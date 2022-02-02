@@ -13,9 +13,23 @@ function addbullet(x, y, velx, vely, evil)
         spr(6, bullet.x, bullet.y)
     end
 
+    function bullet.collide(object, bullet)
+        if bullet.x >= object.x and bullet.x <= object.x+object.w and bullet.y >= object.y and bullet.y <= object.y+object.h then
+            cls(4)
+        end
+    end
+
     function bullet.update(bullet)
+        --applying velocity
         bullet.x += bullet.velx
         bullet.y += bullet.vely
+
+        --collision detection
+        if bullet.evil then
+            foreach(players, bullet.collide(bullet))
+        end
+
+        --delete bullet if off screen
         if bullet.y > 128 or bullet.y < -8 or bullet.x > 128 or bullet.x < -8 then
             del(obj, bullet)
         end
