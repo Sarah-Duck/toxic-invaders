@@ -5,12 +5,16 @@ __lua__
 #include players.lua
 #include bullets.lua
 
-function _update()
+function _update60()
 #include update.lua
 end
 
 function _draw()
+
+circfill(64,64,32,4)
+
 #include draw.lua
+
 end
 __gfx__
 00000000000000009ccc1cc70000000000000000000000000000000000cccc000000000000000000000000000000000000000000000000000000000000000000
