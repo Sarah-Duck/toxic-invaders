@@ -4,6 +4,7 @@ function addbullet(x, y, velx, vely, evil)
     local bullet = {}
 
     bullet.type = "bullet"
+    bullet.evil = evil
     bullet.x = x
     bullet.y = y
     bullet.velx = velx
@@ -13,9 +14,10 @@ function addbullet(x, y, velx, vely, evil)
         spr(6, bullet.x, bullet.y)
     end
 
-    function bullet.collide(object, bullet)
-        if bullet.x >= object.x and bullet.x <= object.x+object.w and bullet.y >= object.y and bullet.y <= object.y+object.h then
-            cls(4)
+    function bullet.collide(object)
+        if bullet.x+4 >= object.x and bullet.x+4 <= object.x+object.w and bullet.y+4 >= object.y and bullet.y+4 <= object.y+object.h and object.inv < 0 then
+            object:shot()
+            del(obj, bullet)
         end
     end
 
@@ -26,7 +28,9 @@ function addbullet(x, y, velx, vely, evil)
 
         --collision detection
         if bullet.evil then
-            foreach(players, bullet.collide(bullet))
+            foreach(players, bullet.collide)
+        elseif bullet.good then
+            --foreach(enemies, bullet.collide)
         end
 
         --delete bullet if off screen
@@ -38,3 +42,5 @@ function addbullet(x, y, velx, vely, evil)
     add(obj, bullet)
     add(bullet, #obj)
 end
+
+addbullet(120, 60, -1, 0, true)

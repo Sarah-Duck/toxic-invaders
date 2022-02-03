@@ -6,6 +6,6 @@ function updateobjs()
 end
 
 function drawobjs()
-    foreach(players, function(obj) obj:draw() end)
     foreach(obj, function(obj) obj:draw() end)
+    foreach(players, function(obj) obj:draw() end)
 end
