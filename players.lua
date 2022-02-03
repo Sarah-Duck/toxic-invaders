@@ -1,7 +1,7 @@
 playercount = -1
 players = {}
 
-function addplayer()
+function addplayer(sprite, bulletsprite)
     playercount += 1
     local player = {}
     player.health = 3
@@ -9,6 +9,8 @@ function addplayer()
     player.y = 60
     player.w = 8
     player.h = 8
+    player.sprite = sprite
+    player.bulletsprite = bulletsprite
     player.ymov = 0
     player.inv = -1
     player.id = playercount
@@ -20,11 +22,11 @@ function addplayer()
         print(player.health)
         if player.inv < 0 or ceil(player.inv*10%2) == 1 then
             if (player.ymov == 0) then
-                spr(2, player.x, player.y)
+                spr(player.sprite, player.x, player.y)
             elseif (player.ymov == 1) then
-                spr(3, player.x, player.y)
+                spr(player.sprite+1, player.x, player.y)
             elseif (player.ymov == -1) then
-                spr(3, player.x, player.y, 1, 1, false, true)
+                spr(player.sprite+1, player.x, player.y, 1, 1, false, true)
             end
         end
     end
@@ -64,6 +66,9 @@ function addplayer()
         if player.particlecooldown < 0 then
             addcircle(player.x-1, player.y, -0.5, 0, 1.5, 0.5, 9)
             addcircle(player.x-1, player.y+7, -0.5, 0, 1.5, 0.5, 9)
+            if (player.health == 1) then
+                addcircle(player.x+rnd(8), player.y+rnd(8), -0.5, -0.2, rnd(8), rnd(1.5)+1, 5)
+            end
             player.particlecooldown = 0.1
         end
 
@@ -74,7 +79,7 @@ function addplayer()
             --for i = 1, 4, 1 do
                 --addcircle(player.x+3, player.y+4, rnd(1)+0.5, rnd(1)-0.5, 1.5, rnd(0.4), 12) 
             --end
-            addbullet(player.x+3, player.y, 2, 0, false)
+            addbullet(player.x+3, player.y, 2, 0, false, player.bulletsprite)
             player.shootcooldown = 0.1
         end
     end
@@ -82,4 +87,4 @@ function addplayer()
     add(players, player)
 end
 
-addplayer()
+addplayer(2, 6)
