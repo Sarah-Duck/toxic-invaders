@@ -3,6 +3,7 @@ version 34
 __lua__
 #include objects.lua
 #include players.lua
+#include enemies.lua
 #include bullets.lua
 
 function _update60()
@@ -10,9 +11,8 @@ function _update60()
 end
 
 function _draw()
-
-circfill(64,64,32,4)
-
+cls(0)
+#include background.lua
 #include draw.lua
 
 end
