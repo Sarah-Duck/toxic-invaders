@@ -1,5 +1,10 @@
 bgcircles = {}
-circletimer = 0
+
+function scrollingcircles(y, speed, spacing, radius, color)
+    for i = 1, (128*(radius*4))/spacing, 1 do
+        circfill(-time()*speed+(spacing*(i-1)), y, radius, color)
+    end
+end
 
 
 function addbgcircle(x, y, velx, r, color, pos)
@@ -21,20 +26,10 @@ function addbgcircle(x, y, velx, r, color, pos)
     add(bgcircles,circle, pos)
 end
 
-
-
-
-
 function drawbg()
     cls(1)
-
-    circletimer -= 1/60
-    if circletimer < 0 then
-        circletimer = .8
-        addbgcircle(180,100,-1,32,3)
-    end
-    
-    foreach(bgcircles, function(circle) circle:draw() end)
+    scrollingcircles(90, 50, 25, 16, 5)
+    scrollingcircles(120, 100, 50, 32, 3)
 
     -- rectfill(0,0,128,16,13)
     -- rectfill(0,64,128,128,13)
