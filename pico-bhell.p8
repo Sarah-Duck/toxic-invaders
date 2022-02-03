@@ -2,6 +2,7 @@ pico-8 cartridge // http://www.pico-8.com
 version 34
 __lua__
 #include objects.lua
+#include particles.lua
 #include players.lua
 #include enemies.lua
 #include bullets.lua
@@ -11,7 +12,6 @@ function _update60()
 end
 
 function _draw()
-cls(0)
 #include background.lua
 #include draw.lua
 
