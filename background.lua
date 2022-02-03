@@ -27,12 +27,15 @@ function addbgcircle(x, y, velx, r, color, pos)
 end
 
 function drawbg()
-    cls(1)
-    scrollingcircles(90, 50, 25, 16, 5)
-    scrollingcircles(120, 100, 50, 32, 3)
+    cls(0)
 
-    -- rectfill(0,0,128,16,13)
-    -- rectfill(0,64,128,128,13)
-    -- rectfill(0,80,128,128,2)
+    --clouds
+    scrollingcircles(-9, 24, 22, 22, 4)
+    scrollingcircles(-14, 40, 25, 20, 13)
+
+
+    --landscape
+    scrollingcircles(110, 72, 25, 20, 14)
+    scrollingcircles(135, 100, 30, 32, 15)
 end
 
