@@ -1,2 +1,3 @@
+drawbg()
 drawobjs()
 print(#obj)
