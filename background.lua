@@ -28,14 +28,15 @@ end
 
 function drawbg()
     cls(0)
-
+    camera((sin(shake+t())*shake)/3, (sin(shake+t()/2.1)*shake)/3)
     --clouds
     scrollingcircles(-9, 24, 22, 22, 4)
     scrollingcircles(-14, 40, 25, 20, 13)
 
-
+    camera((sin(shake+t())*shake)/2, (sin(shake+t()/2.1)*shake)/2)
     --landscape
     scrollingcircles(110, 72, 25, 20, 14)
+    camera(sin(shake+t())*shake, sin(shake+t()/2.1)*shake)
     scrollingcircles(135, 100, 30, 32, 15)
 end
 

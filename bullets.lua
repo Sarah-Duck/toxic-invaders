@@ -3,7 +3,6 @@ bullets = {}
 function addbullet(x, y, velx, vely, evil, sprite)
     local bullet = {}
 
-    bullet.type = "bullet"
     bullet.sprite = sprite
     bullet.evil = evil
     bullet.x = x
@@ -22,6 +21,13 @@ function addbullet(x, y, velx, vely, evil, sprite)
         end
     end
 
+    function bullet.accurate_collide(object)
+        if bullet.x+4 >= object.x-2 and bullet.x+4 <= object.x+2+object.w and bullet.y+4 >= object.y-2 and bullet.y+4 <= object.y+object.h+2 and object.inv < 0 then
+            object:shot()
+            del(obj, bullet)
+        end
+    end
+
     function bullet.update(bullet)
         --applying velocity
         bullet.x += bullet.velx
@@ -31,7 +37,7 @@ function addbullet(x, y, velx, vely, evil, sprite)
         if bullet.evil then
             foreach(players, bullet.collide)
         elseif bullet.evil == false then
-            foreach(enemies, bullet.collide)
+            foreach(enemies, bullet.accurate_collide)
         end
 
         --delete bullet if off screen
