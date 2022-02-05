@@ -1,0 +1,21 @@
+00 Player Shoot
+01 Player Hit
+02 Enemy Killed
+03 Enemy Shoot
+04 Enemy Hit
+05 Player Killed
+06 Powerup Get!
+07 Triple Shot
+08 
+09 
+10 
+11 
+12 
+13 
+14 
+15 
+16 
+17 
+18 
+19 
+20  
