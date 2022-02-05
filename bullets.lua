@@ -22,7 +22,7 @@ function addbullet(x, y, velx, vely, evil, sprite)
     end
 
     function bullet.accurate_collide(object)
-        if bullet.x+4 >= object.x-2 and bullet.x+4 <= object.x+2+object.w and bullet.y+4 >= object.y-2 and bullet.y+4 <= object.y+object.h+2 and object.inv < 0 then
+        if bullet.x+4 >= object.x-2 and bullet.x+4 <= object.x+2+object.w and bullet.y+4 >= object.y-2 and bullet.y+4 <= object.y+object.h+2 then
             object:shot()
             del(obj, bullet)
         end
