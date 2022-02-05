@@ -41,6 +41,7 @@ function addplayer(sprite, bulletsprite)
         player.shootspeed = 0.25
         player.shoot3 = false
         shake = 9
+        sfx(1)
         explosion(player.x, player.y)
     end
 
@@ -88,6 +89,7 @@ function addplayer(sprite, bulletsprite)
                 --addcircle(player.x+3, player.y+4, rnd(1)+0.5, rnd(1)-0.5, 1.5, rnd(0.4), 12) 
             --end
             addbullet(player.x+3, player.y, 2, 0, false, player.bulletsprite)
+            sfx(0)
             if player.shoot3 then
                 addbullet(player.x+3, player.y+3, 2, 0.25, false, player.bulletsprite)
                 addbullet(player.x+3, player.y-3, 2, -0.25, false, player.bulletsprite)

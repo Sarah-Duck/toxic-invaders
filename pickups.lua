@@ -34,7 +34,7 @@ function addpickup(x, y, type)
                 if (pickup.type == "fastshoot") then
                     color = 12
                 elseif (pickup.type == "3shoot") then
-                    color = 11
+                    color = 9
                 end
                 addcircle(pickup.x, pickup.y, sin(i/8), cos(i/8), 2, 0.6, color, 0)
             end

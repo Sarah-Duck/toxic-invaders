@@ -1,3 +1,4 @@
+updatewaves()
 updateobjs()
 --screenshake math
 shake = shake + 0.11 * (0 - shake);

@@ -11,12 +11,12 @@ function addbasicenemy(x, y, sprite, health, speed)
     enemy.inv = -1
     enemy.sprite = sprite
     enemy.health = health
-    enemy.shootcooldown = 3
+    enemy.shootcooldown = rnd(1)+2
     enemy.speed = speed
 
     function enemy.draw(enemy)
         local sprite = enemy.sprite
-        if flr(sin(time()/5)) ~= 0 then
+        if flr(sin(time()*speed)) ~= 0 then --if the ships heading up, change sprite
             sprite += 1
         end
         spr(sprite, enemy.x, enemy.y, 1,1)
@@ -27,6 +27,7 @@ function addbasicenemy(x, y, sprite, health, speed)
         explosion(enemy.x, enemy.y)
         --and reduce health
         enemy.health -= 1
+        sfx(4)
     end
 
     function enemy.collide(object)
@@ -39,12 +40,13 @@ function addbasicenemy(x, y, sprite, health, speed)
 
     function enemy.update()
         enemy.x -= speed
-        enemy.y += sin(time()/5)*speed
+        enemy.y += sin(time()*speed)*speed
         enemy.shootcooldown -= 1/60
         foreach(players, enemy.collide)
         if enemy.shootcooldown < 0 then
-            enemy.shootcooldown = 0.5 + rnd(2)
+            enemy.shootcooldown = 0.5 + rnd(1.5)
             addbullet(enemy.x-3, enemy.y, -1, 0, true, 3)
+            sfx(3)
         end
         if enemy.x < -8 then
             del(enemies, enemy)
@@ -59,13 +61,10 @@ function addbasicenemy(x, y, sprite, health, speed)
             if shake < 3 then
                 shake = 2.5
             end
+            sfx(2)
             del(enemies, enemy)
         end
     end
 
     add(enemies, enemy)
 end
-
-addbasicenemy(128, 60, rnd(basicenemysprites), 1, 0.2)
-addbasicenemy(128, 90, rnd(basicenemysprites), 1, 0.1)
-addbasicenemy(128, 20, rnd(basicenemysprites), 1, 0.1)
