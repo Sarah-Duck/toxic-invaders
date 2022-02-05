@@ -35,7 +35,7 @@ function drawbg()
 
     camera((sin(shake+t())*shake)/2, (sin(shake+t()/2.1)*shake)/2)
     --landscape
-    scrollingcircles(110, 72, 25, 20, 14)
+    scrollingcircles(110, 72, 25, 20, 8)
     camera(sin(shake+t())*shake, sin(shake+t()/2.1)*shake)
     scrollingcircles(135, 100, 30, 32, 15)
 end
