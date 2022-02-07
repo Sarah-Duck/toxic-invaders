@@ -29,6 +29,12 @@ end
 function drawbg()
     cls(0)
     camera((sin(shake+t())*shake)/3, (sin(shake+t()/2.1)*shake)/3)
+    
+    --static planet
+    spr(202,80,62,6,3)
+    spr(249,72,86,7,1)
+
+    
     --clouds
     scrollingcircles(-9, 24, 22, 22, 4)
     scrollingcircles(-14, 40, 25, 20, 13)
@@ -39,4 +45,3 @@ function drawbg()
     camera(sin(shake+t())*shake, sin(shake+t()/2.1)*shake)
     scrollingcircles(135, 100, 30, 32, 15)
 end
-
