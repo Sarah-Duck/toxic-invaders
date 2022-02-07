@@ -1,5 +1,5 @@
 wave = {} --store wave functions here
-currentwave = 1 --THIS IS THE CURRENT WAVE
+currentwave = 1 --THIS IS THE CURRENT WAVE, SHOLD BE 1 UNLESS TESTING SOMETHING
 currentwavetime = 0
 delaytimer = 0
 everysecondtimer = 0
@@ -12,10 +12,7 @@ wave[1] = {
     everysecond = function()
     end,
     conditions = function()
-        if #enemies < 1 then
-            return true
-        else
-            return false
+        if #enemies < 1 then return true else return false
         end
     end
 }
@@ -30,10 +27,7 @@ wave[2] = {
     everysecond = function()
     end,
     conditions = function()
-        if #enemies < 1 then
-            return true
-        else
-            return false
+        if #enemies < 2 then return true else return false
         end
     end
 }
@@ -49,26 +43,7 @@ wave[3] = {
     everysecond = function()
     end,
     conditions = function()
-        if #enemies < 1 then
-            return true
-        else
-            return false
-        end
-    end
-}
-
-wave[4] = {
-    delay = 0,
-    start = function()
-        addwallshooter(130, true, 10, 0.7)
-    end,
-    everysecond = function()
-    end,
-    conditions = function()
-        if #enemies < 1 then
-            return true
-        else
-            return false
+        if #enemies < 5 then return true else return false
         end
     end
 }
@@ -84,10 +59,7 @@ wave[4] = {
     everysecond = function()
     end,
     conditions = function()
-        if #enemies < 1 then
-            return true
-        else
-            return false
+        if #enemies < 2 then return true else return false
         end
     end
 }
@@ -95,21 +67,54 @@ wave[4] = {
 wave[5] = {
     delay = 0,
     start = function()
-        for i = 1, 10, 1 do
-            addwallshooter(100 + (50-i)*i, (i%2==1), 10, 0.4)
+        for i = 1, 12, 1 do
+            addwallshooter(100 + (54-i)*i, (i%2==1), 10, 0.4)
         end
-        addpickup(420, 60, "health")
+        addpickup(490, 60, "health")
     end,
     everysecond = function()
-        if flr(currentwavetime%3) == 2 and currentwavetime < 14 then
-            addbasicenemy(128, rnd(100)+10, rnd(basicenemysprites), 1, 0.6)
+        if flr(currentwavetime%3) == 2 and currentwavetime < 16 then
+            for i = 1, currentwavetime/4, 1 do
+                addbasicenemy(128+rnd(20), rnd(100)+10, rnd(basicenemysprites), 1, 0.6) 
+            end
         end
     end,
     conditions = function()
-        if #enemies < 1 then
-            return true
-        else
-            return false
+        if #enemies < 2 and currentwavetime > 12 then return true else return false
+        end
+    end
+}
+
+wave[6] = {
+    delay = 0,
+    start = function()
+        addballshooter(128, 56, 12, 0.1)
+        addballshooter(160, 14, 12, 0.1)
+        addballshooter(160, 100, 12, 0.1)
+    end,
+    everysecond = function()
+    end,
+    conditions = function()
+        if #enemies < 1 then return true else return false
+        end
+    end
+}
+
+wave[7] = {
+    delay = 1,
+    start = function()
+        addballshooter(140, 56, 12, 0.2)
+        addwallshooter(120, true, 10, 0.3)
+        addwallshooter(220, true, 10, 0.3)
+        addbasicenemy(128, 30, rnd(basicenemysprites), 1, 0.5)
+        addbasicenemy(128, 110, rnd(basicenemysprites), 1, 0.5)
+        addbasicenemy(140, 30, rnd(basicenemysprites), 1, 0.2)
+        addbasicenemy(140, 110, rnd(basicenemysprites), 1, 0.2)
+    end,
+    everysecond = function()
+    end,
+    conditions = function()
+        if #enemies < 2 then return true else return false
         end
     end
 }

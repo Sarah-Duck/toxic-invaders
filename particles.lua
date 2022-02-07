@@ -28,11 +28,13 @@ function addcircle(x, y, velx, vely, r, time, color, grav)
     add(obj, circle)
 end
 
-function explosion(x,y)
-    for i = 1, 4, 1 do
-        addcircle(x+rnd(8), y+rnd(8), -0.5, 0, rnd(8), rnd(1.5)+1, 5, 0)
+function explosion(x,y, w, h)
+    w = w or 8
+    h = h or 8
+    for i = 1, w/2, 1 do
+        addcircle(x+rnd(w), y+rnd(h), -0.5, 0, rnd(8), rnd(1.5)+1, 5, 0)
     end
-    for i = 1, 4, 1 do
-        addcircle(x+rnd(8), y+rnd(8), -0.4, 0, rnd(8), rnd(1)+0.5, 9, 0)
+    for i = 1, w/2, 1 do
+        addcircle(x+rnd(w), y+rnd(h), -0.4, 0, rnd(8), rnd(1)+0.5, 9, 0)
     end
 end

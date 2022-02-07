@@ -50,6 +50,7 @@ function addpickup(x, y, type)
         elseif pickup.type == "3shoot" then
             player.shoot3 = true
         end
+        sfx(6)
     end
 
     function pickup.draw(pickup)
