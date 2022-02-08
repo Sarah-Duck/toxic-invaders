@@ -101,4 +101,4 @@ function addplayer(sprite, bulletsprite)
     add(players, player)
 end
 
-addplayer(16, 19)
+addplayer(16, 18)

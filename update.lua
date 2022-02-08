@@ -7,5 +7,5 @@ if shake < 1 then
 end
 --add another player if they fire
 if btn(4, 1) and playercount == 0 then
-    addplayer(32, 35)
+    addplayer(32, 34)
 end

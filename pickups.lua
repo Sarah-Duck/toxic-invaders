@@ -18,12 +18,12 @@ function addpickup(x, y, type)
     pickup.x = x
     pickup.y = y
     pickup.type = type or rnd({"health", "fastshoot", "3shoot"})
-    pickup.sprite = 5
+    pickup.sprite = 4
 
     if (pickup.type == "fastshoot") then
-        pickup.sprite = 21
+        pickup.sprite = 20
     elseif (pickup.type == "3shoot") then
-        pickup.sprite = 37
+        pickup.sprite = 36
     end
 
     function pickup.collide(player)

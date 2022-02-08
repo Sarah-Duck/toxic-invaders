@@ -1,6 +1,6 @@
 enemies = {}
 
-basicenemysprites = {11, 27, 43, 59} --these are all possible 8x8 basic enemy sprites
+basicenemysprites = {14, 30, 46, 62} --these are all possible 8x8 basic enemy sprites
 
 --Basic, small 8x8 customizable enemy. Very reusable!
 
@@ -51,7 +51,7 @@ function addbasicenemy(x, y, sprite, health, speed)
         foreach(players, enemy.collide)
         if enemy.shootcooldown < 0 then
             enemy.shootcooldown = 0.5 + rnd(1.5)
-            addbullet(enemy.x-3, enemy.y, -1, 0, true, 3)
+            addbullet(enemy.x-3, enemy.y, -1, 0, true, 2)
             sfx(3)
         end
         if enemy.x < -8 then
@@ -81,11 +81,11 @@ function addwallshooter(x, shootup, health, speed)
     local enemy = {}
     enemy.x = x
     enemy.y = 120
-    enemy.sprite = 45
+    enemy.sprite = 60
     enemy.offset = rnd()
     if shootup then
         enemy.y = 0
-        enemy.sprite = 29
+        enemy.sprite = 44
     end
     enemy.w = 8
     enemy.h = 8
@@ -126,7 +126,7 @@ function addwallshooter(x, shootup, health, speed)
             enemy.shootcooldown = 0.08
             local vely = -1
             if shootup then vely = 1 end
-            addbullet(enemy.x-3, enemy.y, -speed, vely, true, 3)
+            addbullet(enemy.x-3, enemy.y, -speed, vely, true, 2)
         end
         if enemy.x < -8 then
             del(enemies, enemy)
@@ -165,8 +165,8 @@ function addballshooter(x, y, health, speed)
 
     function enemy.draw(enemy)
         if enemy.inv < 0 or ceil(enemy.inv*10%2) == 1 then
-            local sprite = 55
-            if enemy.health < 7 then sprite = 39 end
+            local sprite = 56
+            if enemy.health < 7 then sprite = 40 end
             spr(sprite, enemy.x, enemy.y, 4, 1, false, true)
             spr(sprite, enemy.x, enemy.y+8, 4, 1)
         end
@@ -198,15 +198,15 @@ function addballshooter(x, y, health, speed)
             enemy.shootcooldown = 2
             for i = 1, 48, 1 do
                 if sin(i/48) < 0.3 and sin((i+currentwavetime)/8) < 0.4 then
-                    addbullet(enemy.x+4, enemy.y+4, sin(i/48)/2, cos(i/48)/2, true, 3)
+                    addbullet(enemy.x+4, enemy.y+4, sin(i/48)/2, cos(i/48)/2, true, 2)
                 end
             end
         end
         if enemy.x < -32 then
             del(enemies, enemy)
         end
-        if enemy.health < 8 then
-            addcircle(enemy.x+20+rnd(8), enemy.y+6+rnd(8), -0.5, -0.2, rnd(8), rnd(1.5)+1, 5, 0)
+        if enemy.health < 8 then --smokes when damaged!
+            addcircle(enemy.x+20+rnd(8), enemy.y+4+rnd(8), -0.5, -0.2, rnd(8), rnd(1)+0.7, 5, 0)
         end
         if enemy.health <= 0 then
             for i = 1, 24, 1 do

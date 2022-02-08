@@ -65,7 +65,7 @@ wave[4] = {
 }
 
 wave[5] = {
-    delay = 0,
+    delay = 2,
     start = function()
         for i = 1, 12, 1 do
             addwallshooter(100 + (54-i)*i, (i%2==1), 10, 0.4)
