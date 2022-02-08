@@ -1,8 +1,8 @@
 bgcircles = {}
 
 function scrollingcircles(y, speed, spacing, radius, color)
-    for i = 1, (128*(radius*4))/spacing, 1 do
-        circfill(-time()*speed+(spacing*(i-1)), y, radius, color)
+    for i = 1, 256, spacing do
+        circfill((i-(t()*speed))%256-radius*2, y, radius, color)
     end
 end
 
@@ -37,7 +37,7 @@ function drawbg()
 
     --stars
     for i = 1, 64, 1 do
-        pset(((-t()+i*2)*(i/32))%128, sin(i*0.536382)*64+64, 4)
+        pset(((-t()+i*4.3824)*(i/32))%128, sin(i*0.536382)*64+64, 4)
     end
 
     --ringed planet
@@ -47,8 +47,8 @@ function drawbg()
     palt(0,true)
     
     --clouds
-    scrollingcircles(-9, 24, 22, 22, 4)
-    scrollingcircles(-14, 40, 25, 20, 2)
+    scrollingcircles(-9, 24, 22, 22, 2)
+    scrollingcircles(-14, 40, 25, 20, 4)
     --sprites
     --small clouds
     scrollingsprite(198, 20, 10, 1, 1, 28)
@@ -65,9 +65,9 @@ function drawbg()
     scrollingsprite(194, 80, 3, 2, 1, 35)
     scrollingsprite(212, 120, 5, 2, 1, 36)
     scrollingsprite(210, 160, 5, 2, 1, 36)
-    scrollingsprite(210, 180, 10, 2, 1, 38)
-    scrollingsprite(210, 240, 10, 2, 1, 38)
-    scrollingsprite(210, 260, 10, 2, 1, 38)
+    scrollingsprite(210, 180, 7, 2, 1, 38)
+    scrollingsprite(210, 240, 7, 2, 1, 38)
+    scrollingsprite(210, 260, 7, 2, 1, 38)
 
 
     camera((sin(shake+t())*shake)/2, (sin(shake+t()/2.1)*shake)/2)

@@ -1,5 +1,3 @@
-bullets = {}
-
 function addbullet(x, y, velx, vely, evil, sprite)
     local bullet = {}
 
@@ -47,5 +45,4 @@ function addbullet(x, y, velx, vely, evil, sprite)
     end
 
     add(obj, bullet)
-    add(bullet, #obj)
 end
