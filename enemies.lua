@@ -32,7 +32,9 @@ function addbasicenemy(x, y, sprite, health, speed)
         enemy.inv = 0.5
         --and reduce health
         enemy.health -= 1
-        sfx(16)
+        if enemy.health > 0 then
+            sfx(16) 
+        end
     end
 
     function enemy.collide(object)
@@ -67,7 +69,7 @@ function addbasicenemy(x, y, sprite, health, speed)
             if shake < 3 then
                 shake = 2.5
             end
-            sfx(16)
+            sfx(17)
             del(enemies, enemy)
         end
     end
@@ -201,6 +203,7 @@ function addballshooter(x, y, health, speed)
                     addbullet(enemy.x+4, enemy.y+4, sin(i/48)/2, cos(i/48)/2, true, 2)
                 end
             end
+            sfx(15)
         end
         if enemy.x < -32 then
             del(enemies, enemy)
