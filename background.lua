@@ -42,8 +42,15 @@ function drawbg()
 
     --ringed planet
     palt(0,false)
-    spr(201,130-t(),76,7,3)
-    spr(249,122-t(),100,7,1)
+        spr(194,160-t(),50,4,2)
+        spr(199,200-t(),50,2,2)
+        spr(214,192-t(),58,1,1)
+        spr(201,160-t(),66,6,2)
+        spr(207,208-t(),66,1,1)
+        spr(235,152-t(),82,1,1)
+        spr(237,168-t(),82,3,1)
+        spr(251,152-t(),90,4,1)
+        spr(255,192-t(),82,1,1)
     palt(0,true)
     
     --clouds
@@ -52,22 +59,22 @@ function drawbg()
     --sprites
     --small clouds
     scrollingsprite(198, 20, 10, 1, 1, 28)
-    scrollingsprite(214, 60, 10, 1, 1, 28)
+    scrollingsprite(236, 60, 10, 1, 1, 28)
     scrollingsprite(198, 100, 10, 1, 1, 28)
-    scrollingsprite(214, 120, 10, 1, 1, 28)
-    scrollingsprite(214, 130, 12, 1, 1, 29)
+    scrollingsprite(236, 120, 10, 1, 1, 28)
+    scrollingsprite(236, 130, 12, 1, 1, 29)
     scrollingsprite(198, 145, 15, 1, 1, 30)
-    scrollingsprite(214, 160, 15, 1, 1, 30)
+    scrollingsprite(236, 160, 15, 1, 1, 30)
     scrollingsprite(198, 170, 15, 1, 1, 30)
 
     --large clouds
-    scrollingsprite(196, 40, 3, 2, 1, 35)
-    scrollingsprite(194, 80, 3, 2, 1, 35)
-    scrollingsprite(212, 120, 5, 2, 1, 36)
-    scrollingsprite(210, 160, 5, 2, 1, 36)
-    scrollingsprite(210, 180, 7, 2, 1, 38)
-    scrollingsprite(210, 240, 7, 2, 1, 38)
-    scrollingsprite(210, 260, 7, 2, 1, 38)
+    scrollingsprite(249, 40, 3, 2, 1, 35)
+    scrollingsprite(249, 80, 3, 2, 1, 35)
+    scrollingsprite(233, 120, 5, 2, 1, 36)
+    scrollingsprite(233, 160, 5, 2, 1, 36)
+    scrollingsprite(249, 180, 7, 2, 1, 38)
+    scrollingsprite(233, 240, 7, 2, 1, 38)
+    scrollingsprite(249, 260, 7, 2, 1, 38)
 
 
     camera((sin(shake+t())*shake)/2, (sin(shake+t()/2.1)*shake)/2)
@@ -77,7 +84,8 @@ function drawbg()
     --pine trees
     scrollingsprite(231,20,77+16,2,2,72,true)
     scrollingsprite(231,70,78+16,2,2,72)
-    scrollingsprite(231,80,78+16,2,2,72)
+    scrollingsprite(231,80,80+16,2,2,72)
+    scrollingsprite(231,95,78+16,2,2,72)
     scrollingsprite(231,100,79+16,2,2,72)
     scrollingsprite(231,120,80+16,2,2,72,true)
     --small buildings
