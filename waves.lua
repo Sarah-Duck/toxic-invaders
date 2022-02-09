@@ -120,6 +120,7 @@ wave[7] = {
 }
 
 wave[currentwave].start()
+music(0, 0, 3)
 
 function updatewaves()
     currentwavetime += 1/60

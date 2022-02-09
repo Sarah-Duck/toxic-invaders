@@ -32,7 +32,7 @@ function addbasicenemy(x, y, sprite, health, speed)
         enemy.inv = 0.5
         --and reduce health
         enemy.health -= 1
-        sfx(4)
+        sfx(16)
     end
 
     function enemy.collide(object)
@@ -52,7 +52,7 @@ function addbasicenemy(x, y, sprite, health, speed)
         if enemy.shootcooldown < 0 then
             enemy.shootcooldown = 0.5 + rnd(1.5)
             addbullet(enemy.x-3, enemy.y, -1, 0, true, 2)
-            sfx(3)
+            sfx(15)
         end
         if enemy.x < -8 then
             del(enemies, enemy)
@@ -67,7 +67,7 @@ function addbasicenemy(x, y, sprite, health, speed)
             if shake < 3 then
                 shake = 2.5
             end
-            sfx(2)
+            sfx(16)
             del(enemies, enemy)
         end
     end
@@ -106,7 +106,7 @@ function addwallshooter(x, shootup, health, speed)
         --and reduce health
         enemy.health -= 1
         enemy.inv = 0.5
-        sfx(4)
+        sfx(16)
     end
 
     function enemy.collide(object)
@@ -141,7 +141,7 @@ function addwallshooter(x, shootup, health, speed)
             if shake < 3 then
                 shake = 2.5
             end
-            sfx(2)
+            sfx(17)
             del(enemies, enemy)
         end
     end
@@ -178,7 +178,7 @@ function addballshooter(x, y, health, speed)
         --and reduce health
         enemy.health -= 1
         enemy.inv = 0.5
-        sfx(4)
+        sfx(16)
     end
 
     function enemy.collide(object)
@@ -218,7 +218,7 @@ function addballshooter(x, y, health, speed)
             if shake < 3 then
                 shake = 12
             end
-            sfx(2)
+            sfx(17)
             explosion(enemy.x+4, enemy.y+4, 8*4, 8*2)
             del(enemies, enemy)
         end
