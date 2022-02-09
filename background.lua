@@ -6,6 +6,12 @@ function scrollingcircles(y, speed, spacing, radius, color)
     end
 end
 
+function scrollingcirclelines(y, speed, spacing, radius, color)
+    for i = 1, 256, spacing do
+        circ((i-(t()*speed))%256-radius*2, y, radius, color)
+    end
+end
+
 function scrollingsprite(sprite,x,y,w,h,speed,flip)
     flip = flip or false
     spr(sprite, (-t()*speed+x+w*8)%(128+w*8)-w*8, y, w, h, flip)
@@ -54,9 +60,8 @@ function drawbg()
     palt(0,true)
     
     --clouds
+    -- scrollingcircles(-7, 24, 22, 22, 4)
     scrollingcircles(-9, 24, 22, 22, 2)
-    scrollingcircles(-14, 40, 25, 20, 4)
-    --sprites
     --small clouds
     scrollingsprite(198, 20, 10, 1, 1, 28)
     scrollingsprite(236, 60, 10, 1, 1, 28)
@@ -66,21 +71,32 @@ function drawbg()
     scrollingsprite(198, 145, 15, 1, 1, 30)
     scrollingsprite(236, 160, 15, 1, 1, 30)
     scrollingsprite(198, 170, 15, 1, 1, 30)
-
     --large clouds
-    scrollingsprite(249, 40, 3, 2, 1, 35)
-    scrollingsprite(249, 80, 3, 2, 1, 35)
-    scrollingsprite(233, 120, 5, 2, 1, 36)
-    scrollingsprite(233, 160, 5, 2, 1, 36)
-    scrollingsprite(249, 180, 7, 2, 1, 38)
-    scrollingsprite(233, 240, 7, 2, 1, 38)
-    scrollingsprite(249, 260, 7, 2, 1, 38)
+    scrollingsprite(249, 40, 5, 2, 1, 35)
+    scrollingsprite(249, 80, 5, 2, 1, 35)
+    scrollingsprite(233, 120, 7, 2, 1, 36)
+    scrollingsprite(233, 160, 7, 2, 1, 36)
+    scrollingsprite(249, 180, 9, 2, 1, 38)
+    scrollingsprite(233, 240, 9, 2, 1, 38)
+    scrollingsprite(249, 260, 9, 2, 1, 38)
+    --fg clouds
+    scrollingcircles(-11, 40, 25, 20, 2)
+    scrollingcircles(-12, 40, 25, 20, 4)
 
 
     camera((sin(shake+t())*shake)/2, (sin(shake+t()/2.1)*shake)/2)
     --landscape
-    scrollingcircles(125, 72, 25, 20, 8)
-    --scrolling sprites
+    scrollingcirclelines(125, 72, 25, 20, 8)
+    scrollingcircles(126, 72, 25, 20, 2)
+    --landscape lines
+    line(0, 112, 128, 112, 8)
+    line(0, 114, 128, 114, 8)
+    line(0, 116, 128, 116, 8)
+    line(0, 117, 128, 117, 8)
+    rectfill(0,119,128,128,8)
+    for i = 1, 32, 1 do
+        line(((-t()+i*2.5)*80)%128, 111, ((-t()+i*2.5)*80)%128*1.2-12.8, 125, 2)
+    end
     --pine trees
     scrollingsprite(231,20,77+16,2,2,72,true)
     scrollingsprite(231,70,78+16,2,2,72)
@@ -103,12 +119,12 @@ function drawbg()
     scrollingsprite(228,100,87+16,2,2,84)
     scrollingsprite(228,120,88+16,2,2,84,true)
     --large buildings (front)
-    scrollingsprite(192,55,94,2,4,90)
-    scrollingsprite(192,20,91,2,4,90)
-    scrollingsprite(192,100,90,2,4,90)
-    scrollingsprite(192,130,92,2,4,90)
-
+    scrollingsprite(192,52,94,2,4,90)
+    scrollingsprite(192,22,91,2,4,90)
+    scrollingsprite(192,102,90,2,4,90)
+    scrollingsprite(192,137,92,2,4,90)
 
     camera(sin(shake+t())*shake, sin(shake+t()/2.1)*shake)
-    scrollingcircles(154, 100, 30, 32, 2)
+    scrollingcirclelines(150, 100, 30, 32, 8)
+    scrollingcircles(151, 100, 30, 32, 2)
 end
