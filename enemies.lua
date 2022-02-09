@@ -80,11 +80,11 @@ end
 function addwallshooter(x, shootup, health, speed)
     local enemy = {}
     enemy.x = x
-    enemy.y = 120
+    enemy.y = 119
     enemy.sprite = 60
     enemy.offset = rnd()
     if shootup then
-        enemy.y = 0
+        enemy.y = 1
         enemy.sprite = 44
     end
     enemy.w = 8
@@ -126,7 +126,7 @@ function addwallshooter(x, shootup, health, speed)
             enemy.shootcooldown = 0.08
             local vely = -1
             if shootup then vely = 1 end
-            addbullet(enemy.x-3, enemy.y, -speed, vely, true, 2)
+            addbullet(enemy.x, enemy.y, -speed, vely, true, 2)
         end
         if enemy.x < -8 then
             del(enemies, enemy)

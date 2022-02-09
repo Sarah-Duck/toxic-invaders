@@ -69,4 +69,4 @@ function addpickup(x, y, type)
     add(obj, pickup)
 end
 
-addpickup(120, 60)
+-- addpickup(120, 60)
