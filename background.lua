@@ -43,8 +43,13 @@ function drawbg()
 
     --stars
     for i = 1, 64, 1 do
-        pset(((-t()+i*4.3824)*(i/32))%128, sin(i*0.536382)*64+64, 4)
+        pset((((-t()*0.1)+i*4.3824)*(i/32))%128, sin(i*0.536382)*64+64, 4)
     end
+
+    --galaxies
+    spr(254, 100, 40, 1, 1)
+    spr(239, 20, 30, 1, 1)
+    spr(254, 42, 72, 1, 1, true, true)
 
     --ringed planet
     palt(0,false)

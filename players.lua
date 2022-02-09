@@ -20,7 +20,8 @@ function addplayer(sprite, bulletsprite)
     player.shoot3 = false
 
     function player.draw(player)
-        print(player.health)
+        -- print(player.health)
+        
         --draw a different sprite when moving, and blink when hurt
         if player.inv < 0 or ceil(player.inv*10%2) == 1 then
             if (player.ymov == 0) then
