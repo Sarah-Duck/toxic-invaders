@@ -1,3 +1,5 @@
+menuscroll = 0
+menushipscroll = 0
 function drawlogo(x,y)
     --default values
     -- x = 24
@@ -70,8 +72,8 @@ function credits(x,y)
     print("1029chris   ribboncable", x+9,y+5,9)
     print("code/tunes   art/sounds", x+8,y+13,0)
     print("code/tunes   art/sounds", x+8,y+12,9)
-    print("made in vancouver - 2022", x+6,y+22,0)
-    print("made in vancouver - 2022", x+6,y+21,4)
+    -- print("made in vancouver - 2022", x+6,y+22,0)
+    -- print("made in vancouver - 2022", x+6,y+21,4)
 end
 
 

@@ -26,17 +26,26 @@ if gamerunning then
         print(ceil(players[2].inv), players[2].x+sin(t())*3, players[2].y+cos(t())*3, 9)
     end
 end
-if not gamerunning or gt < 1 then
+if not gamerunning or menuscroll < 1 then
+    menuscroll += scrollspeed
+    if not gamerunning then menushipscroll += 1/60 end
     for i = 1, 3, 1 do
-        spr(basicenemysprites[i%#basicenemysprites+1], (-t()*(i*20)+(sin(i/3+t()/100)*128)+1*8)%(128+1*8)-1*8-gt*180, i*36+sin(t()*i/3)*i*2-20,1,1)
+        spr(basicenemysprites[i%#basicenemysprites+1], (-menushipscroll*(i*20)+(sin(i/3)*128)+8)%(128+8)-1*8-menuscroll*240, i*36+sin(menushipscroll*i/3)*i*2-20-menuscroll*50,1,1)
     end
-    if t() < 0.68 then
-        drawlogo(24-gt*120,sin(0.25+t()*0.75)*26)
+    if t() < 1 then
+        drawlogo(24-menuscroll*120,19.5+sin(0.25+t()*0.5)*6.5)
     else
-        drawlogo(24-gt*120,26)
+        drawlogo(24-menuscroll*120,26)
     end
-    mainmenutext(24-gt*150,62)
-    credits(10-gt*140,100)
+    mainmenutext(24-menuscroll*150,62)
+    credits(10-menuscroll*140,108)
+    if t() < 2 then
+        for i = 1, 128, 1 do
+            line(i-1,128,i-1,sin((i+0.22-t()*20)/24.357)*2+t()*80-10,11) --cool wavy transition effect!!!!
+            line(i-1,128,i-1,sin((i+t()*60)/44.357)*5+t()*80-5,3)
+        end
+        addcircle(rnd(128), t()*80, 0,rnd(1),rnd(12)+2,1.5,14,0)
+    end
 end
 
 -- print(#obj)

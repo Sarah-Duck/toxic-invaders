@@ -1,20 +1,20 @@
 --scrolling and respawn stuff
 respawntimer -= 1/60
 if gameover then
-    scrollspeed = mid(-1/60,scrollspeed-1/6000,1/60)
+    -- sfx(1, 1, 0, 28)
+    scrollspeed = mid(-1/10,scrollspeed-1/3000,1/60)
     if respawntimer < 0 then
         gameover = false
         foreach(players, function(obj) obj:respawn() end)
         setwave(mid(1,currentwave-2,#wave))
     end
 elseif gamerunning then
-    updatewaves()
-    updateobjs()
+    updatewaves() -- update the wave function
     scrollspeed = mid(0,scrollspeed+1/2000,1/60)
 end
-gt += scrollspeed
+gt += scrollspeed + 1/600
 
-if not gamerunning then
+if not gamerunning and t() > 1 then
     if btn(4) then
         addplayer(18, 60, 16, 18)
         startgame()
@@ -23,6 +23,10 @@ if not gamerunning then
         addplayer(18, 75, 32, 34)
         startgame()
     end
+end
+
+if gamerunning or t() < 1.95 then -- weird if because of freezing bubbles in the menu
+    updateobjs() --update all objects
 end
 
 --screenshake math

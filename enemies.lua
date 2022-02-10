@@ -37,7 +37,7 @@ function addbasicenemy(x, y, sprite, health, speed)
         end
     end
 
-    function enemy.collide(object)
+    function enemy.collide(object) --f this enemy collides with something, do damage to both it and itself. also EXPLODE!!!
         if enemy.x+4 >= object.x and enemy.x+4 <= object.x+object.w and enemy.y+4 >= object.y and enemy.y+4 <= object.y+object.h and object.inv < 0 then
             object:shot()
             explosion(enemy.x+4, enemy.y+4)
@@ -53,13 +53,15 @@ function addbasicenemy(x, y, sprite, health, speed)
         foreach(players, enemy.collide)
         if enemy.shootcooldown < 0 then
             enemy.shootcooldown = 0.5 + rnd(1.5)
-            addbullet(enemy.x-3, enemy.y, -1, 0, true, 2)
-            sfx(15)
+            if enemy.x < 129 then
+                addbullet(enemy.x-3, enemy.y, -1, 0, true, 2) -- shoot if on screen
+                sfx(15) -- play shoot sound if on screen
+            end
         end
         if enemy.x < -8 then
-            del(enemies, enemy)
+            del(enemies, enemy) -- delete enemy if off screen
         end
-        if enemy.health <= 0 then
+        if enemy.health <= 0 then -- die!!!!!
             for i = 1, rnd(6)+6, 1 do
                 addcircle(enemy.x+rnd(8), enemy.y+rnd(8), rnd(4)-2, -rnd(2)-1, 1, 2, rnd({3, 11, 9}), -0.1)
             end
@@ -198,15 +200,17 @@ function addballshooter(x, y, health, speed)
         foreach(players, enemy.collide)
         if enemy.shootcooldown < 0 then
             enemy.shootcooldown = 2
-            for i = 1, 48, 1 do
-                if sin(i/48) < 0.3 and sin((i+currentwavetime)/8) < 0.4 then
-                    addbullet(enemy.x+4, enemy.y+4, sin(i/48)/2, cos(i/48)/2, true, 2)
+            if enemy.x < 129 then
+                for i = 1, 48, 1 do --shoot ring of bullets if on screen
+                    if sin(i/48) < 0.3 and sin((i+currentwavetime)/8) < 0.4 then
+                        addbullet(enemy.x+4, enemy.y+4, sin(i/48)/2, cos(i/48)/2, true, 2)
+                    end
                 end
+                sfx(19) -- play shoot sound
             end
-            sfx(19)
         end
         if enemy.x < -32 then
-            del(enemies, enemy)
+            del(enemies, enemy) --delete enemy if off screen
         end
         if enemy.health < 8 then --smokes when damaged!
             addcircle(enemy.x+20+rnd(8), enemy.y+4+rnd(8), -0.5, -0.2, rnd(8), rnd(1)+0.7, 5, 0)
