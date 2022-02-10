@@ -50,10 +50,10 @@ function mainmenutext(x,y)
         spr(17,x+2,y+4+sin(t()*0.7)*2,1,1) --blue ship
         spr(33,x+2,y+16+sin(t()*0.7)*2,1,1) --orange ship
     end
-    print("(\142) - Lone Wolf", x+15,y+7,5)
-    print("(\142) - Lone Wolf", x+15,y+6,6)
-    print("(\151) - Companion", x+15,y+18,5)
-    print("(\151) - Companion", x+15,y+17,6)
+    print("(\142) - lone wolf", x+15,y+7,5)
+    print("(\142) - lone wolf", x+15,y+6,6)
+    print("(\151) - companion", x+15,y+18,5)
+    print("(\151) - companion", x+15,y+17,6)
 end
 
 function credits(x,y)
