@@ -22,11 +22,11 @@
 21 Rocket Shoot
 22 Rocket Thruster
 23 
-24 
+24 Player 5sec Spawn
 25 
 26 
 27 
 28 
-29 
+29 Rewind Checkpoint
 30 Powerup Get!
 31  
