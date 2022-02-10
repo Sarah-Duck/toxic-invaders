@@ -43,7 +43,7 @@ function drawbg()
 
     --stars
     for i = 1, 64, 1 do
-        pset((((-gt*0.1)+i*4.3824)*(i/32))%128, sin(i*0.536382)*64+64, 4)
+        pset((((-gt*0.1)+i*4.3824)*(i/32))%128, sin(i*0.536382)*64+64, 4) --funny random star algorithm!!
     end
 
     --galaxies

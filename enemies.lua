@@ -230,7 +230,7 @@ function addballshooter(x, y, health, speed)
             for i = 1, 24, 1 do
                 addcircle(enemy.x+rnd(8), enemy.y+rnd(8), rnd(4)-2, -rnd(2)-1, 1, 2, rnd({3, 11, 9}), -0.1)
             end
-            if rnd(100) > 80 then
+            if rnd(100) > 70 then
                 addpickup(enemy.x, enemy.y)
             end
             if shake < 3 then
