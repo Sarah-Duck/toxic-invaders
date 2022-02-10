@@ -7,7 +7,7 @@ everysecondtimer = 0
 wave[1] = {
     delay = 2,
     start = function()
-        addbasicenemy(130, 60, rnd(basicenemysprites), 1, 0.15)
+        addbasicenemy(150, 60, rnd(basicenemysprites), 1, 0.15)
     end,
     everysecond = function()
     end,
@@ -119,8 +119,8 @@ wave[7] = {
     end
 }
 
-wave[currentwave].start()
-music(0, 0, 3)
+--wave[currentwave].start()
+--music(0, 0, 3)
 
 function updatewaves()
     currentwavetime += 1/60
@@ -132,6 +132,7 @@ function updatewaves()
     if wave[currentwave].conditions() then
         delaytimer += 1/60
         if delaytimer > wave[currentwave].delay then
+            everysecondtimer = 0
             currentwave += 1
             currentwavetime = 0
             delaytimer = 0
@@ -139,4 +140,12 @@ function updatewaves()
             wave[currentwave].start()
         end
     end
+end
+
+function setwave(num)
+    everysecondtimer = 0
+    currentwave = num
+    currentwavetime = 0
+    delaytimer = 0
+    wave[currentwave].start()
 end

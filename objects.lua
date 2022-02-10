@@ -1,4 +1,15 @@
 obj = {}
+gt = 0 -- game time
+scrollspeed = 0
+respawntimer = 0
+gameover = false
+gamerunning = false
+
+function startgame()
+    wave[currentwave].start()
+    music(0, 0, 3)
+    gamerunning = true
+end
 
 function updateobjs()
     foreach(players, function(obj) obj:update() end)

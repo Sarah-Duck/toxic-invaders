@@ -1,49 +1,49 @@
-bgcircles = {}
+-- bgcircles = {}
 
 function scrollingcircles(y, speed, spacing, radius, color)
     for i = 1, 256, spacing do
-        circfill((i-(t()*speed))%256-radius*2, y, radius, color)
+        circfill((i-(gt*speed))%256-radius*2, y, radius, color)
     end
 end
 
 function scrollingcirclelines(y, speed, spacing, radius, color)
     for i = 1, 256, spacing do
-        circ((i-(t()*speed))%256-radius*2, y, radius, color)
+        circ((i-(gt*speed))%256-radius*2, y, radius, color)
     end
 end
 
 function scrollingsprite(sprite,x,y,w,h,speed,flip)
     flip = flip or false
-    spr(sprite, (-t()*speed+x+w*8)%(128+w*8)-w*8, y, w, h, flip)
+    spr(sprite, (-gt*speed+x+w*8)%(128+w*8)-w*8, y, w, h, flip)
 end
 
 
-function addbgcircle(x, y, velx, r, color, pos)
-    local circle = {}
-    circle.x = x
-    circle.y = y
-    circle.velx = velx
-    circle.r = r
-    circle.color = color
+-- function addbgcircle(x, y, velx, r, color, pos)
+--     local circle = {}
+--     circle.x = x
+--     circle.y = y
+--     circle.velx = velx
+--     circle.r = r
+--     circle.color = color
 
-    function circle.draw(circle)
-        circle.x += circle.velx
+--     function circle.draw(circle)
+--         circle.x += circle.velx
 
-        if circle.x < 0 - circle.r * 2 then
-            del(bgcircles, circle)
-        end
-        circfill(circle.x,circle.y,circle.r,circle.color)
-    end
-    add(bgcircles,circle, pos)
-end
+--         if circle.x < 0 - circle.r * 2 then
+--             del(bgcircles, circle)
+--         end
+--         circfill(circle.x,circle.y,circle.r,circle.color)
+--     end
+--     add(bgcircles,circle, pos)
+-- end
 
 function drawbg()
     cls(0)
-    camera((sin(shake+t())*shake)/3, (sin(shake+t()/2.1)*shake)/3)
+    camera((sin(shake+t())*shake)/3, (sin(shake+gt/2.1)*shake)/3)
 
     --stars
     for i = 1, 64, 1 do
-        pset((((-t()*0.1)+i*4.3824)*(i/32))%128, sin(i*0.536382)*64+64, 4)
+        pset((((-gt*0.1)+i*4.3824)*(i/32))%128, sin(i*0.536382)*64+64, 4)
     end
 
     --galaxies
@@ -53,15 +53,15 @@ function drawbg()
 
     --ringed planet
     palt(0,false)
-        spr(194,160-t(),50,4,2)
-        spr(199,200-t(),50,2,2)
-        spr(214,192-t(),58,1,1)
-        spr(201,160-t(),66,6,2)
-        spr(207,208-t(),66,1,1)
-        spr(234,152-t(),82,1,1)
-        spr(236,168-t(),82,3,1)
-        spr(250,152-t(),90,4,1)
-        spr(223,192-t(),82,1,1)
+        spr(194,160-gt,50,4,2)
+        spr(199,200-gt,50,2,2)
+        spr(214,192-gt,58,1,1)
+        spr(201,160-gt,66,6,2)
+        spr(207,208-gt,66,1,1)
+        spr(234,152-gt,82,1,1)
+        spr(236,168-gt,82,3,1)
+        spr(250,152-gt,90,4,1)
+        spr(223,192-gt,82,1,1)
     palt(0,true)
     
     --clouds
@@ -88,7 +88,7 @@ function drawbg()
     scrollingcircles(-12, 40, 25, 20, 4)
 
 
-    camera((sin(shake+t())*shake)/2, (sin(shake+t()/2.1)*shake)/2)
+    camera((sin(shake+t())*shake)/2, (sin(shake+gt/2.1)*shake)/2)
     --landscape
     scrollingcirclelines(125, 72, 25, 20, 8)
     scrollingcircles(126, 72, 25, 20, 2)
@@ -99,7 +99,7 @@ function drawbg()
     line(0, 117, 128, 117, 8)
     rectfill(0,119,128,128,8)
     for i = 1, 32, 1 do
-        line(((-t()+i*2.5)*80)%128, 111, ((-t()+i*2.5)*80)%128*1.2-12.8, 125, 2)
+        line(((-gt+i*2.5)*80)%128, 111, ((-gt+i*2.5)*80)%128*1.2-12.8, 125, 2)
     end
     --pine trees
     scrollingsprite(231,10,78+16,1,2,72,true)
@@ -132,7 +132,7 @@ function drawbg()
     scrollingsprite(192,102,90,2,4,90)
     scrollingsprite(192,137,92,2,4,90)
 
-    camera(sin(shake+t())*shake, sin(shake+t()/2.1)*shake)
+    camera(sin(shake+t())*shake, sin(shake+gt/2.1)*shake)
     scrollingcirclelines(150, 100, 30, 32, 8)
     scrollingcircles(151, 100, 30, 32, 2)
 end

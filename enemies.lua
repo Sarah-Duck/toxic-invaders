@@ -13,7 +13,7 @@ function addbasicenemy(x, y, sprite, health, speed)
     enemy.inv = -1
     enemy.sprite = sprite
     enemy.health = health
-    enemy.shootcooldown = rnd(1)+2
+    enemy.shootcooldown = rnd(2)+1
     enemy.speed = speed
 
     function enemy.draw(enemy)
@@ -203,7 +203,7 @@ function addballshooter(x, y, health, speed)
                     addbullet(enemy.x+4, enemy.y+4, sin(i/48)/2, cos(i/48)/2, true, 2)
                 end
             end
-            sfx(15)
+            sfx(19)
         end
         if enemy.x < -32 then
             del(enemies, enemy)
@@ -221,7 +221,7 @@ function addballshooter(x, y, health, speed)
             if shake < 3 then
                 shake = 12
             end
-            sfx(17)
+            sfx(20)
             explosion(enemy.x+4, enemy.y+4, 8*4, 8*2)
             del(enemies, enemy)
         end

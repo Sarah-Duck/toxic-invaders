@@ -2,9 +2,9 @@ local randompickups = {}
 pickuptimer = 10
 function randompickups.update()
     pickuptimer -= 1/60
-    if (pickuptimer < 0) then
+    if pickuptimer < 0 then
         pickuptimer = 10
-        if rnd(100) > 93 then
+        if rnd(100) > 90 then
             addpickup(128, rnd(80)+20)
         end
     end
