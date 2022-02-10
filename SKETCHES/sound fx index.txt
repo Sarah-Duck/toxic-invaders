@@ -16,20 +16,17 @@
 15 Basic Enemy Shoot
 16 Basic Enemy Hit
 17 Basic Enemy Killed
-18 
-19 
-17  
-18  
-19  Rocket Shoot
-20  Rocket Thruster
-21 
-22 
+18 Wall Crawl Shoot
+19 Circular Shoot
+20 Circular Kill
+21 Rocket Shoot
+22 Rocket Thruster
 23 
 24 
 25 
 26 
 27 
-28 Unknown
+28 
 29 
 30 Powerup Get!
 31  
