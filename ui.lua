@@ -83,5 +83,5 @@ end
 
 --this creates menu items that allow players to turn off screenshake, or always fire the ships gun.
 doshake = true
-menuitem(1, "toggle shaking", function() doshake = not doshake end)
-menuitem(2, "always fire", function() alwaysfire = not alwaysfire end)
+menuitem(1, "(\129) screenshake", function() doshake = not doshake end)
+menuitem(2, "(\144) autofire", function() alwaysfire = not alwaysfire end)
