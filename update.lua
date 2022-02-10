@@ -1,12 +1,12 @@
 --scrolling and respawn stuff
 respawntimer -= 1/60
 if gameover then
-    -- sfx(1, 1, 0, 28)
     scrollspeed = mid(-1/10,scrollspeed-1/3000,1/60)
     if respawntimer < 0 then
         gameover = false
         foreach(players, function(obj) obj:respawn() end)
         setwave(mid(1,currentwave-2,#wave))
+        sfx(29, -2)
     end
 elseif gamerunning then
     updatewaves() -- update the wave function

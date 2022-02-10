@@ -27,7 +27,7 @@ function addpickup(x, y, type)
     end
 
     function pickup.collide(player)
-        if pickup.x+4 >= player.x-4 and pickup.x+4 <= player.x+4+player.w and pickup.y+4 >= player.y-4 and pickup.y+4 <= player.y+player.h+4 then
+        if pickup.x+4 >= player.x-4 and pickup.x+4 <= player.x+4+player.w and pickup.y+4 >= player.y-4 and pickup.y+4 <= player.y+player.h+4 and player.health > 0 then
             pickup:affect(player)
             for i = 1, 8, 1 do
                 local color = 8
