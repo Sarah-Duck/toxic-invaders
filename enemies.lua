@@ -97,6 +97,7 @@ function addwallshooter(x, shootup, health, speed)
     enemy.health = health
     enemy.shootcooldown = 0
     enemy.speed = speed
+    enemy.shoottoggle = true
 
     function enemy.draw(enemy)
         if enemy.inv < 0 or ceil(enemy.inv*10%2) == 1 then
@@ -126,14 +127,24 @@ function addwallshooter(x, shootup, health, speed)
         enemy.shootcooldown -= 1/60
         enemy.inv -= 1/60
         foreach(players, enemy.collide)
-        if enemy.shootcooldown < 0 and (t()+enemy.offset)%1>0.5 then
-            enemy.shootcooldown = 0.08
-            local vely = -1
-            if shootup then vely = 1 end
-            addbullet(enemy.x, enemy.y, -speed, vely, true, 2)
+        if enemy.shootcooldown < 0 then
+            if (t()+enemy.offset)%1>0.5 then
+                if not enemy.shoottoggle then --implemented a toggle so that the sound effect for firing gets played only once.
+                    enemy.shoottoggle = true
+                    if enemy.x < 128 then
+                        sfx(18)
+                    end
+                end
+                enemy.shootcooldown = 0.08
+                local vely = -1
+                if shootup then vely = 1 end
+                addbullet(enemy.x, enemy.y, -speed, vely, true, 2)
+            else
+                enemy.shoottoggle = false
+            end
         end
         if enemy.x < -8 then
-            del(enemies, enemy)
+            del(enemies, enemy) --if off screen, get deleted nerd
         end
         if enemy.health <= 0 then
             for i = 1, rnd(6)+6, 1 do
