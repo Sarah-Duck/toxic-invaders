@@ -49,3 +49,8 @@ if not gamerunning or menuscroll < 1 then
 end
 
 -- print(#obj)
+
+
+-- laser enemy 
+-- spr(64,X+0,y+4,4,2)
+-- spr(64,x+0,y+20,4,2,false,true)
