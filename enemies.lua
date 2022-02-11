@@ -81,12 +81,12 @@ end
 
 --SHOOTER THAT SHOOTS BIG WALLS!!!!!!
 
-function addwallshooter(x, shootup, health, speed)
+function addwallshooter(x, shootup, health, speed, offset)
     local enemy = {}
     enemy.x = x
     enemy.y = 119
     enemy.sprite = 60
-    enemy.offset = rnd()
+    enemy.offset = offset or rnd()
     if shootup then
         enemy.y = 1
         enemy.sprite = 44
@@ -171,7 +171,7 @@ function addballshooter(x, y, health, speed)
     enemy.x = x
     enemy.y = y
     enemy.offset = rnd()
-    enemy.w = 8*4
+    enemy.w = 8*3
     enemy.h = 8*2
     enemy.inv = -1
     enemy.health = health
@@ -181,9 +181,10 @@ function addballshooter(x, y, health, speed)
     function enemy.draw(enemy)
         if enemy.inv < 0 or ceil(enemy.inv*10%2) == 1 then
             local sprite = 56
-            if enemy.health < 7 then sprite = 40 end
-            spr(sprite, enemy.x, enemy.y, 4, 1, false, true)
-            spr(sprite, enemy.x, enemy.y+8, 4, 1)
+            local damaged = (enemy.health < 7)
+            if damaged then sprite = 40 end
+            spr(sprite, enemy.x, enemy.y, 3, 1, false, not damaged)
+            spr(sprite, enemy.x, enemy.y+8, 3, 1, false, damaged)
         end
     end
 
@@ -220,7 +221,7 @@ function addballshooter(x, y, health, speed)
                 sfx(19) -- play shoot sound
             end
         end
-        if enemy.x < -32 then
+        if enemy.x < -24 then
             del(enemies, enemy) --delete enemy if off screen
         end
         if enemy.health < 8 then --smokes when damaged!
@@ -238,6 +239,82 @@ function addballshooter(x, y, health, speed)
             end
             sfx(20)
             explosion(enemy.x+4, enemy.y+4, 8*4, 8*2)
+            del(enemies, enemy)
+        end
+    end
+
+    add(enemies, enemy)
+end
+
+function addtargetingenemy(x, y, health, speed)
+    local enemy = {}
+    enemy.x = x
+    enemy.y = y
+    enemy.w = 16
+    enemy.h = 8
+    enemy.inv = -1
+    enemy.health = health
+    enemy.shootcooldown = rnd(0.4)+0.2
+    enemy.speed = speed
+    enemy.bulletcounter = 0
+
+    function enemy.draw(enemy)
+        if enemy.inv < 0 or ceil(enemy.inv*10%2) == 1 then
+            spr(21, enemy.x, enemy.y, 2, 1)
+        end
+    end
+
+    function enemy.shot(enemy)
+        --explode
+        explosion(enemy.x, enemy.y)
+        enemy.inv = 0.5
+        --and reduce health
+        enemy.health -= 1
+        if enemy.health > 0 then
+            sfx(16) 
+        end
+    end
+
+    function enemy.collide(object) --f this enemy collides with something, do damage to both it and itself. also EXPLODE!!!
+        if enemy.x+4 >= object.x and enemy.x+4 <= object.x+object.w and enemy.y+4 >= object.y and enemy.y+4 <= object.y+object.h and object.inv < 0 then
+            object:shot()
+            explosion(enemy.x+4, enemy.y+4)
+            enemy.health -= 2
+        end
+    end
+
+    function enemy.update()
+        enemy.x -= speed
+        enemy.shootcooldown -= 1/60
+        enemy.inv -= 1/60
+        foreach(players, enemy.collide)
+        if enemy.shootcooldown < 0 and currentwavetime%1.5>1.2 then
+            enemy.shootcooldown = 0.1
+            enemy.bulletcounter += 1
+            local p = enemy.bulletcounter%#players+1
+            if enemy.x < 129 and players[p].x < enemy.x+30 then --math involving a distance check to get the proper velocity for aiming
+                local distance = sqrt((players[p].x - enemy.x)^2+(players[p].y - enemy.y)^2)
+                local velx = (players[p].x - enemy.x)/distance
+                local vely = (players[p].y - enemy.y)/distance
+                addbullet(enemy.x-3, enemy.y, velx, vely, true, 2) -- shoot if on screen
+                sfx(15) -- play shoot sound if on screen
+            end
+        end
+        if enemy.x < -16 then
+            del(enemies, enemy) -- delete enemy if off screen
+        end
+        if enemy.health <= 0 then -- die!!!!!
+            for i = 1, rnd(6)+6, 1 do
+                addcircle(enemy.x+rnd(8), enemy.y+rnd(16), rnd(4)-2, -rnd(2)-1, 1, 2, rnd({3, 11, 9}), -0.1)
+            end
+            if rnd(100) > 85 then
+                addpickup(enemy.x, enemy.y)
+            end
+            if shake < 3 then
+                shake = 3.5
+            end
+            sfx(17)
+            explosion(enemy.x, enemy.y, 16, 8)
             del(enemies, enemy)
         end
     end

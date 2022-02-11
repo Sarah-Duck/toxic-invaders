@@ -21,7 +21,7 @@ wave[2] = {
     delay = 2,
     start = function()
         addbasicenemy(128, 30, rnd(basicenemysprites), 1, 0.4)
-        addbasicenemy(128, 60, rnd(basicenemysprites), 1, 0.8)
+        addtargetingenemy(128, 60, 3, 0.1)
         addbasicenemy(128, 90, rnd(basicenemysprites), 1, 0.4)
     end,
     everysecond = function()
@@ -53,7 +53,7 @@ wave[4] = {
     start = function()
         addwallshooter(140, true, 10, 0.4)
         addbasicenemy(128, 30, rnd(basicenemysprites), 1, 0.5)
-        addbasicenemy(155, 60, rnd(basicenemysprites), 1, 0.4)
+        addtargetingenemy(155, 60, 3, 0.15)
         addbasicenemy(128, 90, rnd(basicenemysprites), 1, 0.5)
     end,
     everysecond = function()
@@ -110,6 +110,40 @@ wave[7] = {
         addbasicenemy(128, 110, rnd(basicenemysprites), 1, 0.5)
         addbasicenemy(140, 30, rnd(basicenemysprites), 1, 0.2)
         addbasicenemy(140, 110, rnd(basicenemysprites), 1, 0.2)
+    end,
+    everysecond = function()
+    end,
+    conditions = function()
+        if #enemies < 2 then return true else return false
+        end
+    end
+}
+
+wave[8] = {
+    delay = 1,
+    start = function()
+        addtargetingenemy(128,1,3,0.1)
+        addtargetingenemy(262,60,3,0.2)
+        addwallshooter(138, true, 10, 0.4, 0)
+        addwallshooter(144, true, 10, 0.4, 0)
+        addwallshooter(185, false, 10, 0.4, 0)
+        addwallshooter(230, true, 10, 0.4)
+        addballshooter(230, 56, 12, 0.2)
+    end,
+    everysecond = function()
+    end,
+    conditions = function()
+        if #enemies < 2 then return true else return false
+        end
+    end
+}
+
+wave[9] = {
+    delay = 3,
+    start = function()
+        for i = 1, 7, 1 do
+            addtargetingenemy(128, i*16-4, 3, 0.1)
+        end
     end,
     everysecond = function()
     end,
