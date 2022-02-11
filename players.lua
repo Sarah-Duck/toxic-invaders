@@ -46,6 +46,7 @@ function addplayer(x, y, sprite, bulletsprite)
         sfx(10)
         explosion(player.x, player.y)
         if isgameover() then --FUCK, GAME OVER YOU DIED!
+            sfx(11)
             gameover = true -- gameover set to true
             respawntimer = 5 --respawns all players in 5 seconds
             player.inv = 20
@@ -63,6 +64,11 @@ function addplayer(x, y, sprite, bulletsprite)
         player.inv = 3
         for i = 1, 8, 1 do
             addcircle(player.x+4, player.y+4, sin(i/8), cos(i/8), 2, 0.6, 7, 0)
+        end
+        if playercount == 1 then
+            sfx(27)
+        else
+            sfx(28)
         end
     end
 

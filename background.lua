@@ -18,24 +18,24 @@ function scrollingsprite(sprite,x,y,w,h,speed,flip)
 end
 
 
--- function addbgcircle(x, y, velx, r, color, pos)
---     local circle = {}
---     circle.x = x
---     circle.y = y
---     circle.velx = velx
---     circle.r = r
---     circle.color = color
+--ringed planet
+function bgplanetmegasprite(x,y)
+    --default values
+    --x = 160-gt
+    --y = 50
 
---     function circle.draw(circle)
---         circle.x += circle.velx
-
---         if circle.x < 0 - circle.r * 2 then
---             del(bgcircles, circle)
---         end
---         circfill(circle.x,circle.y,circle.r,circle.color)
---     end
---     add(bgcircles,circle, pos)
--- end
+    palt(0,false)
+        spr(194,x+10,y+0,4,2)
+        spr(199,x+50,y+0,2,2)
+        spr(214,x+42,y+8,1,1)
+        spr(201,x+10,y+16,6,2)
+        spr(207,x+58,y+16,1,1)
+        spr(234,x+2,y+32,1,1)
+        spr(236,x+18,y+32,3,1)
+        spr(250,x+2,y+40,4,1)
+        spr(223,x+42,y+32,1,1)
+    palt(0,true)
+end
 
 function drawbg()
     cls(0)
@@ -51,18 +51,7 @@ function drawbg()
     spr(239, 20, 30, 1, 1)
     spr(254, 42, 72, 1, 1, true, true)
 
-    --ringed planet
-    palt(0,false)
-        spr(194,160-gt,50,4,2)
-        spr(199,200-gt,50,2,2)
-        spr(214,192-gt,58,1,1)
-        spr(201,160-gt,66,6,2)
-        spr(207,208-gt,66,1,1)
-        spr(234,152-gt,82,1,1)
-        spr(236,168-gt,82,3,1)
-        spr(250,152-gt,90,4,1)
-        spr(223,192-gt,82,1,1)
-    palt(0,true)
+    bgplanetmegasprite(150-(gt)%300,50)
     
     --clouds
     scrollingcircles(-9, 24, 22, 22, 2)
@@ -133,6 +122,7 @@ function drawbg()
     scrollingsprite(192,137,92,2,4,90)
 
     camera(sin(shake+t())*shake, sin(shake+gt/2.1)*shake)
+
     scrollingcirclelines(150, 100, 30, 32, 8)
     scrollingcircles(151, 100, 30, 32, 2)
 end
