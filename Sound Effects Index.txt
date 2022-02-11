@@ -1,26 +1,35 @@
-00 
-01 
-02 
-03 
-04 
-05 
-06 
-07 
-08 
+CHANNELS
+--------
+0 Melody Track
+1 Bass Track / Player / Pickup
+2 Short SFX - Bullets / Basic Enemy Hits/Kills
+3 Long SFX - Tough Enemy/Bosses
+
+SOUNDS
+------
+00 RESERVED INSRUMENT
+01 RESERVED INSRUMENT
+02 RESERVED INSRUMENT
+03 RESERVED INSRUMENT
+04 RESERVED INSRUMENT
+05 RESERVED INSRUMENT
+06 RESERVED INSRUMENT
+07 RESERVED INSRUMENT
+08 RESERVED INSRUMENT
 09 Player Shoot
 10 Player Hit
 11 Player Killed
 12 Triple Shot
-13 
+13 Intro Transition
 14 
 15 Basic Enemy Shoot
 16 Basic Enemy Hit
 17 Basic Enemy Killed
 18 Wall Crawl Shoot
-19 Circular Shoot
-20 Circular Kill
-21 Rocket Shoot
-22 Rocket Thruster
+19 Circular/Wall Shoot
+20 Circular/Wall Kill
+21 
+22 
 23 Laser Charge (1.5 Seconds)
 24 Laser Loop
 25 Laser Finished
@@ -30,35 +39,35 @@
 29 Rewind Checkpoint
 30 Powerup Get!
 31 
-32 
-33 
-34 
-35 
-36 
-37 
-38 
-39 
-40 
-41 
-42 
-43 
-44 
-45 
-46 
-47 
-48 
-49 
-50 
-51 
-52 
-53 
+32 MUSIC
+33 MUSIC
+34 MUSIC
+35 MUSIC
+36 MUSIC
+37 MUSIC
+38 MUSIC
+39 MUSIC
+40 MUSIC
+41 MUSIC
+42 MUSIC
+43 MUSIC
+44 MUSIC
+45 MUSIC
+46 MUSIC
+47 MUSIC
+48 MUSIC
+49 MUSIC
+50 MUSIC
+51 MUSIC
+52 MUSIC
+53 MUSIC
 54 
 55 
 56 
 57 
-58 
-59 
-60 
-61 
-62 
-63 
+58 Rocket Shoot / Thruster Loop    sfx(21, 3) (channel 4 for longer sounds)
+59 Rocket Projectile Explosion
+60 Rocket Killed
+61 Kamikaze Charge
+62 Kamikaze Ignite
+63 Kamikaze Denied

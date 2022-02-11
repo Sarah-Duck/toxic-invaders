@@ -181,9 +181,9 @@ function addballshooter(x, y, health, speed)
 
     function enemy.draw(enemy)
         if enemy.inv < 0 or ceil(enemy.inv*10%2) == 1 then
-            local sprite = 56
+            local sprite = 27
             local damaged = (enemy.health < 7)
-            if damaged then sprite = 40 end
+            if damaged then sprite = 11 end
             spr(sprite, enemy.x, enemy.y, 3, 1, false, not damaged)
             spr(sprite, enemy.x, enemy.y+8, 3, 1, false, damaged)
         end
@@ -261,7 +261,7 @@ function addtargetingenemy(x, y, health, speed)
 
     function enemy.draw(enemy)
         if enemy.inv < 0 or ceil(enemy.inv*10%2) == 1 then
-            spr(21, enemy.x, enemy.y, 2, 1)
+            spr(58, enemy.x, enemy.y, 2, 1)
         end
     end
 

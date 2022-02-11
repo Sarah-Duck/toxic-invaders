@@ -16,13 +16,13 @@ drawobjs()
 
 if gamerunning then
     if gameover then --gameover timer, it does a cute spinny!
-        print(ceil(respawntimer), 62+sin(t())*3,61+cos(t())*3, 4)
-        print(ceil(respawntimer), 62+sin(t())*3,60+cos(t())*3, 7)
+        print(ceil(respawntimer), 62+sin(t())*3,61+cos(t())*3, 5)
+        print(ceil(respawntimer), 62+sin(t())*3,60+cos(t())*3, 6)
     elseif players[1].health <=0 then
-        print(ceil(players[1].inv), players[1].x+sin(t())*3, players[1].y+cos(t())*3+1, 4)
+        print(ceil(players[1].inv), players[1].x+sin(t())*3, players[1].y+cos(t())*3+1, 15)
         print(ceil(players[1].inv), players[1].x+sin(t())*3, players[1].y+cos(t())*3, 12)
     elseif #players > 1 and players[2].health <=0 then
-        print(ceil(players[2].inv), players[2].x+sin(t())*3, players[2].y+cos(t())*3+1, 4)
+        print(ceil(players[2].inv), players[2].x+sin(t())*3, players[2].y+cos(t())*3+1, 2)
         print(ceil(players[2].inv), players[2].x+sin(t())*3, players[2].y+cos(t())*3, 9)
     end
 end
@@ -37,7 +37,8 @@ if not gamerunning or menuscroll < 1 then
     else
         drawlogo(24-menuscroll*120,26)
     end
-    mainmenutext(24-menuscroll*150,62)
+    mainmenutext(24-menuscroll*150,53)
+    titlehighscores(52-menuscroll*110,82)
     credits(10-menuscroll*140,108)
     if t() < 2 then
         for i = 1, 128, 1 do

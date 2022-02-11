@@ -49,7 +49,7 @@ function drawbg()
     --galaxies
     spr(254, 100, 40, 1, 1)
     spr(239, 20, 30, 1, 1)
-    spr(254, 42, 72, 1, 1, true, true)
+    spr(254, 42, 74, 1, 1, true, true)
 
     bgplanetmegasprite(150-(gt)%300,50)
     
