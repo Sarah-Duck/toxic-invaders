@@ -19,6 +19,7 @@ if not gamerunning and t() > 1 then
     if btn(4) then
         addplayer(18, 60, 16, 18)
         startgame()
+        addlaser(60,60,10) -- temp spawning laser on start!!!!! GET RID OF THIS!!!!
     elseif btn(5) then
         addplayer(18, 45, 16, 18)
         addplayer(18, 75, 32, 34)

@@ -153,6 +153,23 @@ wave[9] = {
     end
 }
 
+wave[10] = {
+    delay = 1,
+    start = function()
+        for i = 1, 3, 1 do
+            addwallshooter(128+i*65, true, 10, 0.4, 0, 0.68)
+            addwallshooter(133+i*65, false, 10, 0.4, 0, 0.68)
+        end
+        addballshooter(200, 56, 12, 0.2)
+    end,
+    everysecond = function()
+    end,
+    conditions = function()
+        if #enemies < 1 then return true else return false
+        end
+    end
+}
+
 --wave[currentwave].start()
 --music(0, 0, 3)
 

@@ -81,7 +81,7 @@ end
 
 --SHOOTER THAT SHOOTS BIG WALLS!!!!!!
 
-function addwallshooter(x, shootup, health, speed, offset)
+function addwallshooter(x, shootup, health, speed, offset, bulletspeed)
     local enemy = {}
     enemy.x = x
     enemy.y = 119
@@ -98,6 +98,7 @@ function addwallshooter(x, shootup, health, speed, offset)
     enemy.shootcooldown = 0
     enemy.speed = speed
     enemy.shoottoggle = true
+    enemy.bulletspeed = bulletspeed or 1
 
     function enemy.draw(enemy)
         if enemy.inv < 0 or ceil(enemy.inv*10%2) == 1 then
@@ -128,17 +129,17 @@ function addwallshooter(x, shootup, health, speed, offset)
         enemy.inv -= 1/60
         foreach(players, enemy.collide)
         if enemy.shootcooldown < 0 then
-            if (t()+enemy.offset)%1>0.5 then
+            if (t()+enemy.offset)%1>0.5/enemy.bulletspeed then
                 if not enemy.shoottoggle then --implemented a toggle so that the sound effect for firing gets played only once.
                     enemy.shoottoggle = true
                     if enemy.x < 128 then
                         sfx(18)
                     end
                 end
-                enemy.shootcooldown = 0.08
+                enemy.shootcooldown = 0.08/enemy.bulletspeed
                 local vely = -1
                 if shootup then vely = 1 end
-                addbullet(enemy.x, enemy.y, -speed, vely, true, 2)
+                addbullet(enemy.x, enemy.y, -enemy.speed, enemy.bulletspeed*vely, true, 2)
             else
                 enemy.shoottoggle = false
             end

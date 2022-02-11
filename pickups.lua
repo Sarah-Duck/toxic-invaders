@@ -4,7 +4,7 @@ function randompickups.update()
     pickuptimer -= 1/60
     if pickuptimer < 0 then
         pickuptimer = 10
-        if rnd(100) > 90 then
+        if rnd(100) > 85 then
             addpickup(128, rnd(80)+20)
         end
     end
@@ -17,7 +17,7 @@ function addpickup(x, y, type)
     local pickup = {}
     pickup.x = x
     pickup.y = y
-    pickup.type = type or rnd({"health", "fastshoot", "3shoot"})
+    pickup.type = type or rnd({"health", "health", "fastshoot", "3shoot"})
     pickup.sprite = 4
 
     if (pickup.type == "fastshoot") then

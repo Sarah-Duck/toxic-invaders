@@ -21,9 +21,9 @@
 20 Circular Kill
 21 Rocket Shoot
 22 Rocket Thruster
-23 
-24 
-25 
+23 Laser Charge 1.5 Seconds
+24 Laser Loop
+25 Laser Finished
 26 
 27 Light Respawn
 28 Respawn
