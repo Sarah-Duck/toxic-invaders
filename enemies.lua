@@ -33,7 +33,7 @@ function addbasicenemy(x, y, sprite, health, speed)
         --and reduce health
         enemy.health -= 1
         if enemy.health > 0 then
-            sfx(16) 
+            sfx(16, 2) 
         end
     end
 
@@ -55,7 +55,7 @@ function addbasicenemy(x, y, sprite, health, speed)
             enemy.shootcooldown = 0.5 + rnd(1.5)
             if enemy.x < 129 then
                 addbullet(enemy.x-3, enemy.y, -1, 0, true, 2) -- shoot if on screen
-                sfx(15) -- play shoot sound if on screen
+                sfx(15, 2) -- play shoot sound if on screen
             end
         end
         if enemy.x < -8 then
@@ -71,7 +71,7 @@ function addbasicenemy(x, y, sprite, health, speed)
             if shake < 3 then
                 shake = 2.5
             end
-            sfx(17)
+            sfx(17, 2)
             del(enemies, enemy)
         end
     end
@@ -112,7 +112,7 @@ function addwallshooter(x, shootup, health, speed, offset, bulletspeed)
         --and reduce health
         enemy.health -= 1
         enemy.inv = 0.5
-        sfx(16)
+        sfx(16, 2)
     end
 
     function enemy.collide(object)
@@ -133,7 +133,7 @@ function addwallshooter(x, shootup, health, speed, offset, bulletspeed)
                 if not enemy.shoottoggle then --implemented a toggle so that the sound effect for firing gets played only once.
                     enemy.shoottoggle = true
                     if enemy.x < 128 then
-                        sfx(18)
+                        sfx(18, 3)
                     end
                 end
                 enemy.shootcooldown = 0.08/enemy.bulletspeed
@@ -157,7 +157,7 @@ function addwallshooter(x, shootup, health, speed, offset, bulletspeed)
             if shake < 3 then
                 shake = 2.5
             end
-            sfx(17)
+            sfx(17, 2)
             del(enemies, enemy)
         end
     end
@@ -195,7 +195,7 @@ function addballshooter(x, y, health, speed)
         --and reduce health
         enemy.health -= 1
         enemy.inv = 0.5
-        sfx(16)
+        sfx(16, 2)
     end
 
     function enemy.collide(object)
@@ -219,7 +219,7 @@ function addballshooter(x, y, health, speed)
                         addbullet(enemy.x+4, enemy.y+4, sin(i/48)/2, cos(i/48)/2, true, 2)
                     end
                 end
-                sfx(19) -- play shoot sound
+                sfx(19, 3) -- play shoot sound
             end
         end
         if enemy.x < -24 then
@@ -238,7 +238,7 @@ function addballshooter(x, y, health, speed)
             if shake < 3 then
                 shake = 12
             end
-            sfx(20)
+            sfx(20, 3)
             explosion(enemy.x+4, enemy.y+4, 8*4, 8*2)
             del(enemies, enemy)
         end
@@ -272,7 +272,7 @@ function addtargetingenemy(x, y, health, speed)
         --and reduce health
         enemy.health -= 1
         if enemy.health > 0 then
-            sfx(16) 
+            sfx(16, 2) 
         end
     end
 
@@ -298,7 +298,7 @@ function addtargetingenemy(x, y, health, speed)
                 local velx = (players[p].x - enemy.x)/distance
                 local vely = (players[p].y - enemy.y)/distance
                 addbullet(enemy.x-3, enemy.y, velx, vely, true, 2) -- shoot if on screen
-                sfx(15) -- play shoot sound if on screen
+                sfx(15, 2) -- play shoot sound if on screen
             end
         end
         if enemy.x < -16 then
@@ -314,7 +314,7 @@ function addtargetingenemy(x, y, health, speed)
             if shake < 3 then
                 shake = 3.5
             end
-            sfx(17)
+            sfx(17, 2)
             explosion(enemy.x, enemy.y, 16, 8)
             del(enemies, enemy)
         end
@@ -357,7 +357,7 @@ function addlasershooter(x, y, speed, stay)
         --and reduce health
         enemy.health -= 1
         if enemy.health > 0 then
-            sfx(16) 
+            sfx(16, 2) 
         end
     end
 
@@ -385,7 +385,7 @@ function addlasershooter(x, y, speed, stay)
             if enemy.shootcooldown < 0 then
                 enemy.shootcooldown = 0.18
                 addbullet(enemy.x+6, enemy.y+20, -1, rnd(2)-1, true, 2) --shoooot!!!!!
-                sfx(15) -- play shoot sound if on screen
+                sfx(15, 2) -- play shoot sound if on screen
             end
         end
 
@@ -425,7 +425,7 @@ function addlasershooter(x, y, speed, stay)
             if shake < 3 then
                 shake = 6
             end
-            sfx(26)
+            sfx(26, 3)
             del(enemies, enemy)
         end
     end

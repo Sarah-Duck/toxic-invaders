@@ -91,7 +91,7 @@ function addlaser(x, y, r)
         --collision detection after the warm up
         if laser.timer > 1.5 and laser.timer < 3.6 then
             if not laser.playingsound then
-                sfx(24,1)
+                sfx(24,3)
                 laser.playingsound = true
             end
             shake = rnd(8)/laser.timer
@@ -103,7 +103,7 @@ function addlaser(x, y, r)
         if laser.timer > 4 then
             del(obj, laser)
             sfx(24, -2)
-            sfx(25)
+            sfx(25, 3)
             for i = 1, 16, 1 do
                 addcircle(rnd(laser.x), laser.y-laser.r/2+rnd(laser.r), -0.5, -0.5, rnd(3), rnd(2), rnd({11,14,7}), 0)
             end

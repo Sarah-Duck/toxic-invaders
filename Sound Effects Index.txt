@@ -24,9 +24,41 @@
 23 Laser Charge (1.5 Seconds)
 24 Laser Loop
 25 Laser Finished
-26 Laser Death
+26 Laser Killed
 27 Light Respawn
 28 Respawn
 29 Rewind Checkpoint
 30 Powerup Get!
-31  
+31 
+32 
+33 
+34 
+35 
+36 
+37 
+38 
+39 
+40 
+41 
+42 
+43 
+44 
+45 
+46 
+47 
+48 
+49 
+50 
+51 
+52 
+53 
+54 
+55 
+56 
+57 
+58 
+59 
+60 
+61 
+62 
+63 

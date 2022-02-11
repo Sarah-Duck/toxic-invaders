@@ -43,10 +43,10 @@ function addplayer(x, y, sprite, bulletsprite)
         player.shootspeed = 0.25
         player.shoot3 = false
         shake = 9
-        sfx(10)
+        sfx(10, 0)
         explosion(player.x, player.y)
         if isgameover() then --FUCK, GAME OVER YOU DIED!
-            sfx(11)
+            sfx(11, 0)
             gameover = true -- gameover set to true
             respawntimer = 5 --respawns all players in 5 seconds
             player.inv = 20
@@ -55,6 +55,8 @@ function addplayer(x, y, sprite, bulletsprite)
             end
             sfx(29, 1)
         elseif player.health <= 0 then
+            --kill sfx for co-op
+            sfx(11, 0)
             player.inv = 5
         end
     end
@@ -65,10 +67,11 @@ function addplayer(x, y, sprite, bulletsprite)
         for i = 1, 8, 1 do
             addcircle(player.x+4, player.y+4, sin(i/8), cos(i/8), 2, 0.6, 7, 0)
         end
+        --normal and light respawn sfx for co-op
         if playercount == 1 then
-            sfx(27)
+            sfx(27, 1)
         else
-            sfx(28)
+            sfx(28, 1)
         end
     end
 
@@ -121,9 +124,9 @@ function addplayer(x, y, sprite, bulletsprite)
             if player.shoot3 then
                 addbullet(player.x+3, player.y+3, 2, 0.25, false, player.bulletsprite)
                 addbullet(player.x+3, player.y-3, 2, -0.25, false, player.bulletsprite)
-                sfx(12)
+                sfx(12, 2)
             else
-                sfx(9)
+                sfx(9, 2)
             end
             player.shootcooldown = player.shootspeed
         end

@@ -7,7 +7,6 @@ if gameover then
         foreach(players, function(obj) obj:respawn() end)
         setwave(mid(checkpoint,currentwave-2,#wave))
         sfx(29, -2)
-        -- sfx(24)
     end
 elseif gamerunning then
     updatewaves() -- update the wave function
