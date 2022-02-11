@@ -191,7 +191,7 @@ function addballshooter(x, y, health, speed)
 
     function enemy.shot(enemy)
         --explode
-        explosion(enemy.x+rnd(16), enemy.y+rnd(8))
+        explosion(enemy.x+rnd(32), enemy.y+rnd(32))
         --and reduce health
         enemy.health -= 1
         enemy.inv = 0.5
@@ -316,6 +316,116 @@ function addtargetingenemy(x, y, health, speed)
             end
             sfx(17)
             explosion(enemy.x, enemy.y, 16, 8)
+            del(enemies, enemy)
+        end
+    end
+
+    add(enemies, enemy)
+end
+
+function addlasershooter(x, y, speed, stay)
+    local enemy = {}
+    enemy.x = x+128
+    enemy.y = y
+    if stay then enemy.y = 64-20 end
+    enemy.w = 8*4
+    enemy.h = 8*4
+    enemy.speed = speed
+    enemy.stay = stay
+    enemy.inv = -1
+    enemy.health = 36
+    enemy.lasertimer = 0
+    enemy.firedlaser = false
+    enemy.shootcooldown = 0
+    enemy.moveoffset = 0
+    enemy.sinspeed = 4
+
+    function enemy.draw(enemy)
+        if enemy.inv < 0 or ceil(enemy.inv*10%2) == 1 then
+            local damaged = (enemy.health < 12)
+            local sprite = 64
+            if damaged then sprite = 96 end
+            spr(sprite,enemy.x+0,enemy.y+4,4,2, false, damaged)
+            spr(sprite,enemy.x+0,enemy.y+20,4,2,false,not damaged)
+        end
+    end
+
+    function enemy.shot(enemy)
+        --explode
+        explosion(enemy.x, enemy.y)
+        enemy.inv = 0.5
+        --and reduce health
+        enemy.health -= 1
+        if enemy.health > 0 then
+            sfx(16) 
+        end
+    end
+
+    function enemy.collide(object) --f this enemy collides with something, do damage to both it and itself. also EXPLODE!!!
+        if enemy.x+4 >= object.x and enemy.x+4 <= object.x+object.w and enemy.y+4 >= object.y and enemy.y+4 <= object.y+object.h and object.inv < 0 then
+            object:shot()
+            explosion(enemy.x+4, enemy.y+4)
+            enemy.health -= 2
+        end
+    end
+
+    function enemy.update()
+        if enemy.x > 90 or (not stay and enemy.lasertimer > 4) then --enemy lerps into place when first added, and if they leave they speed up
+            enemy.x -= enemy.speed/2
+            if enemy.lasertimer > 4 then
+                enemy.speed += 0.025
+            else
+                enemy.x = enemy.x + 0.03 * (90 - enemy.x);
+            end
+        end
+
+        if enemy.lasertimer > 4 and stay then
+            enemy.y = 64-20 + sin(enemy.moveoffset+enemy.lasertimer/enemy.sinspeed) * 40
+            enemy.shootcooldown -= 1/60
+            if enemy.shootcooldown < 0 then
+                enemy.shootcooldown = 0.18
+                addbullet(enemy.x+6, enemy.y+20, -1, rnd(2)-1, true, 2) --shoooot!!!!!
+                sfx(15) -- play shoot sound if on screen
+            end
+        end
+
+        if enemy.x <= 90 then
+            if not enemy.firedlaser then
+                addlaser(enemy.x+6, enemy.y+20, 10)
+                enemy.moveoffset = rnd({0,0.5}) --add offset so not moving in same direction each time
+                enemy.sinspeed = rnd({4,4,4,4,4,4,4,4,4,4,4,4,1,8,2,2,2,2}) --add differing speeds to sin up and down randomly
+            end
+            enemy.firedlaser = true
+            enemy.lasertimer += 1/60
+            if enemy.lasertimer > 8 and stay then
+                enemy.firedlaser = false
+                enemy.lasertimer = 0
+            end
+        end
+
+        if enemy.health < 8 then --smokes when damaged! copy pasted from ball shooter!
+            addcircle(enemy.x+12+rnd(8), enemy.y+12+rnd(8), -0.5, -0.2, rnd(8), rnd(1)+0.7, 5, 0)
+        end
+
+        enemy.inv -= 1/60
+        foreach(players, enemy.collide)
+
+        if enemy.x < -32 then
+            del(enemies, enemy) -- delete enemy if off screen
+        end
+
+        if enemy.health <= 0 then -- die!!!!!
+            explosion(enemy.x,enemy.y,32,32)
+            for i = 1, 40, 1 do
+                addcircle(enemy.x+rnd(32), enemy.y+rnd(32), sin(t()*2), -rnd(2)-1, 1, 2, rnd({3, 11, 9}), -0.1)
+            end
+            addpickup(enemy.x+rnd(32), enemy.y+rnd(32), "health")
+            addpickup(enemy.x+rnd(32), enemy.y+rnd(32))
+            addpickup(enemy.x+rnd(32), enemy.y+rnd(32))
+            if shake < 3 then
+                shake = 6
+            end
+            sfx(26)
             del(enemies, enemy)
         end
     end

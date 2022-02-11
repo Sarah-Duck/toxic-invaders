@@ -3,6 +3,7 @@ currentwave = 1 --THIS IS THE CURRENT WAVE, SHOLD BE 1 UNLESS TESTING SOMETHING
 currentwavetime = 0
 delaytimer = 0
 everysecondtimer = 0
+checkpoint = 1
 
 wave[1] = {
     delay = 2,
@@ -114,16 +115,39 @@ wave[7] = {
     everysecond = function()
     end,
     conditions = function()
-        if #enemies < 2 then return true else return false
+        if #enemies < 1 then return true else return false
         end
     end
 }
 
 wave[8] = {
-    delay = 1,
+    delay = 3,
+    start = function()
+        addbasicenemy(240, 58, rnd(basicenemysprites), 1, 1.1)
+        addbasicenemy(240, 68, rnd(basicenemysprites), 1, 0.9)
+        addbasicenemy(240, 63, rnd(basicenemysprites), 1, 1)
+        addlasershooter(128, 64, 0.4, true)
+        
+    end,
+    everysecond = function()
+        if flr(currentwavetime%3) == 2 and rnd(100) < 40 then
+            for i = 1, rnd(2), 1 do
+                addbasicenemy(128+rnd(20), rnd(20)+54, rnd(basicenemysprites), 1, 0.6) 
+            end
+        end
+    end,
+    conditions = function()
+        if #enemies < 1 then checkpoint = currentwave+1 return true else return false
+        end
+    end
+}
+
+wave[9] = {
+    delay = 5,
     start = function()
         addtargetingenemy(128,1,3,0.1)
-        addtargetingenemy(262,60,3,0.2)
+        addtargetingenemy(262-9,60,3,0.2)
+        addtargetingenemy(262+9,60,3,0.2)
         addwallshooter(138, true, 10, 0.4, 0)
         addwallshooter(144, true, 10, 0.4, 0)
         addwallshooter(185, false, 10, 0.4, 0)
@@ -138,7 +162,7 @@ wave[8] = {
     end
 }
 
-wave[9] = {
+wave[10] = {
     delay = 3,
     start = function()
         for i = 1, 7, 1 do
@@ -153,7 +177,7 @@ wave[9] = {
     end
 }
 
-wave[10] = {
+wave[11] = {
     delay = 1,
     start = function()
         for i = 1, 3, 1 do
@@ -182,12 +206,15 @@ function updatewaves()
     end
     if wave[currentwave].conditions() then
         delaytimer += 1/60
-        if delaytimer > wave[currentwave].delay then
+        if delaytimer > wave[min(currentwave+1, #wave)].delay then
             everysecondtimer = 0
             currentwave += 1
             currentwavetime = 0
             delaytimer = 0
             currentwave = (currentwave - 1) % #wave+1 --temporarily looping the waves
+            if currentwave < checkpoint then
+                checkpoint = 1
+            end
             wave[currentwave].start()
         end
     end

@@ -74,8 +74,8 @@ function addlaser(x, y, r)
             circfill(laser.x, laser.y, laser.timer*4+sin(t()*8), 11)
             circfill(laser.x, laser.y, laser.timer*2+sin(t()*8), 7)
             for i = mid(-5, laser.x-laser.timer*laser.x,laser.x), laser.x, 1 do
-                pset(i, laser.y+sin(i/6.32535-t())*2, 11)
-                pset(i, laser.y+cos(t()*1.5+i/30)*laser.timer*2+sin(i/8.32535+t()), 14)
+                pset(i, laser.y+sin(i/(3/(laser.timer/2))-t())*laser.timer*laser.r/2, 11)
+                pset(i, laser.y+cos(t()*laser.timer+i/30)*laser.timer*3+sin(i/8.32535+t()), 14)
             end
         end
     end
@@ -89,13 +89,14 @@ function addlaser(x, y, r)
     function laser.update(laser)
         laser.timer += 1/60
         --collision detection after the warm up
-        if laser.timer > 1.5 and laser.timer < 4.2 then
+        if laser.timer > 1.5 and laser.timer < 3.6 then
             if not laser.playingsound then
-                sfx(24)
+                sfx(24,1)
                 laser.playingsound = true
             end
             shake = rnd(8)/laser.timer
             foreach(players, laser.collide)
+            foreach(enemies, laser.collide)
         end
 
         --delete laser once its done
