@@ -446,8 +446,8 @@ function addbomb(x, y, delay) --BIG BOMB!!!! KILL IIT QUICKLY!!!!
             local offset = mid(0, -enemy.shootcooldown-2, 3)
             spr(sprite, enemy.x, enemy.y-offset, 2, 2)
             spr(sprite, enemy.x, enemy.y+16+offset, 2, 2, false, true)
-            spr(sprite, enemy.x+16, enemy.y-offset, 2, 2, true)
-            spr(sprite, enemy.x+16, enemy.y+16+offset, 2, 2, true, true)
+            spr(sprite, enemy.x+15, enemy.y-offset, 2, 2, true)
+            spr(sprite, enemy.x+15, enemy.y+16+offset, 2, 2, true, true)
         end
     end
 

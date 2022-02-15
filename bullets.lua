@@ -105,7 +105,7 @@ function addlaser(x, y, r)
             sfx(24, -2)
             sfx(25, 3)
             for i = 1, 16, 1 do
-                addcircle(rnd(laser.x), laser.y-laser.r/2+rnd(laser.r), -0.5, -0.5, rnd(3), rnd(2), rnd({11,14,7}), 0)
+                addcircle(rnd(laser.x), laser.y-laser.r/2+rnd(laser.r), -0.5, -0.5, rnd(3), rnd(2), rnd({11,14,3}), 0)
             end
         end
     end
