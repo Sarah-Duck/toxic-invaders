@@ -45,7 +45,7 @@ function drawlogo(x,y)
     --X
     sspr(32,24,8,8,x+26,y-9,16,16)
     sspr(32,24,8,8,x+42,y-9,16,16,true)
-    sspr(40,24,8,8,x+26,y+7,16,16, true)
+    sspr(40,24,8,8,x+26,y+7,16,16,true)
     sspr(40,24,8,8,x+42,y+7,16,16)
     --invaders
     invaderslogotext(x+12,y+20)
