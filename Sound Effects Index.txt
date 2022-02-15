@@ -26,8 +26,8 @@ SOUNDS
 16 Basic Enemy Hit
 17 Basic Enemy Killed
 18 Wall Crawl Shoot
-19 Circular/Wall Shoot
-20 Circular/Wall Kill
+19 Circular/Wall Boss Shoot
+20 Circular/Wall Boss Kill
 21 
 22 
 23 Laser Charge (1.5 Seconds)
@@ -67,7 +67,7 @@ SOUNDS
 57 
 58 Rocket Shoot / Thruster Loop    sfx(21, 3) (channel 4 for longer sounds)
 59 Rocket Projectile Explosion
-60 Rocket Killed
-61 Kamikaze Charge
+60 Rocket Boss Killed
+61 Kamikaze Charge (8 seconds)
 62 Kamikaze Ignite
 63 Kamikaze Denied
