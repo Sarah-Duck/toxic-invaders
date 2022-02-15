@@ -78,18 +78,21 @@ function drawbg()
 
 
     camera((sin(shake+t())*shake)/2, (sin(shake+gt/2.1)*shake)/2)
+
     --landscape
     scrollingcirclelines(125, 72, 25, 20, 8)
     scrollingcircles(126, 72, 25, 20, 2)
+
     --landscape lines
-    line(0, 112, 128, 112, 8)
-    line(0, 114, 128, 114, 8)
-    line(0, 116, 128, 116, 8)
-    line(0, 117, 128, 117, 8)
-    rectfill(0,119,128,128,8)
+    rectfill(0,112,128,128,8)
+    line(0, 113, 128, 113, 2)
+    line(0, 116, 128, 116, 2)
+    line(0, 119, 128, 119, 2)
+
     for i = 1, 32, 1 do
         line(((-gt+i*2.5)*80)%128, 111, ((-gt+i*2.5)*80)%128*1.2-12.8, 125, 2)
     end
+
     --pine trees
     scrollingsprite(231,10,78+16,1,2,72,true)
     scrollingsprite(231,30,78+16,1,2,72)

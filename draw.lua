@@ -15,23 +15,19 @@ drawbg()
 drawobjs()
 
 if gamerunning then
-    if gameover then --gameover timer, it does a cute spinny!
-        print(ceil(respawntimer), 62+sin(t())*3,61+cos(t())*3, 5)
-        print(ceil(respawntimer), 62+sin(t())*3,60+cos(t())*3, 6)
+    if gameover then --gameover timer, it does a cute spinny! 😵
+        printdropshadow(ceil(respawntimer),63+sin(t())*3,55+cos(t())*3,6,5)
     elseif players[1].health <=0 then
-        print(ceil(players[1].inv), players[1].x+sin(t())*3, players[1].y+cos(t())*3+1, 15)
-        print(ceil(players[1].inv), players[1].x+sin(t())*3, players[1].y+cos(t())*3, 12)
+        printdropshadow(ceil(players[1].inv),players[1].x+sin(t())*3,players[1].y+cos(t())*3,12,15)
     elseif #players > 1 and players[2].health <=0 then
-        print(ceil(players[2].inv), players[2].x+sin(t())*3, players[2].y+cos(t())*3+1, 2)
-        print(ceil(players[2].inv), players[2].x+sin(t())*3, players[2].y+cos(t())*3, 9)
+        printdropshadow(ceil(players[2].inv),players[2].x+sin(t())*3,players[2].y+cos(t())*3,9,2)
     end
 end
 if not gamerunning or menuscroll < 1 then
     menuscroll += scrollspeed
     if not gamerunning then menushipscroll += 1/60 end
     for i = 1, 3, 1 do
-        spr(basicenemysprites[i%#basicenemysprites+1], (-menushipscroll*(i*20)+(sin(i/3)*128)+8)%(128+8)-1*8-menuscroll*240, i*36+sin(menushipscroll*i/3)*i*2-20-menuscroll*50,1,1)
-    end
+        spr(14+i*16, (-menushipscroll*(i*20)+(sin(i/3)*128)+8)%(128+8)-1*8-menuscroll*240, i*36+sin(menushipscroll*i/3)*i*2-20-menuscroll*50,1,1)    end
     if t() < 1 then
         drawlogo(24-menuscroll*120,19.5+sin(0.25+t()*0.5)*6.5)
     else

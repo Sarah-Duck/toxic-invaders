@@ -1,6 +1,11 @@
 menuscroll = 0
 menushipscroll = 0
 
+function printdropshadow(text,x,y,colorMain,colorShadow)
+    print(text,x,y+1,colorShadow)
+    print(text,x,y,colorMain)
+end
+
 function invaderslogotext(x,y)
     --default values
     -- x = 12
@@ -8,7 +13,6 @@ function invaderslogotext(x,y)
 
     --font
     local text = "i n v a d e r s"
-    print(text, x, y+1, 3)
     print(text, x, y-1, 3)
     print(text, x+1, y, 3)
     print(text, x-1, y, 3)
@@ -20,10 +24,11 @@ function invaderslogotext(x,y)
     print(text, x-1, y+2, 3)
     print(text, x+1, y+2, 3)
     print(text, x, y+2, 3)
-    print(text, x, y, 14)
-    clip(x, y, 60, 3)
-    print(text, x, y, 11)
+    printdropshadow(text,x,y,14,3)
+    clip(x, y, 63, 3)
+    print(text,x,y,11)
     clip()
+
 end
 
 function drawlogo(x,y)
@@ -55,10 +60,8 @@ function mainmenutext(x,y)
         spr(17,x+2,y+4+sin(t()*0.7)*2,1,1) --blue ship
         spr(33,x+2,y+16+sin(t()*0.7)*2,1,1) --orange ship
     end
-    print("(\142) - lone wolf", x+15,y+7,5)
-    print("(\142) - lone wolf", x+15,y+6,6)
-    print("(\151) - companion", x+15,y+18,5)
-    print("(\151) - companion", x+15,y+17,6)
+    printdropshadow("(\142) - lone wolf",x+15,y+7,6,5)
+    printdropshadow("(\151) - companion",x+15,y+18,6,5)
 end
 
 function titlehighscores(x,y)
@@ -66,14 +69,9 @@ function titlehighscores(x,y)
     -- 52
     -- 110
     
-    --1P high score
-    print("000000", x-20,y+1,15)
-    print("000000", x-20,y,12)
-    print("-", x+10,y+1,5)
-    print("-", x+10,y,6)
-    --2P high score
-    print("000000", x+20,y+1,2)
-    print("000000", x+20,y,9)
+    printdropshadow("000000",x-20,y,12,15) --1P high score
+    printdropshadow("-",x+10,y,6,5)
+    printdropshadow("000000",x+20,y,9,2) --2P high score
 end
 
 function credits(x,y)
@@ -87,14 +85,10 @@ function credits(x,y)
     spr(49,x+104,y+6+cos(t())*2,1,1,(t()%2<1)) --bot
     palt(2,false)
     palt(0,true)
-    print("1029chris", x+10,y+6,2)
-    print("1029chris", x+10,y+5,9)
-    print("ribboncable", x+56,y+6,15)
-    print("ribboncable", x+56,y+5,12)
-    print("code tunes", x+8,y+13,3)
-    print("code tunes", x+8,y+12,11)
-    print("sprites sfx", x+56,y+13,3)
-    print("sprites sfx", x+56,y+12,11)
+    printdropshadow("1029chris",x+10,y+5,9,2)
+    printdropshadow("ribboncable",x+56,y+5,12,15)
+    printdropshadow("code tunes",x+8,y+12,11,3)
+    printdropshadow("sprites sfx",x+56,y+12,11,3)
 
     -- print("made in vancouver - 2022", x+6,y+22,0)
     -- print("made in vancouver - 2022", x+6,y+21,4)
@@ -102,10 +96,6 @@ end
 
 --sfx for the intro transition
 sfx(13,3)
-
--- drawlogo(24,26)
--- mainmenutext(24,62)
--- credits(10,100)
 
 --this creates menu items that allow players to turn off screenshake, or always fire the ships gun.
 doshake = true
