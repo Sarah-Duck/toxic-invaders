@@ -41,13 +41,13 @@ function drawbg()
         pset((((-gt*0.1)+i*4.3824)*(i/32))%128, sin(i*0.536382)*64+64, 4) --funny random star algorithm!!
     end
 
-    --ringed planet
-    bgplanetmegasprite(150-(gt)%300,50)
-
     --galaxies
     spr(120, 20, 30, 1, 1)
     spr(104, 100, 40, 1, 1)
     spr(104, 42, 74, 1, 1, true, true)
+
+    --ringed planet
+    bgplanetmegasprite(150-(gt)%300,50)
     
     --clouds
     scrollingcircles(-9, 24, 22, 22, 2)
