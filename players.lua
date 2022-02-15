@@ -1,9 +1,7 @@
-playercount = -1
 alwaysfire = false
 players = {}
 
 function addplayer(x, y, sprite, bulletsprite)
-    playercount += 1
     local player = {}
     player.health = 3
     player.x = x
@@ -14,7 +12,7 @@ function addplayer(x, y, sprite, bulletsprite)
     player.bulletsprite = bulletsprite
     player.ymov = 0
     player.inv = 2
-    player.id = playercount
+    player.id = #players
     player.shootcooldown = 0.0
     player.particlecooldown = 0.0
     player.shootspeed = 0.25
@@ -67,7 +65,7 @@ function addplayer(x, y, sprite, bulletsprite)
             addcircle(player.x+4, player.y+4, sin(i/8), cos(i/8), 2, 0.6, 7, 0)
         end
         --normal and light respawn sfx for co-op
-        if playercount == 1 then
+        if #players == 1 then
             sfx(27, 1)
         else
             sfx(28, 1)

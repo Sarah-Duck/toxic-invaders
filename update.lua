@@ -39,6 +39,6 @@ if not doshake then
     shake = 0
 end
 --add another player if they fire
--- if btn(4, 1) and playercount == 0 then
+-- if btn(4, 1) and #players == 1 then
 --     addplayer(32, 34)
 -- end
