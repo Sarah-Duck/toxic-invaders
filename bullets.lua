@@ -1,12 +1,12 @@
 function addbullet(x, y, velx, vely, evil, sprite)
-    local bullet = {}
-
-    bullet.sprite = sprite
-    bullet.evil = evil
-    bullet.x = x
-    bullet.y = y
-    bullet.velx = velx
-    bullet.vely = vely
+    local bullet = {
+        sprite = sprite or 2,
+        evil = evil,
+        x = x,
+        y = y,
+        velx = velx,
+        vely = vely,
+    }
 
     function bullet.draw(bullet)
         spr(bullet.sprite, bullet.x, bullet.y)
@@ -48,14 +48,14 @@ function addbullet(x, y, velx, vely, evil, sprite)
 end
 
 function addlaser(x, y, r)
-    local laser = {}
-
-    --lasers!!!!!!!!!!!!!!!
-    laser.x = x
-    laser.y = y
-    laser.r = r
-    laser.timer = 0
-    laser.playingsound = false
+    local laser = {
+        --lasers!!!!!!!!!!!!!!!
+        x = x,
+        y = y,
+        r = r,
+        timer = 0,
+        playingsound = false
+    }
 
     function laser.draw(laser)
         if laser.timer > 1.5 then

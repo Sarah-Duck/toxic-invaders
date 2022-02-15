@@ -2,21 +2,22 @@ alwaysfire = false
 players = {}
 
 function addplayer(x, y, sprite, bulletsprite)
-    local player = {}
-    player.health = 3
-    player.x = x
-    player.y = y
-    player.w = 8
-    player.h = 8
-    player.sprite = sprite
-    player.bulletsprite = bulletsprite
-    player.ymov = 0
-    player.inv = 2
-    player.id = #players
-    player.shootcooldown = 0.0
-    player.particlecooldown = 0.0
-    player.shootspeed = 0.25
-    player.shoot3 = false
+    local player = {
+        health = 3,
+        x = x,
+        y = y,
+        w = 8,
+        h = 8,
+        sprite = sprite,
+        bulletsprite = bulletsprite,
+        ymov = 0,
+        inv = 2,
+        id = #players,
+        shootcooldown = 0.0,
+        particlecooldown = 0.0,
+        shootspeed = 0.25,
+        shoot3 = false
+    }
 
     function player.draw(player)
         -- print(player.health)
@@ -138,7 +139,7 @@ end
 function isgameover()
     for i = 1, #players, 1 do
         if players[i].health > 0 then
-            return false
+            return
         end
     end
     return true

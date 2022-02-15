@@ -13,7 +13,7 @@ wave[1] = {
     everysecond = function()
     end,
     conditions = function()
-        if #enemies < 1 then return true else return false
+        if #enemies < 1 then return true
         end
     end
 }
@@ -22,13 +22,13 @@ wave[2] = {
     delay = 2,
     start = function()
         addbasicenemy(128, 30, 0.4)
-        addtargetingenemy(128, 60, 3, 0.1)
+        addtargetingenemy(128, 60, 0.1)
         addbasicenemy(128, 90, 0.4)
     end,
     everysecond = function()
     end,
     conditions = function()
-        if #enemies < 2 then return true else return false
+        if #enemies < 2 then return true
         end
     end
 }
@@ -44,7 +44,7 @@ wave[3] = {
     everysecond = function()
     end,
     conditions = function()
-        if #enemies < 5 then return true else return false
+        if #enemies < 5 then return true
         end
     end
 }
@@ -54,13 +54,13 @@ wave[4] = {
     start = function()
         addwallshooter(140, true, 10, 0.4)
         addbasicenemy(128, 30, 0.5)
-        addtargetingenemy(155, 60, 3, 0.15)
+        addtargetingenemy(155, 60, 0.15)
         addbasicenemy(128, 90, 0.5)
     end,
     everysecond = function()
     end,
     conditions = function()
-        if #enemies < 2 then return true else return false
+        if #enemies < 2 then return true
         end
     end
 }
@@ -81,7 +81,7 @@ wave[5] = {
         end
     end,
     conditions = function()
-        if #enemies < 2 and currentwavetime > 12 then return true else return false
+        if #enemies < 2 and currentwavetime > 12 then return true
         end
     end
 }
@@ -89,14 +89,14 @@ wave[5] = {
 wave[6] = {
     delay = 0,
     start = function()
-        addballshooter(128, 56, 12, 0.1)
-        addballshooter(160, 14, 12, 0.1)
-        addballshooter(160, 100, 12, 0.1)
+        addballshooter(128, 56, 0.1)
+        addballshooter(160, 14, 0.1)
+        addballshooter(160, 100, 0.1)
     end,
     everysecond = function()
     end,
     conditions = function()
-        if #enemies < 1 then return true else return false
+        if #enemies < 1 then return true
         end
     end
 }
@@ -104,7 +104,7 @@ wave[6] = {
 wave[7] = {
     delay = 1,
     start = function()
-        addballshooter(140, 56, 12, 0.2)
+        addballshooter(140, 56, 0.2)
         addwallshooter(120, true, 10, 0.3)
         addwallshooter(220, true, 10, 0.3)
         addbasicenemy(128, 30, 0.5)
@@ -115,7 +115,7 @@ wave[7] = {
     everysecond = function()
     end,
     conditions = function()
-        if #enemies < 1 then return true else return false
+        if #enemies < 1 then return true
         end
     end
 }
@@ -137,7 +137,7 @@ wave[8] = {
         end
     end,
     conditions = function()
-        if #enemies < 1 then checkpoint = currentwave+1 return true else return false
+        if #enemies < 1 then checkpoint = currentwave+1 return true
         end
     end
 }
@@ -145,18 +145,18 @@ wave[8] = {
 wave[9] = {
     delay = 5,
     start = function()
-        addtargetingenemy(128,1,3,0.1)
-        addtargetingenemy(262,60,3,0.2)
+        addtargetingenemy(128,1,0.1)
+        addtargetingenemy(262,60,0.2)
         addwallshooter(138, true, 10, 0.4, 0)
         addwallshooter(144, true, 10, 0.4, 0)
         addwallshooter(185, false, 10, 0.4, 0)
         addwallshooter(230, true, 10, 0.4)
-        addballshooter(230, 56, 12, 0.2)
+        addballshooter(230, 56, 0.2)
     end,
     everysecond = function()
     end,
     conditions = function()
-        if #enemies < 2 then return true else return false
+        if #enemies < 2 then return true
         end
     end
 }
@@ -165,13 +165,13 @@ wave[10] = {
     delay = 3,
     start = function()
         for i = 1, 7, 1 do
-            addtargetingenemy(128, i*16-4, 3, 0.1)
+            addtargetingenemy(128, i*16-4, 0.1)
         end
     end,
     everysecond = function()
     end,
     conditions = function()
-        if #enemies < 2 then return true else return false
+        if #enemies < 2 then return true
         end
     end
 }
@@ -183,12 +183,12 @@ wave[11] = {
             addwallshooter(128+i*65, true, 10, 0.4, 0, 0.68)
             addwallshooter(133+i*65, false, 10, 0.4, 0, 0.68)
         end
-        addballshooter(200, 56, 12, 0.2)
+        addballshooter(200, 56, 0.2)
     end,
     everysecond = function()
     end,
     conditions = function()
-        if #enemies < 1 then return true else return false
+        if #enemies < 1 then return true
         end
     end
 }
@@ -198,10 +198,52 @@ wave[12] = {
     start = function()
         addwallboss(128,4,15,0.05,true)
     end,
+    everysecond = wave[8].everysecond,
+    conditions = wave[8].conditions
+}
+
+wave[13] = {
+    delay = 5,
+    start = function()
+        addbasicenemy(130, 58, 0.6)
+        addbasicenemy(130, 68, 0.5)
+        addbasicenemy(130, 63, 0.7)
+        addlasershooter(128, -2, 0.1, false)
+        addbomb(128,46, 0)
+        addlasershooter(128, 128-38, 0.1, false)
+    end,
+    everysecond = wave[8].everysecond,
+    conditions = function()
+        if #enemies < 1 then return true
+        end
+    end
+}
+
+wave[14] = {
+    delay = 0,
+    start = function()
+        addbomb(140,46, 4)
+        addtargetingenemy(140, 60-8, 0.2)
+        addtargetingenemy(140, 60+8, 0.2)
+        addballshooter(128, 14, 0.03)
+        addballshooter(128, 100, 0.03)
+    end,
     everysecond = function()
     end,
     conditions = function()
-        if #enemies < 1 then return true else return false
+        if #enemies < 1 then return true
+        end
+    end
+}
+
+wave[15] = {
+    delay = 0,
+    start = function()
+        addmissileboss(128, 60)
+    end,
+    everysecond = wave[8].everysecond,
+    conditions = function()
+        if #enemies < 1 then return true
         end
     end
 }

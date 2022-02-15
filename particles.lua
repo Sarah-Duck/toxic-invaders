@@ -1,15 +1,16 @@
 shake = 0
 function addcircle(x, y, velx, vely, r, time, color, grav)
-    local circle = {}
-    circle.x = x
-    circle.y = y
-    circle.velx = velx
-    circle.vely = vely
-    circle.r = r
-    circle.time = time
-    circle.t = time
-    circle.col = color
-    circle.grav = grav
+    local circle = {
+        x = x,
+        y = y,
+        velx = velx,
+        vely = vely,
+        r = r,
+        time = time,
+        t = time,
+        col = color,
+        grav = grav
+    }
 
     function circle.draw(circle)
         circfill(circle.x, circle.y, circle.r*sin(circle.time/circle.t), circle.col)

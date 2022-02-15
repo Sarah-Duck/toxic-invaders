@@ -2,13 +2,12 @@ enemies = {}
 
 --universal functions:
 function enemyshot(enemy)
-    --explode
-    explosion(enemy.x+rnd(enemy.w), enemy.y+rnd(enemy.h))
     enemy.inv = 0.5
-    --and reduce health
+    --reduce health
     enemy.health -= 1
     if enemy.health > 0 then
-        sfx(16, 2) 
+        sfx(16, 2)
+        explosion(enemy.x+rnd(enemy.w), enemy.y+rnd(enemy.h)) --explode!!!!!!
     end
 end
 
@@ -31,6 +30,7 @@ function enemydie(enemy, sound)
         shake = enemy.h/2
     end
     sfx(sound, 2)
+    explosion(enemy.x, enemy.y, enemy.w, enemy.h)
     del(enemies, enemy)
 end
 
@@ -55,7 +55,9 @@ function addbasicenemy(x, y, speed) --basic small weak enemy
         sprite = rnd({14, 30, 46, 62}), --these are all possible 8x8 basic enemy sprites
         health = 1,
         shootcooldown = rnd(2)+1,
-        speed = speed
+        speed = speed,
+        shot = enemyshot,
+        collide = enemycollide
     }
 
     function enemy.draw(enemy)
@@ -67,10 +69,6 @@ function addbasicenemy(x, y, speed) --basic small weak enemy
             spr(sprite, enemy.x, enemy.y)
         end
     end
-
-    enemy.shot = enemyshot
-
-    enemy.collide = enemycollide
 
     function enemy.update()
         enemy.x -= speed
@@ -107,6 +105,8 @@ function addwallshooter(x, shootup, health, speed, offset, bulletspeed)
         speed = speed,
         shoottoggle = true,
         bulletspeed = bulletspeed or 1,
+        shot = enemyshot,
+        collide = enemycollide
     }
     if shootup then
         enemy.y = 1
@@ -118,10 +118,6 @@ function addwallshooter(x, shootup, health, speed, offset, bulletspeed)
             spr(enemy.sprite+t()*10%2, enemy.x, enemy.y)
         end
     end
-
-    enemy.shot = enemyshot
-
-    enemy.collide = enemycollide
 
     function enemy.update()
         enemy.x -= speed
@@ -152,7 +148,7 @@ end
 
 --Big ol fella that shoots CIRCLES of BULLETS!!!!!!
 
-function addballshooter(x, y, health, speed)
+function addballshooter(x, y, speed)
     local enemy = {
         x = x,
         y = y,
@@ -160,29 +156,27 @@ function addballshooter(x, y, health, speed)
         w = 8*3,
         h = 8*2,
         inv = -1,
-        health = health,
+        health = 12,
         shootcooldown = 0,
-        speed = speed
+        speed = speed,
+        shot = enemyshot,
+        collide = enemycollide
     }
 
     function enemy.draw(enemy)
         if enemy.inv < 0 or ceil(enemy.inv*10%2) == 1 then
-            local sprite = 27
-            if health < 7 then sprite = 11 end
+            local sprite = 11
+            if enemy.health < 7 then sprite = 27 end
             spr(sprite, enemy.x, enemy.y, 3, 1, false, true)
             spr(sprite, enemy.x, enemy.y+8, 3, 1)
         end
     end
 
-    enemy.shot = enemyshot
-
-    enemy.collide = enemycollide
-
     function enemy.update()
         enemy.x -= speed
         if enemy.shootcooldown < 0 then
             enemy.shootcooldown = 2
-            if enemy.x < 129 then
+            if enemy.x < 128 then
                 for i = 1, 48, 1 do --shoot ring of bullets if on screen
                     if sin(i/48) < 0.3 and sin((i+currentwavetime)/8) < 0.4 then
                         addbullet(enemy.x+4, enemy.y+4, sin(i/48)/2, cos(i/48)/2, true, 2)
@@ -203,17 +197,19 @@ function addballshooter(x, y, health, speed)
     add(enemies, enemy)
 end
 
-function addtargetingenemy(x, y, health, speed)
+function addtargetingenemy(x, y, speed)
     local enemy = {
         x = x,
         y = y,
         w = 16,
         h = 8,
         inv = -1,
-        health = health,
+        health = 3,
         shootcooldown = rnd(0.4)+0.2,
         speed = speed,
-        bulletcounter = 0
+        bulletcounter = 0,
+        shot = enemyshot,
+        collide = enemycollide
     }
 
     function enemy.draw(enemy)
@@ -221,10 +217,6 @@ function addtargetingenemy(x, y, health, speed)
             spr(58, enemy.x, enemy.y, 2, 1)
         end
     end
-
-    enemy.shot = enemyshot
-
-    enemy.collide = enemycollide
 
     function enemy.update()
         enemy.x -= speed
@@ -263,7 +255,9 @@ function addlasershooter(x, y, speed, stay)
         firedlaser = false,
         shootcooldown = 0,
         moveoffset = 0,
-        sinspeed = 4
+        sinspeed = 4,
+        shot = enemyshot,
+        collide = enemycollide
     }
     if stay then enemy.y = 64-20 end
 
@@ -275,10 +269,6 @@ function addlasershooter(x, y, speed, stay)
             spr(sprite,enemy.x+0,enemy.y+20,4,2,false,true)
         end
     end
-
-    enemy.shot = enemyshot
-
-    enemy.collide = enemycollide
 
     function enemy.update()
         if enemy.x > 90 or (not stay and enemy.lasertimer > 4) then --enemy lerps into place when first added, and if they leave they speed up
@@ -347,6 +337,8 @@ function addwallboss(x, y, length, speed, stay, move)
         shootcooldown = 3,
         speed = speed,
         bulletfired = {},
+        shot = enemyshot,
+        collide = enemycollide
     }
 
     for i = 1, length, 1 do
@@ -355,7 +347,7 @@ function addwallboss(x, y, length, speed, stay, move)
 
     function enemy.draw(enemy)
         local dmg = 0
-        if enemy.health < length * 4 * #players then
+        if enemy.health < length * 4 then
             dmg = 16
         end
         if enemy.inv < 0 or ceil(enemy.inv*10%2) == 1 then
@@ -372,10 +364,6 @@ function addwallboss(x, y, length, speed, stay, move)
             spr(79+dmg,enemy.x+8,enemy.y+length*8-24,1,1)
         end
     end
-
-    enemy.shot = enemyshot
-
-    enemy.collide = enemycollide
 
     function enemy.update()
         if not enemy.stay then
@@ -397,24 +385,26 @@ function addwallboss(x, y, length, speed, stay, move)
                                 return true
                             end
                         end
-                    elseif move == 2 and i == ceil(rnd(length*1.3)) then -- this one is just random ones
+                    elseif move == 2 and i == ceil(rnd(length)) then -- this one is just random ones
                         return true
                     elseif move == 3 then --this one is that neat weaving pattern, shout out to don't get a virus fans!
                         if i > length/3 and i < length/3*2 then
-                            if currentwavetime%1.5 < 0.15 then
+                            if everysecondtimer < 0.1 then
                                 return true
                             end
-                        elseif currentwavetime%1.5 > 0.7 and currentwavetime%1.5 < 0.85 then
+                        elseif everysecondtimer > 0.5 and everysecondtimer < 0.6 then
                             return true
                         end
-                    elseif move == 5 and (i < length/3+sin(t()/3)*3 or i > length/3*2+sin(t()/3)*3 or ceil(rnd(length*7)) == i) then -- this one is a wavy bullet corridor
+                    elseif move == 4 and (i < length/3+sin(t()/2)*3 or i > length/3*2+sin(t()/2)*3) then -- this one is a wavy bullet corridor
                         return true
                     end
                 end
 
                 for i = 1, length, 1 do
                     if attack(i, enemy.move) then
-                        addbullet(enemy.x, -4+i*8, -1, 0, true, 2)
+                        local bulletspeed = -1-rnd(0.2)
+                        if enemy.move > 2 then bulletspeed = -1 end
+                        addbullet(enemy.x, enemy.y-8+i*8, bulletspeed, 0, true, 2)
                         enemy.bulletfired[i] = 1
                     else
                         enemy.bulletfired[i] = 0
@@ -425,6 +415,160 @@ function addwallboss(x, y, length, speed, stay, move)
         enemymisc(enemy)
         if enemy.health <= 0 then -- die!!!!!
             enemydie(enemy,17)
+            addpickup(enemy.x+rnd(32), enemy.y+rnd(32), "health")
+            addpickup(enemy.x+rnd(32), enemy.y+rnd(32))
+            addpickup(enemy.x+rnd(32), enemy.y+rnd(32))
+        end
+    end
+
+    add(enemies, enemy)
+end
+
+function addbomb(x, y, delay) --BIG BOMB!!!! KILL IIT QUICKLY!!!!
+    local enemy = {
+        x = x,
+        y = y,
+        w = 32,
+        h = 32,
+        inv = -1,
+        health = 12,
+        shootcooldown = 0+delay,
+        shot = enemyshot,
+        collide = enemycollide
+    }
+
+    function enemy.draw(enemy)
+        local sprite = 73
+        if everysecondtimer > 0.5 then sprite = 75 end
+        if enemy.health < 6 then sprite += 32 end
+        if enemy.inv < 0 or ceil(enemy.inv*10%2) == 1 then
+            circfill(enemy.x+16, enemy.y+16, sin(enemy.shootcooldown^2)*3-enemy.shootcooldown, 7)
+            local offset = mid(0, -enemy.shootcooldown-2, 3)
+            spr(sprite, enemy.x, enemy.y-offset, 2, 2)
+            spr(sprite, enemy.x, enemy.y+16+offset, 2, 2, false, true)
+            spr(sprite, enemy.x+16, enemy.y-offset, 2, 2, true)
+            spr(sprite, enemy.x+16, enemy.y+16+offset, 2, 2, true, true)
+        end
+    end
+
+    function enemy.update()
+        if enemy.shootcooldown < 0 then
+            enemy.x = enemy.x + 0.02 * (80 - enemy.x);
+        end
+        enemy.y += sin(time()/3)/8
+        if enemy.shootcooldown < -8 then
+            for i = 1, 60, 1 do
+                addbullet(enemy.x+16, enemy.y+16, sin(i/60), cos(i/60), true, 2)
+                enemy.health = 0
+            end
+        end
+        enemymisc(enemy)
+        if enemy.health <= 0 then -- die!!!!!
+            enemydie(enemy,17)
+        end
+    end
+
+    add(enemies, enemy)
+end
+
+function addmissile(x, y, target) --basic small weak enemy
+    local enemy = {
+        target = target,
+        x = x,
+        y = y,
+        w = 16,
+        h = 8,
+        inv = -1,
+        health = 3,
+        speed = 0.3,
+        shootcooldown = 0,
+        shot = enemyshot,
+        collide = enemycollide
+    }
+
+    function enemy.draw(enemy)
+        if enemy.inv < 0 or ceil(enemy.inv*10%2) == 1 then
+            spr(42, enemy.x, enemy.y, 2, 1)
+        end
+    end
+
+    function enemy.update()
+        enemy.x -= enemy.speed
+        enemy.speed += 0.015
+        enemy.y += (players[enemy.target].y - enemy.y)/30
+        addcircle(enemy.x+12, enemy.y+rnd(8), 0, rnd()/8, 2.1, 0.6, rnd({9,5}), 0)
+        enemymisc(enemy)
+        if enemy.health <= 0 then -- die!!!!!
+            enemydie(enemy,17)
+        end
+    end
+
+    add(enemies, enemy, 1)
+end
+
+function addmissileboss(x, y) --boss that shoots missiles!!!
+    local enemy = {
+        x = x,
+        y = y,
+        targetx = 90,
+        targety = 48,
+        targetchangetimer = 2,
+        w = 32,
+        h = 32,
+        inv = -1,
+        health = 40*#players,
+        shootcooldown = 1.8,
+        speed = 0.04,
+        shot = enemyshot,
+        collide = enemycollide
+    }
+
+    function enemy.draw(enemy)
+        local sprite = 68
+        if enemy.health < 15 then sprite = 100 end
+        if enemy.inv < 0 or ceil(enemy.inv*10%2) == 1 then
+            spr(sprite, enemy.x, enemy.y, 4, 2)
+            spr(sprite, enemy.x, enemy.y+16, 4, 2, false, true)
+        end
+    end
+
+    function enemy.update()
+        local playertarget = ceil((t()/2.4)%#players)
+        enemy.targetchangetimer -= 1/60
+        --some cool different moves, shout out to dont get a virus fans!
+        if currentwavetime%18 > 8 and currentwavetime%20 < 12 then
+            enemy.targety = flr(everysecondtimer*1.99)*96
+        elseif currentwavetime%18 > 17.3 then --INTIMIDATION TACTICS!!!!!
+            enemy.targety = players[playertarget].y
+            enemy.targetx = players[playertarget].x+24
+            enemy.shootcooldown = 0.4
+        end
+        enemy.x = enemy.x + enemy.speed * (enemy.targetx - enemy.x);
+        enemy.y = enemy.y + enemy.speed * (enemy.targety - enemy.y);
+        if enemy.targetchangetimer < 0 then
+            enemy.targetchangetimer = rnd(0.3)+0.5
+            enemy.targetx = 80+rnd(16)
+            enemy.targety = rnd(96)
+        end
+        if enemy.shootcooldown < 0 then
+            enemy.shootcooldown = 0.3 + rnd(1.2)
+            if enemy.x < 129 then
+                local offset = 2
+                if currentwavetime%2 > 1 then offset = 30 end
+                addmissile(enemy.x, enemy.y+offset, playertarget)
+                if enemy.health < 12 then
+                    addbullet(enemy.x,enemy.y+16,(players[playertarget].x-enemy.x)/70,(players[playertarget].y-enemy.y-16)/70,true)
+                end
+                enemy.speed += 0.001
+                sfx(15, 2) -- play shoot sound if on screen
+            end
+        end
+        enemymisc(enemy)
+        if enemy.health <= 0 then -- die!!!!!
+            enemydie(enemy,17)
+            addpickup(enemy.x+rnd(32), enemy.y+rnd(32), "health")
+            addpickup(enemy.x+rnd(32), enemy.y+rnd(32))
+            addpickup(enemy.x+rnd(32), enemy.y+rnd(32))
         end
     end
 
