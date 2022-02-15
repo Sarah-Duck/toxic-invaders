@@ -361,7 +361,7 @@ function addwallboss(x, y, length, speed, stay, move)
             spr(77+enemy.bulletfired[1]+dmg*2, enemy.x, enemy.y+length*8-8, 1, 1, false, true)
             spr(70+dmg,enemy.x+8,enemy.y,2,2)
             spr(70+dmg*2,enemy.x+8,enemy.y+length*8-16,2,2,false,true)
-            spr(79+dmg,enemy.x+8,enemy.y+length*8-24,1,1)
+            spr(79+dmg,enemy.x+8,enemy.y+length*8-24,1,1, false, true)
         end
     end
 
