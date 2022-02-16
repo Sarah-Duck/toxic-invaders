@@ -185,7 +185,7 @@ wave[13] = {
         addbasicenemy(130, 63, 0.7)
         addlasershooter(128, -2, 0.1, false)
         addbomb(128,46, 0)
-        addlasershooter(128, 128-38, 0.1, false)
+        addlasershooter(128, 90, 0.1, false)
     end,
     everysecond = wave[8].everysecond,
 }
@@ -194,8 +194,8 @@ wave[14] = {
     delay = 0,
     start = function()
         addbomb(140,46, 4)
-        addtargetingenemy(140, 60-8, 0.2)
-        addtargetingenemy(140, 60+8, 0.2)
+        addtargetingenemy(140, 52, 0.2)
+        addtargetingenemy(140, 68, 0.2)
         addballshooter(128, 14, 0.03)
         addballshooter(128, 100, 0.03)
     end,
@@ -235,8 +235,8 @@ wave[16] = {
 --music(0, 0, 3)
 
 function updatewaves()
-    currentwavetime += 1/60
-    everysecondtimer += 1/60
+    currentwavetime += ft
+    everysecondtimer += ft
     if everysecondtimer >= 1 then
         everysecondtimer = 0
         if wave[currentwave].everysecond then
@@ -244,7 +244,7 @@ function updatewaves()
         end
     end
     if (wave[currentwave].conditions and wave[currentwave].conditions() or #enemies < 1) then
-        delaytimer += 1/60
+        delaytimer += ft
         if delaytimer > wave[min(currentwave+1, #wave)].delay then
             if changedmusic and currentwave ~= 15 then
                 music(0, 0, 3)

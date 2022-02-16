@@ -12,19 +12,23 @@ function invaderslogotext(x,y)
     -- y = 20
 
     --font
-    local text = "i n v a d e r s"
-    print(text, x, y-1, 3)
-    print(text, x+1, y, 3)
-    print(text, x-1, y, 3)
-    print(text, x-1, y+1, 3)
-    print(text, x+1, y+1, 3)
-    print(text, x-1, y-1, 3)
-    print(text, x+1, y-1, 3)
-    print(text, x+1, y+1, 3)
-    print(text, x-1, y+2, 3)
-    print(text, x+1, y+2, 3)
-    print(text, x, y+2, 3)
-    printdropshadow(text,x,y,14,3)
+    local text = "I N V A D E R S"
+    for i = 1, 12, 1 do
+        print(text, x+i%3-1, y+i%4-1, 3)
+    end
+    -- color(3)
+    -- print(text, x, y-1) --ew
+    -- print(text, x+1, y)
+    -- print(text, x-1, y)
+    -- print(text, x-1, y+1)
+    -- print(text, x+1, y+1)
+    -- print(text, x-1, y-1)
+    -- print(text, x+1, y-1)
+    -- print(text, x+1, y+1)
+    -- print(text, x-1, y+2)
+    -- print(text, x+1, y+2)
+    -- print(text, x, y+2)
+    print(text,x,y,14)
     clip(x, y, 63, 3)
     print(text,x,y,11)
     clip()
@@ -48,7 +52,7 @@ function drawlogo(x,y)
     sspr(40,24,8,8,x+26,y+7,16,16,true)
     sspr(40,24,8,8,x+42,y+7,16,16)
     --invaders
-    invaderslogotext(x+12,y+20)
+    invaderslogotext(x+11,y+20)
 end
 
 function mainmenutext(x,y)
@@ -103,12 +107,11 @@ function credits(x,y)
     palt(0,false)
     spr(48,x-4,y+6+sin(t())*2,1,1,(t()%2<1)) --duck
     spr(49,x+104,y+6+cos(t())*2,1,1,(t()%2<1)) --bot
-    palt(2,false)
-    palt(0,true)
+    palt()
     printdropshadow("1029chris",x+10,y+5,9,2)
     printdropshadow("ribboncable",x+56,y+5,12,15)
-    printdropshadow("code tunes",x+8,y+12,11,3)
-    printdropshadow("art sounds",x+58,y+12,11,3)
+    printdropshadow("CODE TUNES",x+8,y+12,11,3)
+    printdropshadow("ART SOUNDS",x+58,y+12,11,3)
 
     -- print("made in vancouver - 2022", x+6,y+22,0)
     -- print("made in vancouver - 2022", x+6,y+21,4)

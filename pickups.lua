@@ -1,7 +1,7 @@
 local randompickups = {}
 pickuptimer = 10
 function randompickups.update()
-    pickuptimer -= 1/60
+    pickuptimer -= ft
     if pickuptimer < 0 then
         pickuptimer = 10
         if rnd(100) > 85 then

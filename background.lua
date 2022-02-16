@@ -90,16 +90,20 @@ function drawbg()
     end
 
     --pine trees
-    scrollingsprite(231,10,94,1,2,72,true)
-    scrollingsprite(231,30,94,1,2,72)
-    scrollingsprite(231,20,93,1,2,72,true)
-    scrollingsprite(231,50,95,1,2,72,true)
-    scrollingsprite(231,62,93,1,2,72,true)
-    scrollingsprite(231,70,94,1,2,72)
-    scrollingsprite(231,80,95,1,2,72)
-    scrollingsprite(231,95,94,1,2,72)
-    scrollingsprite(231,100,93,1,2,72)
-    scrollingsprite(231,120,95,1,2,72,true)
+    local treex = {10,30,20,50,62,70,80,95,100,120}
+    for i = 1, 10, 1 do
+        scrollingsprite(231,treex[i],94+sin(i/5.2323),1,2,72,(i%2==0))
+    end
+    -- scrollingsprite(231,10,94,1,2,72,true)
+    -- scrollingsprite(231,30,94,1,2,72)
+    -- scrollingsprite(231,20,93,1,2,72,true)
+    -- scrollingsprite(231,50,95,1,2,72,true)
+    -- scrollingsprite(231,62,93,1,2,72,true)
+    -- scrollingsprite(231,70,94,1,2,72)
+    -- scrollingsprite(231,80,95,1,2,72)
+    -- scrollingsprite(231,95,94,1,2,72)
+    -- scrollingsprite(231,100,93,1,2,72)
+    -- scrollingsprite(231,120,95,1,2,72,true)
     --small buildings
     scrollingsprite(226,15,98,2,2,80)
     scrollingsprite(226,65,97,2,2,80)

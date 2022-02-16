@@ -32,7 +32,7 @@ if not gamerunning or menuscroll < 1 then
 
     menuscroll += scrollspeed
 
-    if not gamerunning then menushipscroll += 1/60 end
+    if not gamerunning then menushipscroll += ft end
 
     for i = 1, 3, 1 do
         spr(14+i*16, (-menushipscroll*(i*20)+(sin(i/3)*128)+8)%(128+8)-1*8-menuscroll*240, i*36+sin(menushipscroll*i/3)*i*2-20-menuscroll*50,1,1)

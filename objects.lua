@@ -1,5 +1,6 @@
 obj = {}
 gt = 0 -- game time
+ft = 1/60 --frametime
 scrollspeed = 0
 respawntimer = 0
 gameover = false

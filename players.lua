@@ -95,7 +95,7 @@ function addplayer(x, y, sprite, bulletsprite)
         player.y = mid(0, player.y, 120)
 
         --particles from rockets, and smoke/sparks from damage
-        player.particlecooldown -= 1/60
+        player.particlecooldown -= ft
         if player.particlecooldown < 0 and player.health > 0 then
             addcircle(player.x-1, player.y, -0.5, 0, 1.5, 0.5, 9)
             addcircle(player.x-1, player.y+7, -0.5, 0, 1.5, 0.5, 9)
@@ -109,8 +109,8 @@ function addplayer(x, y, sprite, bulletsprite)
         end
 
         --shooting after cooldown
-        player.shootcooldown -= 1/60
-        player.inv -= 1/60
+        player.shootcooldown -= ft
+        player.inv -= ft
         if (btn(4, player.id) or alwaysfire) and player.shootcooldown < 0 and player.health > 0 then
             --for i = 1, 4, 1 do
                 --addcircle(player.x+3, player.y+4, rnd(1)+0.5, rnd(1)-0.5, 1.5, rnd(0.4), 12) 

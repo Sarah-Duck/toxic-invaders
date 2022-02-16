@@ -1,7 +1,7 @@
 --scrolling and respawn stuff
-respawntimer -= 1/60
+respawntimer -= ft
 if gameover then
-    scrollspeed = mid(-1/10,scrollspeed-1/3000,1/60)
+    scrollspeed = mid(-1/10,scrollspeed-1/3000,ft)
     if respawntimer < 0 then
         gameover = false
         foreach(players, function(obj) obj:respawn() end)
@@ -10,7 +10,7 @@ if gameover then
     end
 elseif gamerunning then
     updatewaves() -- update the wave function
-    scrollspeed = mid(0,scrollspeed+1/2000,1/60)
+    scrollspeed = mid(0,scrollspeed+1/2000,ft)
 end
 gt += scrollspeed + 1/600
 
@@ -31,11 +31,7 @@ end
 
 --screenshake math
 shake = shake + 0.11 * (0 - shake);
-if shake < 1 then
-    shake = 0
-end
-
-if not doshake then
+if shake < 1 or not doshake then
     shake = 0
 end
 --add another player if they fire

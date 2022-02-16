@@ -40,8 +40,8 @@ function enemydie(enemy, sound, soundchannel)
 end
 
 function enemymisc(enemy) --misc stuff every enemy needs
-    enemy.shootcooldown -= 1/60
-    enemy.inv -= 1/60
+    enemy.shootcooldown -= ft
+    enemy.inv -= ft
     for i = 1, #players, 1 do
         enemy.collide(enemy, players[i])
     end
@@ -319,7 +319,7 @@ function addlasershooter(x, y, speed, stay)
                 end
             end
             enemy.firedlaser = true
-            enemy.lasertimer += 1/60
+            enemy.lasertimer += ft
             if enemy.lasertimer > 8 and stay then
                 enemy.firedlaser = false
                 enemy.lasertimer = 0
@@ -537,7 +537,7 @@ function addmissileboss(x, y) --boss that shoots missiles!!!
 
     function enemy.update(enemy)
         local playertarget = ceil((t()/2.4)%#players)
-        enemy.targetchangetimer -= 1/60
+        enemy.targetchangetimer -= ft
         --some cool different moves, shout out to dont get a virus fans!
         if currentwavetime%18 > 8 and currentwavetime%20 < 12 then
             enemy.targety = flr(everysecondtimer*1.99)*96

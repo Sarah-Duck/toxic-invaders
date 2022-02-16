@@ -20,7 +20,7 @@ function addcircle(x, y, velx, vely, r, time, color, grav)
         circle.x += circle.velx
         circle.vely -= circle.grav
         circle.y += circle.vely
-        circle.time -= 1/60
+        circle.time -= ft
         if circle.time < 0 then
             del(obj, circle)
         end

@@ -85,7 +85,7 @@ function addlaser(x, y, r)
     end
 
     function laser.update(laser)
-        timer += 1/60
+        timer += ft
         --collision detection after the warm up
         if timer > 1.5 and timer < 3.6 then
             if not playingsound then
