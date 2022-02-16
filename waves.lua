@@ -4,6 +4,7 @@ currentwavetime = 0
 delaytimer = 0
 everysecondtimer = 0
 checkpoint = 1
+changedmusic = false
 
 wave[1] = {
     delay = 2,
@@ -121,8 +122,10 @@ wave[7] = {
 }
 
 wave[8] = {
-    delay = 3,
+    delay = 1,
     start = function()
+        music(9, 0, 3)
+        changedmusic = true
         addbasicenemy(240, 58, 1.1)
         addbasicenemy(240, 68, 0.9)
         addbasicenemy(240, 63, 1)
@@ -181,7 +184,7 @@ wave[11] = {
     start = function()
         for i = 1, 3, 1 do
             addwallshooter(128+i*65, true, 10, 0.4, 0, 0.68)
-            addwallshooter(133+i*65, false, 10, 0.4, 0, 0.68)
+            addwallshooter(128+i*65, false, 10, 0.4, 0, 0.68)
         end
         addballshooter(200, 56, 0.2)
     end,
@@ -196,6 +199,8 @@ wave[11] = {
 wave[12] = {
     delay = 1,
     start = function()
+        music(9, 0, 3)
+        changedmusic = true
         addwallboss(128,4,15,0.05,true)
     end,
     everysecond = wave[8].everysecond,
@@ -238,8 +243,30 @@ wave[14] = {
 
 wave[15] = {
     delay = 0,
+    start = wave[5].start,
+    everysecond = function()
+        if currentwavetime%5 > 4 and currentwavetime < 20 then
+            addbomb(128,20+currentwavetime*2,0)
+        end
+        if currentwavetime > 18 and not changedmusic then
+            music(8, 0, 3)
+            changedmusic = true
+        end
+        addbasicenemy(128,rnd(100)+14,0.4+rnd(0.4))
+    end,
+    conditions = function()
+        if currentwavetime > 24 then return true
+        end
+    end
+}
+
+wave[16] = {
+    delay = 0,
     start = function()
-        addmissileboss(128, 60)
+        for i = 1, #enemies, 1 do
+            enemies[i].health = 0
+        end
+        addmissileboss(128, 0)
     end,
     everysecond = wave[8].everysecond,
     conditions = function()
@@ -261,6 +288,10 @@ function updatewaves()
     if wave[currentwave].conditions() then
         delaytimer += 1/60
         if delaytimer > wave[min(currentwave+1, #wave)].delay then
+            if changedmusic and currentwave ~= 15 then
+                music(0, 0, 3)
+                changedmusic = false
+            end
             everysecondtimer = 0
             currentwave += 1
             currentwavetime = 0
@@ -280,4 +311,7 @@ function setwave(num)
     currentwavetime = 0
     delaytimer = 0
     wave[currentwave].start()
+    if changedmusic then
+        music(0, 0, 3)
+    end
 end
