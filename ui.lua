@@ -74,10 +74,23 @@ function titlehighscores(highscore0,highscore1,x,y)
     printdropshadow(highscore1,x+20,y,9,2) --2P high score
 end
 
-function currentscore(currentscore0,currentscore1,x,y)
-    printdropshadow(currentscore0,x+2,y+2,12,15) --1P current score
+function currentscore(currentscore0,currentscore1,isflashing0,isflashing1) 
     if #players != 1 then
-        printdropshadow(currentscore1,x+2,y+117,9,2) --2P current score
+        if isflashing1 then
+            if ceil(t()*10%2) == 1 then
+                printdropshadow(currentscore1,2,121,9,4) --2P current score
+            end
+        else
+            printdropshadow(currentscore1,2,121,9,4) --2P current score
+        end
+    end
+
+    if isflashing0 then
+        if ceil(t()*10%2) == 1 then
+            printdropshadow(currentscore0,2,2,12,15) --1P current score
+        end
+    else
+        printdropshadow(currentscore0,2,2,12,15) --1P current score
     end
 end
 
@@ -95,14 +108,14 @@ function credits(x,y)
     printdropshadow("1029chris",x+10,y+5,9,2)
     printdropshadow("ribboncable",x+56,y+5,12,15)
     printdropshadow("code tunes",x+8,y+12,11,3)
-    printdropshadow("sprites sfx",x+56,y+12,11,3)
+    printdropshadow("art sounds",x+58,y+12,11,3)
 
     -- print("made in vancouver - 2022", x+6,y+22,0)
     -- print("made in vancouver - 2022", x+6,y+21,4)
 end
 
 --sfx for the intro transition
-sfx(13,3)
+sfx(0,3)
 
 --this creates menu items that allow players to turn off screenshake, or always fire the ships gun.
 doshake = true

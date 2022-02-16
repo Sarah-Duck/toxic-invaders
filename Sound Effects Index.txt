@@ -1,26 +1,26 @@
 CHANNELS
 --------
 0 Melody Track
-1 Bass Track / Player / Pickup
+1 Bass Track / Player / Pickup / Bomb Charge
 2 Short SFX - Bullets / Basic Enemy Hits/Kills
 3 Long SFX - Tough Enemy/Bosses
 
 SOUNDS
 ------
-00 
+00 Intro Transition
 01 
 02 
 03 
 04 
 05 
 06 
-07 
-08 
+07 Bomb Charge First Half
+08 Bomb Charge Second Half
 09 Player Shoot
 10 Player Hit
 11 Player Killed
 12 Triple Shot
-13 Intro Transition
+13 
 14 Rocket Shoot / Thruster Loop
 15 Basic Enemy Shoot
 16 Basic Enemy Hit
@@ -29,11 +29,11 @@ SOUNDS
 19 Ball Shooter/Bomb Shoot
 20 Ball Shooter/Bomb Kill
 21 Boss Kill
-22 Bomb Charge (8 seconds)
+22 
 23 Laser Charge (1.5 Seconds)
 24 Laser Loop
 25 Laser Finished
-26 Laser Killed (scrapped)
+26 
 27 Light Respawn
 28 Respawn
 29 Rewind Checkpoint
@@ -63,9 +63,9 @@ SOUNDS
 53 MUSIC
 54 MUSIC
 55 MUSIC
-56 MUSICMUSIC
+56 MUSIC
 57 MUSIC
-58 MUSICMUSIC
+58 MUSIC
 59 MUSIC
 60 MUSIC
 61 MUSIC
