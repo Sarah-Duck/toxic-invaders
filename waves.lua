@@ -1,5 +1,5 @@
 wave = {} --store wave functions here
-currentwave = 8 --THIS IS THE CURRENT WAVE, SHOLD BE 1 UNLESS TESTING SOMETHING
+currentwave = 12 --THIS IS THE CURRENT WAVE, SHOLD BE 1 UNLESS TESTING SOMETHING
 currentwavetime = 0
 delaytimer = 0
 everysecondtimer = 0

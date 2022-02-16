@@ -125,7 +125,7 @@ function addwallshooter(x, shootup, health, speed, offset, bulletspeed)
     end
 
     function enemy.draw(enemy)
-        if enemy.health < enemy.health*0.25 then
+        if enemy.health < health*0.25 then
             damagesmoke(enemy)
         end
         if enemy.inv < 0 or ceil(enemy.inv*10%2) == 1 then
@@ -343,7 +343,7 @@ function addlasershooter(x, y, speed, stay)
 end
 
 
---ERROR damage model has incorrect tiling (also it doesnt work??)
+--ERROR damage model has incorrect tiling for endings and lights
 function addwallboss(x, y, length, speed, stay, move)
     local enemy = {
         stay = stay or false,
@@ -354,13 +354,14 @@ function addwallboss(x, y, length, speed, stay, move)
         w = 16,
         h = 8*length,
         inv = -1,
-        health = 10*length*#players, --10
+        health = 2*length*#players, --10
         shootcooldown = 3,
         speed = speed,
         bulletfired = {},
         shot = enemyshot,
         collide = enemycollide
     }
+    enemy.starthealth = enemy.health
 
     for i = 1, length, 1 do
         enemy.bulletfired[i] = 0
@@ -368,7 +369,7 @@ function addwallboss(x, y, length, speed, stay, move)
 
     function enemy.draw(enemy)
         local dmg = 0
-        if enemy.health < enemy.health*0.25 then
+        if enemy.health < enemy.starthealth*0.25 then
             damagesmoke(enemy)
             dmg = 16
         end
