@@ -6,8 +6,8 @@ gameover = false
 gamerunning = false
 
 function startgame()
-    wave[currentwave].start()
     music(0, 0, 3)
+    wave[currentwave].start()
     gamerunning = true
 end
 

@@ -64,14 +64,21 @@ function mainmenutext(x,y)
     printdropshadow("(\151) - companion",x+15,y+18,6,5)
 end
 
-function titlehighscores(x,y)
+function titlehighscores(highscore0,highscore1,x,y)
     -- default values
     -- 52
     -- 110
     
-    printdropshadow("000000",x-20,y,12,15) --1P high score
+    printdropshadow(highscore0,x-20,y,12,15) --1P high score
     printdropshadow("-",x+10,y,6,5)
-    printdropshadow("000000",x+20,y,9,2) --2P high score
+    printdropshadow(highscore1,x+20,y,9,2) --2P high score
+end
+
+function currentscore(currentscore0,currentscore1,x,y)
+    printdropshadow(currentscore0,x+2,y+2,12,15) --1P current score
+    if #players != 1 then
+        printdropshadow(currentscore1,x+2,y+117,9,2) --2P current score
+    end
 end
 
 function credits(x,y)

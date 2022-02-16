@@ -7,33 +7,33 @@ CHANNELS
 
 SOUNDS
 ------
-00 RESERVED INSRUMENT
-01 RESERVED INSRUMENT
-02 RESERVED INSRUMENT
-03 RESERVED INSRUMENT
-04 RESERVED INSRUMENT
-05 RESERVED INSRUMENT
-06 RESERVED INSRUMENT
-07 RESERVED INSRUMENT
-08 RESERVED INSRUMENT
+00 
+01 
+02 
+03 
+04 
+05 
+06 
+07 
+08 
 09 Player Shoot
 10 Player Hit
 11 Player Killed
 12 Triple Shot
 13 Intro Transition
-14 
+14 Rocket Shoot / Thruster Loop
 15 Basic Enemy Shoot
 16 Basic Enemy Hit
 17 Basic Enemy Killed
 18 Wall Crawl Shoot
-19 Circular/Wall Boss Shoot
-20 Circular/Wall Boss Kill
-21 
-22 
+19 Ball Shooter/Bomb Shoot
+20 Ball Shooter/Bomb Kill
+21 Boss Kill
+22 Bomb Charge (8 seconds)
 23 Laser Charge (1.5 Seconds)
 24 Laser Loop
 25 Laser Finished
-26 Laser Killed
+26 Laser Killed (scrapped)
 27 Light Respawn
 28 Respawn
 29 Rewind Checkpoint
@@ -61,13 +61,13 @@ SOUNDS
 51 MUSIC
 52 MUSIC
 53 MUSIC
-54 
-55 
-56 
-57 
-58 Rocket Shoot / Thruster Loop    sfx(21, 3) (channel 4 for longer sounds)
-59 Rocket Projectile Explosion
-60 Rocket Boss Killed
-61 Kamikaze Charge (8 seconds)
-62 Kamikaze Ignite
-63 Kamikaze Denied
+54 MUSIC
+55 MUSIC
+56 MUSICMUSIC
+57 MUSIC
+58 MUSICMUSIC
+59 MUSIC
+60 MUSIC
+61 MUSIC
+62 MUSIC
+63 MUSIC

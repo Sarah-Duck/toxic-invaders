@@ -15,6 +15,7 @@ drawbg()
 drawobjs()
 
 if gamerunning then
+    currentscore("000000","000000",2,2)
     if gameover then --gameover timer, it does a cute spinny! 😵
         printdropshadow(ceil(respawntimer),63+sin(t())*3,55+cos(t())*3,6,5)
     elseif players[1].health <=0 then
@@ -41,7 +42,7 @@ if not gamerunning or menuscroll < 1 then
 
     --main screen items
     mainmenutext(24-menuscroll*150,53)
-    titlehighscores(52-menuscroll*110,82)
+    titlehighscores("000000","000000",52-menuscroll*110,82)
     credits(10-menuscroll*140,108)
 
     --intro acid effect

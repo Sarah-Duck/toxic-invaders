@@ -100,12 +100,9 @@ function addplayer(x, y, sprite, bulletsprite)
             addcircle(player.x-1, player.y, -0.5, 0, 1.5, 0.5, 9, 0)
             addcircle(player.x-1, player.y+7, -0.5, 0, 1.5, 0.5, 9, 0)
             if player.health < 3 then
-                addcircle(player.x+rnd(8), player.y+rnd(8), -0.5, -0.2, rnd(8), rnd(1.5)+1, 5, 0)
+                addcircle(player.x+rnd(8), player.y+rnd(8), rnd(1.5)-0.75, -1.5, 1, rnd(1)+0.5, 9, -0.1)
                 if player.health < 2 then
-                    addcircle(player.x+rnd(8), player.y+rnd(8), rnd(1.5)-0.75, -1.5, 1, rnd(1)+0.5, 9, -0.1)
-                    if ceil(rnd(2)) == 1 then
-                        addcircle(player.x+rnd(8), player.y+rnd(8), -0.4, -0.2, rnd(8), rnd(1)+0.5, 9, 0)
-                    end
+                    damagesmoke(player)
                 end
             end
             player.particlecooldown = 0.1

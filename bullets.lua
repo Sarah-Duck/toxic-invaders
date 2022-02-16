@@ -47,6 +47,7 @@ function addbullet(x, y, velx, vely, evil, sprite)
     add(obj, bullet)
 end
 
+--ERROR Sticks around after boss dies
 function addlaser(x, y, r)
     local laser = {
         --lasers!!!!!!!!!!!!!!!
@@ -102,7 +103,6 @@ function addlaser(x, y, r)
         --delete laser once its done
         if laser.timer > 4 then
             del(obj, laser)
-            sfx(24, -2)
             sfx(25, 3)
             for i = 1, 16, 1 do
                 addcircle(rnd(laser.x), laser.y-laser.r/2+rnd(laser.r), -0.5, -0.5, rnd(3), rnd(2), rnd({11,14,3}), 0)
@@ -111,5 +111,42 @@ function addlaser(x, y, r)
     end
 
     add(obj, laser)
-    sfx(23)
+    sfx(23,3)
+end
+
+
+function addmissile(x, y, target) --basic small weak enemy
+    local enemy = {
+        target = target,
+        x = x,
+        y = y,
+        w = 16,
+        h = 8,
+        inv = -1,
+        health = 3,
+        speed = 0.3,
+        shootcooldown = 0,
+        shot = enemyshot,
+        collide = enemycollide
+    }
+
+    function enemy.draw(enemy)
+        if enemy.inv < 0 or ceil(enemy.inv*10%2) == 1 then
+            spr(42, enemy.x, enemy.y, 2, 1)
+        end
+    end
+
+    function enemy.update()
+        enemy.x -= enemy.speed
+        enemy.speed += 0.015
+        enemy.y += (players[enemy.target].y - enemy.y)/30
+        addcircle(enemy.x+12, enemy.y+rnd(8), 0, rnd()/8, 2.1, 0.6, rnd({9,5}), 0)
+        enemymisc(enemy)
+        if enemy.health <= 0 then -- die!!!!!
+            enemydie(enemy,17,2)
+        end
+    end
+
+    sfx(14,3) --missle launch/thruster loop
+    add(enemies, enemy, 1)
 end
