@@ -1,5 +1,5 @@
 wave = {} --store wave functions here
-currentwave = 1 --THIS IS THE CURRENT WAVE, SHOLD BE 1 UNLESS TESTING SOMETHING
+currentwave = 8 --THIS IS THE CURRENT WAVE, SHOLD BE 1 UNLESS TESTING SOMETHING
 currentwavetime = 0
 delaytimer = 0
 everysecondtimer = 0
@@ -11,13 +11,11 @@ wave[1] = {
     start = function()
         addbasicenemy(150, 60, 0.15)
     end,
-    everysecond = function()
-    end,
-    conditions = function()
-        if #enemies < 1 then return true
-        end
-    end
 }
+
+for i = 2, 16, 1 do
+    wave[i] = {}
+end
 
 wave[2] = {
     delay = 2,
@@ -25,8 +23,6 @@ wave[2] = {
         addbasicenemy(128, 30, 0.4)
         addtargetingenemy(128, 60, 0.1)
         addbasicenemy(128, 90, 0.4)
-    end,
-    everysecond = function()
     end,
     conditions = function()
         if #enemies < 2 then return true
@@ -42,8 +38,6 @@ wave[3] = {
             addbasicenemy(170, i*16, 1.05 - 0.075*i)
         end
     end,
-    everysecond = function()
-    end,
     conditions = function()
         if #enemies < 5 then return true
         end
@@ -57,8 +51,6 @@ wave[4] = {
         addbasicenemy(128, 30, 0.5)
         addtargetingenemy(155, 60, 0.15)
         addbasicenemy(128, 90, 0.5)
-    end,
-    everysecond = function()
     end,
     conditions = function()
         if #enemies < 2 then return true
@@ -94,12 +86,6 @@ wave[6] = {
         addballshooter(160, 14, 0.1)
         addballshooter(160, 100, 0.1)
     end,
-    everysecond = function()
-    end,
-    conditions = function()
-        if #enemies < 1 then return true
-        end
-    end
 }
 
 wave[7] = {
@@ -113,12 +99,6 @@ wave[7] = {
         addbasicenemy(140, 30, 0.2)
         addbasicenemy(140, 110, 0.2)
     end,
-    everysecond = function()
-    end,
-    conditions = function()
-        if #enemies < 1 then return true
-        end
-    end
 }
 
 wave[8] = {
@@ -156,8 +136,6 @@ wave[9] = {
         addwallshooter(230, true, 10, 0.4)
         addballshooter(230, 56, 0.2)
     end,
-    everysecond = function()
-    end,
     conditions = function()
         if #enemies < 2 then return true
         end
@@ -170,8 +148,6 @@ wave[10] = {
         for i = 1, 7, 1 do
             addtargetingenemy(128, i*16-4, 0.1)
         end
-    end,
-    everysecond = function()
     end,
     conditions = function()
         if #enemies < 2 then return true
@@ -188,12 +164,6 @@ wave[11] = {
         end
         addballshooter(200, 56, 0.2)
     end,
-    everysecond = function()
-    end,
-    conditions = function()
-        if #enemies < 1 then return true
-        end
-    end
 }
 
 wave[12] = {
@@ -218,10 +188,6 @@ wave[13] = {
         addlasershooter(128, 128-38, 0.1, false)
     end,
     everysecond = wave[8].everysecond,
-    conditions = function()
-        if #enemies < 1 then return true
-        end
-    end
 }
 
 wave[14] = {
@@ -233,12 +199,6 @@ wave[14] = {
         addballshooter(128, 14, 0.03)
         addballshooter(128, 100, 0.03)
     end,
-    everysecond = function()
-    end,
-    conditions = function()
-        if #enemies < 1 then return true
-        end
-    end
 }
 
 wave[15] = {
@@ -269,10 +229,6 @@ wave[16] = {
         addmissileboss(128, 0)
     end,
     everysecond = wave[8].everysecond,
-    conditions = function()
-        if #enemies < 1 then return true
-        end
-    end
 }
 
 --wave[currentwave].start()
@@ -283,9 +239,11 @@ function updatewaves()
     everysecondtimer += 1/60
     if everysecondtimer >= 1 then
         everysecondtimer = 0
-        wave[currentwave].everysecond()
+        if wave[currentwave].everysecond then
+            wave[currentwave].everysecond()
+        end
     end
-    if wave[currentwave].conditions() then
+    if (wave[currentwave].conditions and wave[currentwave].conditions() or #enemies < 1) then
         delaytimer += 1/60
         if delaytimer > wave[min(currentwave+1, #wave)].delay then
             if changedmusic and currentwave ~= 15 then

@@ -1,26 +1,23 @@
-function addbullet(x, y, velx, vely, evil, sprite)
+function addbullet(x, y, velx, vely, good, sprite)
     local bullet = {
-        sprite = sprite or 2,
-        evil = evil,
-        x = x,
-        y = y,
-        velx = velx,
-        vely = vely,
     }
 
+    sprite = sprite or 2
+    good = good or false
+
     function bullet.draw(bullet)
-        spr(bullet.sprite, bullet.x, bullet.y)
+        spr(sprite, x, y)
     end
 
     function bullet.collide(object)
-        if bullet.x+4 >= object.x and bullet.x+4 <= object.x+object.w and bullet.y+4 >= object.y and bullet.y+4 <= object.y+object.h and object.inv < 0 then
+        if x+4 >= object.x and x+4 <= object.x+object.w and y+4 >= object.y and y+4 <= object.y+object.h and object.inv < 0 then
             object:shot()
             del(obj, bullet)
         end
     end
 
     function bullet.accurate_collide(object)
-        if bullet.x+4 >= object.x-2 and bullet.x+4 <= object.x+2+object.w and bullet.y+4 >= object.y-2 and bullet.y+4 <= object.y+object.h+2 then
+        if x+4 >= object.x-2 and x+4 <= object.x+2+object.w and y+4 >= object.y-2 and y+4 <= object.y+object.h+2 then
             object:shot()
             del(obj, bullet)
         end
@@ -28,18 +25,18 @@ function addbullet(x, y, velx, vely, evil, sprite)
 
     function bullet.update(bullet)
         --applying velocity
-        bullet.x += bullet.velx
-        bullet.y += bullet.vely
+        x += velx
+        y += vely
 
         --collision detection
-        if bullet.evil then
-            foreach(players, bullet.collide)
-        elseif bullet.evil == false then
+        if good then
             foreach(enemies, bullet.accurate_collide)
+        else
+            foreach(players, bullet.collide)
         end
 
         --delete bullet if off screen
-        if bullet.y > 128 or bullet.y < -8 or bullet.x > 128 or bullet.x < -8 then
+        if y > 128 or y < -8 or x > 128 or x < -8 then
             del(obj, bullet)
         end
     end
@@ -51,61 +48,61 @@ end
 function addlaser(x, y, r)
     local laser = {
         --lasers!!!!!!!!!!!!!!!
-        x = x,
-        y = y,
-        r = r,
-        timer = 0,
-        playingsound = false
     }
+    timer = 0
+    playingsound = false
 
-    function laser.draw(laser)
-        if laser.timer > 1.5 then
-            local radius = (min(laser.timer*laser.r*0.7,laser.r)+sin(t()*6))-mid(0, laser.timer-3, laser.r)*laser.r
-            for i = -10, laser.x, 1 do
-                line(i, laser.y+radius*sin(t()*3+i/(10+laser.timer^3.5))*1.6, i, laser.y-radius*sin(t()*3+i/(10+laser.timer^3.5))*1.6, 14)
-                pset(i, laser.y+(cos(t()*1.5+i/50)+sin(i/4.32535+t())*2)*radius/1.8, 14)
+    function laser:draw()
+        --local mid,line,pset,circfill,rectfill,sin,cos,t = mid,line,pset,circfill,rectfill,sin,cos,t
+        --local _ENV = self
+        if timer > 1.5 then
+            local radius = (min(timer*r*0.7,r)+sin(t()*6))-mid(0, timer-3, r)*r
+            for i = -10, x, 1 do
+                line(i, y+radius*sin(t()*3+i/(10+timer^3.5))*1.6, i, y-radius*sin(t()*3+i/(10+timer^3.5))*1.6, 14)
+                pset(i, y+(cos(t()+i/50)+sin(i/4.32535+t())*2)*radius/1.8, 14)
             end
-            circfill(laser.x, laser.y, radius, 14)
-            rectfill(-10, laser.y-radius, laser.x, laser.y+radius, 14)
-            circfill(laser.x, laser.y, radius*0.7, 11)
-            rectfill(-10, laser.y-radius*0.7, laser.x, laser.y+radius*0.7, 11)
-            circfill(laser.x, laser.y, radius*0.3, 7)
-            rectfill(-10, laser.y-radius*0.3, laser.x, laser.y+radius*0.3, 7)
+            --circfill(x, y, radius, 14)
+            --rectfill(-10, y-radius, x, y+radius, 14)
+            circfill(x, y, radius*0.7, 11)
+            rectfill(-10, y-radius*0.7, x, y+radius*0.7, 11)
+            circfill(x, y, radius*0.3, 7)
+            rectfill(-10, y-radius*0.3, x, y+radius*0.3, 7)
         else
-            circfill(laser.x, laser.y, laser.timer*4+sin(t()*8), 11)
-            circfill(laser.x, laser.y, laser.timer*2+sin(t()*8), 7)
-            for i = mid(-5, laser.x-laser.timer*laser.x,laser.x), laser.x, 1 do
-                pset(i, laser.y+sin(i/(3/(laser.timer/2))-t())*laser.timer*laser.r/2, 11)
-                pset(i, laser.y+cos(t()*laser.timer+i/30)*laser.timer*3+sin(i/8.32535+t()), 14)
+            circfill(x, y, timer*4+sin(t()*8), 11)
+            circfill(x, y, timer*2+sin(t()*8), 7)
+            for i = mid(-5, x-timer*x,x), x, 1 do
+                pset(i, y+sin(i/(3/(timer/2))-t())*timer*r/2, 11)
+                pset(i, y+cos(t()*timer+i/30)*timer*3+sin(i/8.32535+t()), 14)
             end
         end
     end
 
     function laser.collide(object)
-        if object.x < laser.x and laser.y+laser.r*2 > object.y+object.h and laser.y-laser.r*2 < object.y and object.inv < 0 then
+        --local _ENV = laser
+        if object.x < x and y+r*2 > object.y+object.h and y-r*2 < object.y and object.inv < 0 then
             object:shot()
         end
     end
 
     function laser.update(laser)
-        laser.timer += 1/60
+        timer += 1/60
         --collision detection after the warm up
-        if laser.timer > 1.5 and laser.timer < 3.6 then
-            if not laser.playingsound then
+        if timer > 1.5 and timer < 3.6 then
+            if not playingsound then
                 sfx(24,3)
-                laser.playingsound = true
+                playingsound = true
             end
-            shake = rnd(8)/laser.timer
+            shake = rnd(8)/timer
             foreach(players, laser.collide)
             foreach(enemies, laser.collide)
         end
 
         --delete laser once its done
-        if laser.timer > 4 then
+        if timer > 4 then
             del(obj, laser)
             sfx(25, 3)
             for i = 1, 16, 1 do
-                addcircle(rnd(laser.x), laser.y-laser.r/2+rnd(laser.r), -0.5, -0.5, rnd(3), rnd(2), rnd({11,14,3}), 0)
+                addcircle(rnd(x), y-r/2+rnd(r), -0.5, -0.5, rnd(3), rnd(2), rnd({11,14,3}))
             end
         end
     end
@@ -117,7 +114,7 @@ end
 
 function addmissile(x, y, target) --basic small weak enemy
     local enemy = {
-        target = target,
+        --target = target,
         x = x,
         y = y,
         w = 16,
@@ -139,8 +136,8 @@ function addmissile(x, y, target) --basic small weak enemy
     function enemy.update()
         enemy.x -= enemy.speed
         enemy.speed += 0.015
-        enemy.y += (players[enemy.target].y - enemy.y)/30
-        addcircle(enemy.x+12, enemy.y+rnd(8), 0, rnd()/8, 2.1, 0.6, rnd({9,5}), 0)
+        enemy.y += (players[target].y - enemy.y)/30
+        addcircle(enemy.x+12, enemy.y+rnd(8), 0, rnd()/8, 2.1, 0.6, rnd({9,5}))
         enemymisc(enemy)
         if enemy.health <= 0 then -- die!!!!!
             enemydie(enemy,17,2)
