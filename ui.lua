@@ -1,3 +1,9 @@
+--adds zeros to score to look cooler
+function scorewithzeros(string,length)
+    if #string == length then return string end
+    return "0"..scorewithzeros(string, length-1)
+end
+
 function printdropshadow(text,x,y,colorMain,colorShadow)
     print(text,x,y+1,colorShadow)
     print(text,x,y,colorMain)
@@ -45,14 +51,9 @@ function mainmenutext(x,y)
     -- x = 24
     -- y = 62
     x -= 1
-    local sintime = sin(t()*0.7)*2
 
-    if not gamerunning then
-        spr(17,x+2,y+6+sintime,1,1) --blue ship
-        spr(33,x+2,y+17+sintime,1,1) --orange ship
-    end
-    printdropshadow("(\142) - lone wolf",x+15,y+7,6,5)
-    printdropshadow("(\151) - companion",x+15,y+18,6,5)
+    spr(5,x+2,y+7+(sin(t()*0.7)*2),1,3) --ships
+    printdropshadow("(\142) - lone wolf\n\n(\151) - companion",x+15,y+7,6,5)
 end
 
 function titlehighscores(x,y)
@@ -61,7 +62,7 @@ function titlehighscores(x,y)
     -- 110
     
     printdropshadow(scorewithzeros(tostring(highscore0),4),x-10,y,12,15) --1P high score
-    printdropshadow("-",x+10,y,6,5)
+    spr(48,x+8,y)
     printdropshadow(scorewithzeros(tostring(highscore1),4),x+18,y,9,2) --2P high score
 end
 
@@ -88,16 +89,18 @@ function credits(x,y)
     -- default vaues
     -- x = 10
     -- y = 100
+    local sintime = sin(t())*2
+    local timemod = (t()%2<1)
 
     palt(2,true)
     palt(0,false)
-    spr(186,x-4,y+6+sin(t())*2,1,1,(t()%2<1)) --duck
-    spr(184,x+104,y+6+cos(t())*2,1,1,(t()%2<1)) --bot
+    spr(186,x-4,y+6+sintime,1,1,timemod) --duck
+    spr(184,x+104,y+6+-sintime,1,1,timemod) --bot
     palt()
-    printdropshadow("1029chris",x+10,y+5,9,2)
-    printdropshadow("ribboncable",x+56,y+5,12,15)
-    printdropshadow("CODE TUNES",x+8,y+12,11,3)
-    printdropshadow("ART SOUNDS",x+58,y+12,11,3)
+    printdropshadow("1029chris\nLUA TUNES",x+10,y+5,9,2)
+    printdropshadow("ribboncable\nART  SOUNDS",x+56,y+5,12,15)
+    -- printdropshadow("CODE TUNES",x+8,y+12,11,3)
+    -- printdropshadow("ART SOUNDS",x+58,y+12,11,3)
 end
 
 --Ending screen
@@ -114,9 +117,9 @@ function finalscorescreen(x,y)
     -- if #players > 1 and currentscore > highscore1 or #players == 1 and currentscore > highscore0 then
         if flashtime == 1 then
             printdropshadow("! new high score !", x+27,y+32,11,3)
-            if babymode then
-                printdropshadow("! BABYMODE !", x+40,y+70,9,2)
-            end
+            -- if babymode then
+            --     printdropshadow("! BABYMODE !", x+40,y+70,9,2)
+            -- end
         -- end
     end
     
@@ -124,11 +127,11 @@ function finalscorescreen(x,y)
     printdropshadow(scorewithzeros(tostring(currentscore),4),x+48+circletimex,y+50+circletimey,playercolour0,playercolour1) --2P high score
     poke(0x5f58, 0)
 
-    printdropshadow("THANK YOU FOR PLAYING", x+19,y+80,11,3)
-    printdropshadow("PRESS ❎ ⁙ 🅾️ TO RETRY", x+18,y+88,11,3)
+    printdropshadow("  THANKS FOR PLAYING\nPRESS ❎ ⁙ 🅾️ TO RETRY", x+19,y+80,11,3)
+    -- printdropshadow("PRESS ❎ ⁙ 🅾️ TO RETRY", x+18,y+88,11,3)
 
-    printdropshadow("MADE WITH ♥ IN VANCOUVER", x+14,y+110,9,2)
-    printdropshadow("◆ 2022 ◆", x+42,y+118,11,3)
+    printdropshadow("MADE WITH ♥ IN VANCOUVER\n       ◆ 2022 ◆", x+14,y+113,9,2)
+    -- printdropshadow("◆ 2022 ◆", x+42,y+118,11,3)
 end
 
 --intro/ending acid effect
@@ -149,4 +152,4 @@ sfx(0,3,3)
 doshake = true
 menuitem(1, "(\129) screenshake", function() doshake = not doshake end)
 menuitem(2, "(\144) autofire", function() alwaysfire = not alwaysfire end)
-menuitem(3, "(\137) BABYMODE", function() babymode = true end)
+-- menuitem(3, "(\137) BABYMODE", function() babymode = true end)

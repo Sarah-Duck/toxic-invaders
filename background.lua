@@ -4,11 +4,11 @@ function scrollingcircles(y, speed, spacing, radius, color)
     end
 end
 
-function scrollingcirclelines(y, speed, spacing, radius, color)
-    for i = 1, 256, spacing do
-        circ((i-(gt*speed))%256-radius*2, y, radius, color)
-    end
-end
+-- function scrollingcirclelines(y, speed, spacing, radius, color)
+--     for i = 1, 256, spacing do
+--         circ((i-(gt*speed))%256-radius*2, y, radius, color)
+--     end
+-- end
 
 function scrollingsprite(sprite,x,y,w,h,speed,flip)
     flip = flip or false
@@ -68,14 +68,14 @@ function drawbg()
     scrollingsprite(232, 160, 7, 2, 1, 36)
     scrollingsprite(232, 240, 9, 2, 1, 38)
     --fg clouds
-    scrollingcirclelines(-11, 40, 25, 20, 2)
+    scrollingcircles(-11, 40, 25, 20, 2)
     scrollingcircles(-12, 40, 25, 20, 4)
 
 
     camera(screenshakex/2, screenshakey/2)
 
     --landscape
-    scrollingcirclelines(125, 72, 25, 20, 8)
+    scrollingcircles(125, 72, 25, 20, 8)
     scrollingcircles(126, 72, 25, 20, 2)
 
     --landscape lines
@@ -115,6 +115,6 @@ function drawbg()
 
     camera(screenshakex, screenshakey)
 
-    scrollingcirclelines(150, 100, 30, 32, 8)
+    scrollingcircles(150, 100, 30, 32, 8)
     scrollingcircles(151, 100, 30, 32, 2)
 end
