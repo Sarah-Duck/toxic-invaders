@@ -1,29 +1,34 @@
-local randompickups = {}
-pickuptimer = 10
-function randompickups.update()
-    pickuptimer -= ft
-    if pickuptimer < 0 then
-        pickuptimer = 10
-        if rnd(100) > 85 then
-            addpickup(128, rnd(80)+20)
-        end
-    end
-end
-function randompickups.draw()
-end
-add(obj, randompickups)
+-- local randompickups = {}
+-- pickuptimer = 10
+-- function randompickups.update()
+--     pickuptimer -= ft
+--     if pickuptimer < 0 then
+--         pickuptimer = 10
+--         if rnd(100) > 85 then
+--             addpickup(128, rnd(80)+20)
+--         end
+--     end
+-- end
+-- function randompickups.draw()
+-- end
+-- add(obj, randompickups)
 
 function addpickup(x, y, type)
     local pickup = {}
     x = x
     y = y
     type = type or rnd({"health", "health", "fastshoot", "3shoot"})
-    sprite = 4
+    if type == "powerup" then type = rnd({"fastshoot", "3shoot"}) end
+    
+    function pickup.draw(pickup)
+        sprite = 4 --had to move these checks into draw or they'd have incorrect sprites
+        if type == "fastshoot" then
+            sprite = 20
+        elseif type == "3shoot" then
+            sprite = 36
+        end
 
-    if type == "fastshoot" then
-        sprite = 20
-    elseif type == "3shoot" then
-        sprite = 36
+        spr(sprite, x, y)
     end
 
     function pickup.collide(player)
@@ -50,11 +55,8 @@ function addpickup(x, y, type)
         elseif type == "3shoot" then
             player.shoot3 = true
         end
+        currentscore+=10 --10 points
         sfx(30, 1)
-    end
-
-    function pickup.draw(pickup)
-        spr(sprite, x, y)
     end
 
     function pickup.update(pickup)

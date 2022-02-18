@@ -16,16 +16,16 @@ drawobjs()
 
 if gamerunning then
     if gameover then --gameover timer, it does a cute spinny! 😵
-        printdropshadow(ceil(respawntimer),63+sin(t())*3,55+cos(t())*3,6,5)
-        currentscore("000000","000000",true,true) --clear score
+        printdropshadow(ceil(respawntimer),63+circletimex,55+circletimey,6,5)
+        runningscore(currentscore,true) --flashes score
     elseif players[1].health <=0 then
-        printdropshadow(ceil(players[1].inv),players[1].x+sin(t())*3,players[1].y+cos(t())*3,12,15)
-        currentscore("000000","696969",true,false) --clear score for P1
+        printdropshadow(ceil(players[1].inv),players[1].x+circletimex,players[1].y+circletimey,12,15)
+        runningscore(currentscore,true) --flashes score
     elseif #players > 1 and players[2].health <=0 then
-        printdropshadow(ceil(players[2].inv),players[2].x+sin(t())*3,players[2].y+cos(t())*3,9,2)
-        currentscore("000420","000000",false,true) --clear score for P2
+        printdropshadow(ceil(players[2].inv),players[2].x+circletimex,players[2].y+circletimey,9,2)
+        runningscore(currentscore,true) --flashes score
     else
-       currentscore("000420","696969",false,false) --current game score
+        runningscore(currentscore,false) --current game score
     end
 end
 if not gamerunning or menuscroll < 1 then
@@ -46,15 +46,35 @@ if not gamerunning or menuscroll < 1 then
 
     --main screen items
     mainmenutext(24-menuscroll*150,53)
-    titlehighscores("000000","000000",52-menuscroll*110,82)
+    titlehighscores(52-menuscroll*110,82)
     credits(10-menuscroll*140,108)
 
-    --intro acid effect
-    if t() < 2 then
-        for i = 1, 128, 1 do
-            line(i-1,128,i-1,sin((i+0.22-t()*20)/24.357)*2+t()*80-10,11) --cool wavy transition effect!!!!
-            line(i-1,128,i-1,sin((i+t()*60)/44.357)*5+t()*80-5,3)
-        end
-        addcircle(rnd(128), t()*80, 0,rnd(1),rnd(12)+2,1.5,14)
-    end
+    --intro acid transtition
+    acidcounter+=ft
+    acidtransition()
 end
+
+--final score screen and outro transition
+if scorescreen then
+    finalscorescreen(0,0)
+
+    --outro acid transition
+    if isoutro then
+        acidcounter-=ft
+        sfx(0,3,3)
+        acidtransition()
+    end
+    if acidcounter < -0.2 then run() end --resets cart
+end
+
+
+
+
+
+
+-- --final boss portal parts
+-- addportalthruster(70,6)
+-- addportalthruster(70,107,true)
+-- addfinalbossportal(80,10)
+-- addportalthruster(95,6)
+-- addportalthruster(95,107,true)

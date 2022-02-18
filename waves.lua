@@ -1,10 +1,12 @@
 wave = {} --store wave functions here
-currentwave = 12 --THIS IS THE CURRENT WAVE, SHOLD BE 1 UNLESS TESTING SOMETHING
+currentwave = 1 --THIS IS THE CURRENT WAVE, SHOLD BE 1 UNLESS TESTING SOMETHING
 currentwavetime = 0
 delaytimer = 0
 everysecondtimer = 0
 checkpoint = 1
 changedmusic = false
+
+--NOTE - slow BG during boss waves / make bosses their own checkpoint
 
 wave[1] = {
     delay = 2,
@@ -101,6 +103,7 @@ wave[7] = {
     end,
 }
 
+--music doesnt transition yet
 wave[8] = {
     delay = 1,
     start = function()
@@ -109,7 +112,7 @@ wave[8] = {
         addbasicenemy(240, 58, 1.1)
         addbasicenemy(240, 68, 0.9)
         addbasicenemy(240, 63, 1)
-        addlasershooter(128, 64, 0.4, true)
+        addlasershooter(128, 64, 100, 0.4, true, true)
         
     end,
     everysecond = function()
@@ -166,12 +169,13 @@ wave[11] = {
     end,
 }
 
+--music doesnt transition yet
 wave[12] = {
     delay = 1,
     start = function()
         music(9, 0, 3)
         changedmusic = true
-        addwallboss(128,4,15,0.05,true)
+        addwallboss(128,4,15,225,0.05,true,false,true)
     end,
     everysecond = wave[8].everysecond,
     conditions = wave[8].conditions
@@ -183,9 +187,9 @@ wave[13] = {
         addbasicenemy(130, 58, 0.6)
         addbasicenemy(130, 68, 0.5)
         addbasicenemy(130, 63, 0.7)
-        addlasershooter(128, -2, 0.1, false)
+        addlasershooter(128, -2, 50, 0.1, false)
         addbomb(128,46, 0)
-        addlasershooter(128, 90, 0.1, false)
+        addlasershooter(128, 90, 50, 0.1, false)
     end,
     everysecond = wave[8].everysecond,
 }
@@ -229,6 +233,14 @@ wave[16] = {
         addmissileboss(128, 0)
     end,
     everysecond = wave[8].everysecond,
+}
+
+--ending score screen
+wave[17] = {
+    delay = 3,
+    start = function()
+        scorescreen = true
+    end
 }
 
 --wave[currentwave].start()

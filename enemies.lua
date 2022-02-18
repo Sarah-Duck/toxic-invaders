@@ -1,6 +1,3 @@
---REDUCE TOKENS BY
---merge new bullet sfx() to addbullet() ? (exception would be for the wallshooter)
-
 enemies = {}
 
 --universal functions:
@@ -24,16 +21,21 @@ function enemycollide(enemy, object) --f this enemy collides with something, do 
     end
 end
 
-function enemydie(enemy, sound, soundchannel)
+function enemydie(enemy, sound, soundchannel, points, isboss)
     for i = 1, rnd(enemy.h)+6, 1 do
         addcircle(enemy.x+rnd(enemy.w), enemy.y+rnd(enemy.h), rnd(4)-2, -rnd(2)-1, 1, 2, rnd({3, 11, 9}), -0.1)
     end
-    if rnd(100) > 95 then
-        addpickup(enemy.x+rnd(enemy.w), enemy.y+rnd(enemy.h))
+    -- if rnd(100) > 95 then
+    --     addpickup(enemy.x+rnd(enemy.w), enemy.y+rnd(enemy.h))
+    -- end
+    if isboss then
+        addpickup(enemy.x+rnd(32), enemy.y+rnd(32), "powerup")
+        addpickup(enemy.x+rnd(32), enemy.y+rnd(32), "health")
     end
     if shake < 3 then
         shake = enemy.h/2
     end
+    currentscore += points
     sfx(sound, soundchannel)
     explosion(enemy.x, enemy.y, enemy.w, enemy.h)
     del(enemies, enemy)
@@ -93,7 +95,7 @@ function addbasicenemy(x, y, speed) --basic small weak enemy
         end
         enemymisc(enemy)
         if enemy.health <= 0 then -- die!!!!!
-            enemydie(enemy,17,2)
+            enemydie(enemy,17,2,10)
         end
     end
 
@@ -153,7 +155,7 @@ function addwallshooter(x, shootup, health, speed, offset, bulletspeed)
         end
         enemymisc(enemy)
         if enemy.health <= 0 then
-            enemydie(enemy,17,2)
+            enemydie(enemy,17,2,15)
         end
     end
 
@@ -204,7 +206,7 @@ function addballshooter(x, y, speed)
         end
         enemymisc(enemy)
         if enemy.health <= 0 then
-            enemydie(enemy,20,3)
+            enemydie(enemy,20,3,40)
         end
     end
 
@@ -251,14 +253,14 @@ function addtargetingenemy(x, y, speed)
         end
         enemymisc(enemy)
         if enemy.health <= 0 then -- die!!!!!
-            enemydie(enemy,17,2)
+            enemydie(enemy,17,2,20)
         end
     end
 
     add(enemies, enemy)
 end
 
-function addlasershooter(x, y, speed, stay)
+function addlasershooter(x, y, points, speed, stay, isboss)
     local enemy = {
         x = x+128,
         y = y,
@@ -311,7 +313,7 @@ function addlasershooter(x, y, speed, stay)
 
         if enemy.x <= 90 then
             if not enemy.firedlaser then
-                addlaser(enemy.x+6, enemy.y+20, 10)
+                addlaser(enemy.x+6, enemy.y+20, 10, enemy)
                 enemy.moveoffset = rnd({0,0.5}) --add offset so not moving in same direction each time
                 enemy.sinspeed = rnd({4,4,4,4,4,4,4,4,4,4,4,4,1,8,2,2,2,2}) --add differing speeds to sin up and down randomly
                 if enemy.health < 15*#players then
@@ -332,10 +334,7 @@ function addlasershooter(x, y, speed, stay)
             if stay then
                 music(-1, 3000)
             end
-            enemydie(enemy,21,3)
-            addpickup(enemy.x+rnd(32), enemy.y+rnd(32), "health")
-            addpickup(enemy.x+rnd(32), enemy.y+rnd(32))
-            addpickup(enemy.x+rnd(32), enemy.y+rnd(32))
+            enemydie(enemy,21,3,points,isboss)
         end
     end
 
@@ -344,7 +343,7 @@ end
 
 
 --ERROR damage model has incorrect tiling for endings and lights
-function addwallboss(x, y, length, speed, stay, move)
+function addwallboss(x, y, length, points, speed, stay, move, isboss)
     local enemy = {
         stay = stay or false,
         move = move or 1,
@@ -354,7 +353,7 @@ function addwallboss(x, y, length, speed, stay, move)
         w = 16,
         h = 8*length,
         inv = -1,
-        health = 2*length*#players, --10
+        health = 10*length*#players, --10
         shootcooldown = 3,
         speed = speed,
         bulletfired = {},
@@ -437,10 +436,7 @@ function addwallboss(x, y, length, speed, stay, move)
         enemymisc(enemy)
         if enemy.health <= 0 then -- die!!!!!
             music(-1, 3000)
-            enemydie(enemy,21,3)
-            addpickup(enemy.x+rnd(32), enemy.y+rnd(32), "health")
-            addpickup(enemy.x+rnd(32), enemy.y+rnd(32))
-            addpickup(enemy.x+rnd(32), enemy.y+rnd(32))
+            enemydie(enemy,21,3,points,isboss)
         end
     end
 
@@ -459,10 +455,11 @@ function addbomb(x, y, delay) --BIG BOMB!!!! KILL IIT QUICKLY!!!!
         shot = enemyshot,
         collide = enemycollide
     }
+    local points = 50 --points by default if killed by player
 
     function enemy.draw(enemy)
         local sprite = 73
-        if everysecondtimer > 0.5 then sprite = 75 end
+        if everysecondtimer > 0.5 then sprite = 75 end --animation
         if enemy.health < 7 then
             damagesmoke(enemy)
             sprite += 32
@@ -483,6 +480,7 @@ function addbomb(x, y, delay) --BIG BOMB!!!! KILL IIT QUICKLY!!!!
             for i = 1, 60, 1 do
                 addbullet(enemy.x+16, enemy.y+16, sin(i/60), cos(i/60))
                 enemy.health = 0
+                points = -40 --loss of points
                 sfx(19,2)
                 sfx(8,-2)
             end
@@ -491,7 +489,7 @@ function addbomb(x, y, delay) --BIG BOMB!!!! KILL IIT QUICKLY!!!!
         end
         enemymisc(enemy)
         if enemy.health <= 0 then -- die!!!!!
-            enemydie(enemy,20,3)
+            enemydie(enemy,20,3,points)
         end
         --charge sound
         if enemy.x < 120 and everysecondtimer > 0.45 then
@@ -507,6 +505,7 @@ function addbomb(x, y, delay) --BIG BOMB!!!! KILL IIT QUICKLY!!!!
 end
 
 
+--move enemy more towards the centre of the screen to have room for portal
 function addmissileboss(x, y) --boss that shoots missiles!!!
     local enemy = {
         x = x,
@@ -572,12 +571,45 @@ function addmissileboss(x, y) --boss that shoots missiles!!!
         if enemy.health <= 0 then -- die!!!!!
             music(-1, 3000)
             sfx(60,-2) --stop missle sound
-            enemydie(enemy,21,3)
-            addpickup(enemy.x+rnd(32), enemy.y+rnd(32), "health")
-            addpickup(enemy.x+rnd(32), enemy.y+rnd(32))
-            addpickup(enemy.x+rnd(32), enemy.y+rnd(32))
+            enemydie(enemy,21,3,300,true)
+            
         end
     end
 
     add(enemies, enemy)
+end
+
+
+
+
+
+
+--FINAL BOSSS!!!! (INCOMPLETE)
+function addfinalbossportal(x,y)
+    speed = 1.5
+    amount = 3
+    sprite = 136
+
+    -- function enemy.draw()
+        spr(sprite, x, (sin(time()*speed)*amount)+y, 4, 3)
+        spr(sprite, x, (-sin(time()*speed)*amount)+y+85, 4, 3, false,true)
+        -- portal
+        ovalfill(x+28,(sin(time()*speed)*amount)+y+24,x+6,(-sin(time()*speed)*amount)+y+84,7)
+    -- end
+end
+
+--thrusters that each fall off once the portal's health is 1/5th depleated
+function addportalthruster(x,y,isflipped)
+    -- function enemy.draw()
+        local sprite = 128
+
+        if isflipped == true then
+            isflipped = -1
+        else
+            isflipped = 1
+        end
+
+        if everysecondtimer%0.1 > 0.05 then sprite = 132 end --animation
+        spr(sprite, x, isflipped*(sin(time()*1.5)*3)+y, 4, 2)
+    --end
 end

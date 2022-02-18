@@ -5,11 +5,22 @@ scrollspeed = 0
 respawntimer = 0
 gameover = false
 gamerunning = false
+menuscroll = 0 --main screens
+menushipscroll = 0
+acidcounter = 0
+scorescreen = false
+isoutro = false --for outro transition
+highscore0 = 0420 --scores (0 is solo - 1 is coop)
+highscore1 = 0690
+currentscore = 0 --used for both gamemodes, but passed into highscore at end of game
+babymode = false --makes game a lot easier
+
 
 function startgame()
     music(0, 0, 3)
     wave[currentwave].start()
     gamerunning = true
+    print(gt,10,10)
 end
 
 function updateobjs()

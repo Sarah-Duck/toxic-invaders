@@ -44,8 +44,7 @@ function addbullet(x, y, velx, vely, good, sprite)
     add(obj, bullet)
 end
 
---ERROR Sticks around after boss dies
-function addlaser(x, y, r)
+function addlaser(x, y, r, enemy)
     local laser = {
         --lasers!!!!!!!!!!!!!!!
     }
@@ -98,7 +97,7 @@ function addlaser(x, y, r)
         end
 
         --delete laser once its done
-        if timer > 4 then
+        if timer > 4 or enemy.health <= 0 then
             del(obj, laser)
             sfx(25, 3)
             for i = 1, 16, 1 do
@@ -106,7 +105,6 @@ function addlaser(x, y, r)
             end
         end
     end
-
     add(obj, laser)
     sfx(23,3)
 end
@@ -140,7 +138,7 @@ function addmissile(x, y, target) --basic small weak enemy
         addcircle(enemy.x+12, enemy.y+rnd(8), 0, rnd()/8, 2.1, 0.6, rnd({9,5}))
         enemymisc(enemy)
         if enemy.health <= 0 then -- die!!!!!
-            enemydie(enemy,17,2)
+            enemydie(enemy,17,2,10)
         end
     end
 

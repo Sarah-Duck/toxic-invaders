@@ -25,10 +25,11 @@ function bgplanetmegasprite(x,y)
     --y = 50
 
     palt(0,false)
+    palt(13,true)
         spr(194,x+10,y+0,7,2)
         spr(201,x+10,y+16,7,2)
         spr(234,x+2,y+32,6,2)
-    palt(0,true)
+    palt()
 end
 
 
@@ -43,7 +44,7 @@ function drawbg()
 
     --galaxies
     spr(120, 20, 30, 1, 1)
-    spr(104, 100, 40, 1, 1)
+    spr(104, 108, 40, 1, 1)
     spr(104, 42, 74, 1, 1, true, true)
 
     --ringed planet

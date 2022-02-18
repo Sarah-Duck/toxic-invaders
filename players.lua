@@ -23,7 +23,7 @@ function addplayer(x, y, sprite, bulletsprite)
         -- print(player.health)
         
         --draw a different sprite when moving, and blink when hurt
-        if (player.inv < 0 or ceil(player.inv*10%2) == 1) and player.health > 0 then
+        if (player.inv < 0 or flashtime == 1) and player.health > 0 then
             if (player.ymov == 0) then
                 spr(sprite, player.x, player.y)
             elseif (player.ymov == 1) then
@@ -54,6 +54,7 @@ function addplayer(x, y, sprite, bulletsprite)
             sfx(11, 3)
             sfx(29, 1)
         elseif player.health <= 0 then
+            currentscore = ceil(currentscore * 0.5) --halves score if coop
             sfx(11, 3)
             player.inv = 5
         end
@@ -134,6 +135,7 @@ function addplayer(x, y, sprite, bulletsprite)
 end
 
 function isgameover()
+    currentscore+=-10 --lose points if hit
     for i = 1, #players, 1 do
         if players[i].health > 0 then
             return
