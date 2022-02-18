@@ -13,8 +13,9 @@ pal(0,130,1)
 
 drawbg()
 drawobjs()
-
+camera() --so the score doesn't shake
 if gamerunning then
+    local scoreflash = false
     if gameover then --gameover timer, it does a cute spinny! 😵
         printdropshadow(ceil(respawntimer),63+circletimex,55+circletimey,6,5)
         runningscore(currentscore,true) --flashes score
@@ -55,7 +56,7 @@ if not gamerunning or menuscroll < 1 then
 end
 
 --final score screen and outro transition
-if scorescreen then
+if currentwave == 18 then
     finalscorescreen(0,0)
 
     --outro acid transition
@@ -66,15 +67,3 @@ if scorescreen then
     end
     if acidcounter < -0.2 then run() end --resets cart
 end
-
-
-
-
-
-
--- --final boss portal parts
--- addportalthruster(70,6)
--- addportalthruster(70,107,true)
--- addfinalbossportal(80,10)
--- addportalthruster(95,6)
--- addportalthruster(95,107,true)

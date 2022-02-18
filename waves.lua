@@ -235,16 +235,36 @@ wave[16] = {
     everysecond = wave[8].everysecond,
 }
 
---ending score screen
 wave[17] = {
+    delay = 0,
+    start = function()
+        addfinalboss()
+        addballshooter(128, 56, 0.1)
+    end,
+    everysecond = function()
+        local y = rnd(30)+50
+        addbasicenemy(115,y,0.4+rnd(0.4))
+    end
+}
+
+--ending score screen
+wave[18] = {
     delay = 3,
     start = function()
-        scorescreen = true
-    end
+        if #players == 1 then
+            dset(0, currentscore) --set singleplayer score
+        else
+            dset(1, currentscore) --set multiplayer score
+        end
+    end,
+    conditions = function()
+    end 
 }
 
 --wave[currentwave].start()
 --music(0, 0, 3)
+
+foreach(wave, function(wave) if not wave.conditions then wave.conditions = function() if #enemies < 1 then return true end end end end) --if there are no conditons for a wave, give them one. look at all those ends!!!!
 
 function updatewaves()
     currentwavetime += ft
@@ -255,7 +275,7 @@ function updatewaves()
             wave[currentwave].everysecond()
         end
     end
-    if (wave[currentwave].conditions and wave[currentwave].conditions() or #enemies < 1) then
+    if wave[currentwave].conditions() then
         delaytimer += ft
         if delaytimer > wave[min(currentwave+1, #wave)].delay then
             if changedmusic and currentwave ~= 15 then
@@ -266,10 +286,10 @@ function updatewaves()
             currentwave += 1
             currentwavetime = 0
             delaytimer = 0
-            currentwave = (currentwave - 1) % #wave+1 --temporarily looping the waves
-            if currentwave < checkpoint then
-                checkpoint = 1
-            end
+            -- currentwave = (currentwave - 1) % #wave+1 --temporarily looping the waves
+            -- if currentwave < checkpoint then
+            --     checkpoint = 1
+            -- end
             wave[currentwave].start()
         end
     end

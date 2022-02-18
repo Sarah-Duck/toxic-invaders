@@ -7,7 +7,7 @@ function enemyshot(enemy)
     enemy.health -= 1
     if enemy.health > 0 then
         sfx(16, 2)
-        explosion(enemy.x+rnd(enemy.w), enemy.y+rnd(enemy.h)) --explode!!!!!!
+        --explosion(enemy.x+rnd(enemy.w), enemy.y+rnd(enemy.h)) --explode!!!!!!
     end
 end
 
@@ -25,9 +25,9 @@ function enemydie(enemy, sound, soundchannel, points, isboss)
     for i = 1, rnd(enemy.h)+6, 1 do
         addcircle(enemy.x+rnd(enemy.w), enemy.y+rnd(enemy.h), rnd(4)-2, -rnd(2)-1, 1, 2, rnd({3, 11, 9}), -0.1)
     end
-    -- if rnd(100) > 95 then
-    --     addpickup(enemy.x+rnd(enemy.w), enemy.y+rnd(enemy.h))
-    -- end
+    if rnd(100) < sqrt(enemy.w*enemy.h)/1.5 then --you get a better chance of a randomly dropped health from bigger enemies
+        addpickup(enemy.x+rnd(enemy.w), enemy.y+rnd(enemy.h), "health")
+    end
     if isboss then
         addpickup(enemy.x+rnd(32), enemy.y+rnd(32), "powerup")
         addpickup(enemy.x+rnd(32), enemy.y+rnd(32), "health")
@@ -44,9 +44,7 @@ end
 function enemymisc(enemy) --misc stuff every enemy needs
     enemy.shootcooldown -= ft
     enemy.inv -= ft
-    for i = 1, #players, 1 do
-        enemy.collide(enemy, players[i])
-    end
+    foreach(players, function(player) enemy:collide(player) end)
     if enemy.x < -enemy.w then
         del(enemies, enemy) -- delete enemy if off screen
     end
@@ -367,6 +365,7 @@ function addwallboss(x, y, length, points, speed, stay, move, isboss)
     end
 
     function enemy.draw(enemy)
+        local x,y = enemy.x,enemy.y
         local dmg = 0
         if enemy.health < enemy.starthealth*0.25 then
             damagesmoke(enemy)
@@ -374,16 +373,16 @@ function addwallboss(x, y, length, points, speed, stay, move, isboss)
         end
         if enemy.inv < 0 or ceil(enemy.inv*10%2) == 1 then
             for i = 2, length-1, 1 do
-                spr(93+enemy.bulletfired[i]+dmg, enemy.x, -8+enemy.y+i*8)
+                spr(93+enemy.bulletfired[i]+dmg, x, -8+y+i*8)
                 if i < length-2 then
-                    spr(79+((i%3)%2*16)+dmg*2, enemy.x+8, -8+enemy.y+i*8, 1, 1, false, (i%3 == 2))
+                    spr(79+((i%3)%2*16)+dmg*2, x+8, -8+y+i*8, 1, 1, false, (i%3 == 2))
                 end
             end
-            spr(77+enemy.bulletfired[1]+dmg*2, enemy.x, enemy.y)
-            spr(77+enemy.bulletfired[1]+dmg*2, enemy.x, enemy.y+length*8-8, 1, 1, false, true)
-            spr(70+dmg,enemy.x+8,enemy.y,2,2)
-            spr(70+dmg*2,enemy.x+8,enemy.y+length*8-16,2,2,false,true)
-            spr(79+dmg,enemy.x+8,enemy.y+length*8-24,1,1, false, true)
+            spr(77+enemy.bulletfired[1]+dmg*2, x, y)
+            spr(77+enemy.bulletfired[1]+dmg*2, x, y+length*8-8, 1, 1, false, true)
+            spr(70+dmg,x+8,y,2,2)
+            spr(70+dmg*2,x+8,y+length*8-16,2,2,false,true)
+            spr(79+dmg,x+8,y+length*8-24,1,1, false, true)
         end
     end
 
@@ -579,37 +578,62 @@ function addmissileboss(x, y) --boss that shoots missiles!!!
     add(enemies, enemy)
 end
 
+function addfinalboss() --THE FINAL BOSS!!!!!!! WOOOAAAHHHHHH!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    local enemy = {
+        x = 150,
+        y = 10,
+        w = 32,
+        h = 120,
+        inv = -1,
+        health = 150,
+        shootcooldown = rnd(2)+1,
+        shot = enemyshot,
+        collide = enemycollide,
+        speed = 1.5,
+        amount = 3
+    }
 
+    --thrusters that each fall off once the portal's health is 1/5th depleated
+    function addportalthruster(x,y,isflipped)
+            local sprite = 128
+            isflipped = isflipped or 1
+            if everysecondtimer%0.1 > 0.05 then sprite = 132 end --animation
+            spr(sprite, x, isflipped*(sin(time()*enemy.speed)*3.5)+y, 4, 2)
+    end
 
-
-
-
---FINAL BOSSS!!!! (INCOMPLETE)
-function addfinalbossportal(x,y)
-    speed = 1.5
-    amount = 3
-    sprite = 136
-
-    -- function enemy.draw()
+    function enemy:draw()
+        -- portal
+        local x,y,speed,amount = enemy.x-8,enemy.y,enemy.speed,enemy.amount
+        local ovaly1 = (sin(time()*speed-0.12)*amount/2)+y+24
+        local ovaly2 = (-sin(time()*speed-0.12)*amount/2)+y+84
+        ovalfill(x+28,ovaly1,x+6,ovaly2,14)
+        local portalcolors = {11,3}
+        for i = 1, 260, 1 do --cool swirling portal effect
+            pset(x+17+sin(i/53.3465+t()/8)*i/24+sin(i/350.23548+t()), y+54+cos(i/53.3465+t()/8)*i/9,portalcolors[(ceil(i/20))%#portalcolors+1])
+        end
+        addcircle(x+17, y+54, rnd(0.5)-0.25, rnd(1)-0.5, 5, 2, 11)
+        oval(x+28,ovaly1,x+6,ovaly2,11)
+        addportalthruster(x-19,y-4)
+        addportalthruster(x-19,y+97,-1)
+        local sprite = 136
         spr(sprite, x, (sin(time()*speed)*amount)+y, 4, 3)
         spr(sprite, x, (-sin(time()*speed)*amount)+y+85, 4, 3, false,true)
-        -- portal
-        ovalfill(x+28,(sin(time()*speed)*amount)+y+24,x+6,(-sin(time()*speed)*amount)+y+84,7)
-    -- end
-end
+        addportalthruster(x+6,y-4)
+        addportalthruster(x+6,y+97,-1)
+        clip(0,0,x+17+circletimex/3,128)
+    end
 
---thrusters that each fall off once the portal's health is 1/5th depleated
-function addportalthruster(x,y,isflipped)
-    -- function enemy.draw()
-        local sprite = 128
-
-        if isflipped == true then
-            isflipped = -1
-        else
-            isflipped = 1
+    function enemy.update()
+        enemy.y = 10+sin(time()*enemy.speed+0.2)*2 --bouncy!!!!
+        enemy.x = enemy.x + 0.025 * (103 - enemy.x); --lerps into place
+        -- if enemy.shootcooldown < 0 then
+        --     enemy.shootcooldown = 0.5 + rnd(1.5)
+        -- end
+        enemymisc(enemy)
+        if enemy.health <= 0 then -- die!!!!!
+            enemydie(enemy,17,2,1000)
         end
+    end
 
-        if everysecondtimer%0.1 > 0.05 then sprite = 132 end --animation
-        spr(sprite, x, isflipped*(sin(time()*1.5)*3)+y, 4, 2)
-    --end
+    add(enemies, enemy)
 end

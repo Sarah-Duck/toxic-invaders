@@ -19,6 +19,7 @@ function addbullet(x, y, velx, vely, good, sprite)
     function bullet.accurate_collide(object)
         if x+4 >= object.x-2 and x+4 <= object.x+2+object.w and y+4 >= object.y-2 and y+4 <= object.y+object.h+2 then
             object:shot()
+            explosion(x,y)
             del(obj, bullet)
         end
     end

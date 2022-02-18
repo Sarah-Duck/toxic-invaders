@@ -22,7 +22,7 @@ elseif gamerunning then
 end
 gt += scrollspeed + 1/600
 
-if scorescreen then --ending screen
+if currentwave == 18 then --ending screen
     if btn(4) and btn(5) and not isoutro then --press both buttons to reset cart
         acidcounter = 2
         isoutro = true

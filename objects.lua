@@ -8,12 +8,12 @@ gamerunning = false
 menuscroll = 0 --main screens
 menushipscroll = 0
 acidcounter = 0
-scorescreen = false
 isoutro = false --for outro transition
-highscore0 = 0420 --scores (0 is solo - 1 is coop)
-highscore1 = 0690
+cartdata("toxicinvaders_bychrisandribbon")
+highscore0 = dget(0) --scores (0 is solo - 1 is coop)
+highscore1 = dget(1)
 currentscore = 0 --used for both gamemodes, but passed into highscore at end of game
-babymode = false --makes game a lot easier
+-- babymode = false --makes game a lot easier
 
 
 function startgame()
@@ -32,5 +32,6 @@ end
 function drawobjs()
     foreach(obj, function(obj) obj:draw() end)
     foreach(enemies, function(obj) obj:draw() end)
+    clip() --for the final boss
     foreach(players, function(obj) obj:draw() end)
 end
