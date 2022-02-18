@@ -51,6 +51,7 @@ function addplayer(x, y, sprite, bulletsprite)
             for i = 1, #enemies, 1 do
                 enemies[i].health = -1
             end
+            currentscore-=10
             sfx(11, 3)
             sfx(29, 1)
         elseif player.health <= 0 then

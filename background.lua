@@ -1,5 +1,3 @@
--- bgcircles = {}
-
 function scrollingcircles(y, speed, spacing, radius, color)
     for i = 1, 256, spacing do
         circfill((i-(gt*speed))%256-radius*2, y, radius, color)
@@ -35,7 +33,7 @@ end
 
 function drawbg()
     cls(0)
-    camera((sin(shake+t())*shake)/3, (sin(shake+gt/2.1)*shake)/3)
+    camera(screenshakex/3, screenshakey/3)
 
     --stars
     for i = 1, 64, 1 do
@@ -56,8 +54,8 @@ function drawbg()
     scrollingsprite(88, 60, 10, 1, 1, 28)
     scrollingsprite(88, 120, 10, 1, 1, 28)
     scrollingsprite(88, 130, 12, 1, 1, 29)
-    scrollingsprite(88, 160, 15, 1, 1, 30)
-    scrollingsprite(72, 145, 15, 1, 1, 30)
+    scrollingsprite(88, 160, 15, 1, 1, 30)--
+    scrollingsprite(72, 145, 15, 1, 1, 30)--
     scrollingsprite(72, 20, 10, 1, 1, 28)
     scrollingsprite(72, 100, 10, 1, 1, 28)
     scrollingsprite(72, 170, 15, 1, 1, 30)
@@ -65,8 +63,8 @@ function drawbg()
     scrollingsprite(248, 40, 5, 2, 1, 35)
     scrollingsprite(248, 80, 5, 2, 1, 35)
     scrollingsprite(248, 180, 9, 2, 1, 38)
-    scrollingsprite(248, 260, 9, 2, 1, 38)
-    scrollingsprite(232, 120, 7, 2, 1, 36)
+    scrollingsprite(248, 260, 9, 2, 1, 38)--
+    scrollingsprite(232, 120, 7, 2, 1, 36)--
     scrollingsprite(232, 160, 7, 2, 1, 36)
     scrollingsprite(232, 240, 9, 2, 1, 38)
     --fg clouds
@@ -74,7 +72,7 @@ function drawbg()
     scrollingcircles(-12, 40, 25, 20, 4)
 
 
-    camera((sin(shake+t())*shake)/2, (sin(shake+gt/2.1)*shake)/2)
+    camera(screenshakex/2, screenshakey/2)
 
     --landscape
     scrollingcirclelines(125, 72, 25, 20, 8)
@@ -95,16 +93,6 @@ function drawbg()
     for i = 1, 10, 1 do
         scrollingsprite(231,treex[i],94+sin(i/5.2323),1,2,72,(i%2==0))
     end
-    -- scrollingsprite(231,10,94,1,2,72,true)
-    -- scrollingsprite(231,30,94,1,2,72)
-    -- scrollingsprite(231,20,93,1,2,72,true)
-    -- scrollingsprite(231,50,95,1,2,72,true)
-    -- scrollingsprite(231,62,93,1,2,72,true)
-    -- scrollingsprite(231,70,94,1,2,72)
-    -- scrollingsprite(231,80,95,1,2,72)
-    -- scrollingsprite(231,95,94,1,2,72)
-    -- scrollingsprite(231,100,93,1,2,72)
-    -- scrollingsprite(231,120,95,1,2,72,true)
     --small buildings
     scrollingsprite(226,15,98,2,2,80)
     scrollingsprite(226,65,97,2,2,80)
@@ -112,20 +100,20 @@ function drawbg()
     scrollingsprite(226,115,97,2,2,80)
     --totem poles
     scrollingsprite(230,25,99,1,2,84)
-    scrollingsprite(230,65,100,1,2,84,true)
-    scrollingsprite(230,85,101,1,2,84)
+    scrollingsprite(230,65,100,1,2,83,true)
+    scrollingsprite(230,85,101,1,2,83)
     --dead trees
-    scrollingsprite(228,30,104,2,2,84)
-    scrollingsprite(228,75,105,2,2,84,true)
-    scrollingsprite(228,100,104,2,2,84)
-    scrollingsprite(228,120,105,2,2,84,true)
+    scrollingsprite(228,30,104,2,2,86)
+    scrollingsprite(228,75,105,2,2,86,true)
+    scrollingsprite(228,100,104,2,2,86)
+    scrollingsprite(228,120,105,2,2,86,true)
     --large buildings (front)
     scrollingsprite(192,52,94,2,4,90)
     scrollingsprite(192,22,91,2,4,90)
     scrollingsprite(192,102,90,2,4,90)
     scrollingsprite(192,137,92,2,4,90)
 
-    camera(sin(shake+t())*shake, sin(shake+gt/2.1)*shake)
+    camera(screenshakex, screenshakey)
 
     scrollingcirclelines(150, 100, 30, 32, 8)
     scrollingcircles(151, 100, 30, 32, 2)

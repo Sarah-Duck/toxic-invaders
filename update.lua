@@ -4,6 +4,8 @@ respawntimer -= ft
 flashtime = ceil(t()*10%2) --for flashing elements (ship, score)
 circletimex = sin(t())*3 -- for elements that move in a circle (respawn timer)
 circletimey = cos(t())*3
+screenshakex = sin(shake+t())*shake
+screenshakey = sin(shake+gt/2.1)*shake
 
 if gameover then
     scrollspeed = mid(-1/10,scrollspeed-1/3000,ft)
