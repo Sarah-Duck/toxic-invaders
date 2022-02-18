@@ -17,15 +17,14 @@ function addpickup(x, y, type)
     local pickup = {}
     x = x
     y = y
-    type = type or rnd({"health", "health", "fastshoot", "3shoot"})
-    if type == "powerup" then type = rnd({"fastshoot", "3shoot"}) end
+    type = type or rnd({"fastshoot", "3shoot"})
     
     function pickup.draw(pickup)
         sprite = 4 --had to move these checks into draw or they'd have incorrect sprites
         if type == "fastshoot" then
             sprite = 20
         elseif type == "3shoot" then
-            sprite = 36
+            sprite = 36 --health
         end
 
         spr(sprite, x, y)
@@ -39,7 +38,7 @@ function addpickup(x, y, type)
                 if type == "fastshoot" then
                     color = 12
                 elseif type == "3shoot" then
-                    color = 9
+                    color = 9 --health
                 end
                 addcircle(x, y, sin(i/8), cos(i/8), 2, 0.6, color)
             end

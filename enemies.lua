@@ -29,7 +29,7 @@ function enemydie(enemy, sound, soundchannel, points, isboss)
         addpickup(enemy.x+rnd(enemy.w), enemy.y+rnd(enemy.h), "health")
     end
     if isboss then
-        addpickup(enemy.x+rnd(32), enemy.y+rnd(32), "powerup")
+        addpickup(enemy.x+rnd(32), enemy.y+rnd(32))
         addpickup(enemy.x+rnd(32), enemy.y+rnd(32), "health")
     end
     if shake < 3 then
