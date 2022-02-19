@@ -3,7 +3,7 @@ players = {}
 
 function addplayer(x, y, sprite, bulletsprite)
     local player = {
-        health = 33, --3
+        health = 3, --3
         x = x,
         y = y,
         w = 8,

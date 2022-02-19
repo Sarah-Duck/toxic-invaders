@@ -118,7 +118,7 @@ function finalscorescreen(x,y)
         end
     end
 
-    printdropshadow("  THANKS FOR PLAYING\nPRESS ❎ ⁙ 🅾️ TO RETRY", x+19,y+80,11,3)
+    printdropshadow("   THANKS FOR PLAYING\nPRESS (❎ ⁙ 🅾️) TO RETRY", x+15,y+80,11,3)
 
     printdropshadow("MADE WITH ♥ IN VANCOUVER\n       ◆ 2022 ◆", x+14,y+113,9,2)
     -- printdropshadow("◆ 2022 ◆", x+42,y+118,11,3)
