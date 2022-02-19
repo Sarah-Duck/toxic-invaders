@@ -1,4 +1,5 @@
 alwaysfire = false
+coopmode = false
 players = {}
 
 function addplayer(x, y, sprite, bulletsprite)
@@ -93,9 +94,8 @@ function addplayer(x, y, sprite, bulletsprite)
         --particles from rockets, and smoke/sparks from damage
         player.particlecooldown -= ft
         if player.particlecooldown < 0 and player.health > 0 then
-            thrusteroffset = {0,7}
-            for i = 1, 2, 1 do
-                addcircle(player.x-1, player.y+thrusteroffset[i], -0.5, 0, 1.5, 0.5, 9)
+            for i = 0, 1, 1 do
+                addcircle(player.x-1, player.y+i*7, -0.5, 0, 1.5, 0.5, 9)
             end
             -- addcircle(player.x-1, player.y, -0.5, 0, 1.5, 0.5, 9)
             -- addcircle(player.x-1, player.y+7, -0.5, 0, 1.5, 0.5, 9)

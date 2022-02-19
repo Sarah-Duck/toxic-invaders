@@ -221,7 +221,7 @@ wave[16] = {
     end,
     everysecond = function ()
         if flr(currentwavetime%6) == 5 and currentwavetime < 20 then
-            ylaserpos = 16
+            local ylaserpos = 16
             if players[targetplayer].y > 64 then
                 ylaserpos = 80
             end
@@ -286,10 +286,10 @@ wave[20] = {
 foreach(wave, function(wave) if not wave.conditions then wave.conditions = function() if #enemies < 1 then return true end end end end) --if there are no conditons for a wave, give them one. look at all those ends!!!!
 
 function updatewaves()
-    if coopmode then targetplayer = rnd({1,2}) end
     currentwavetime += ft
     everysecondtimer += ft
     if everysecondtimer >= 1 then
+        targetplayer = rnd({1,#players}) --swaps target every second
         everysecondtimer = 0
         if wave[currentwave].everysecond then
             wave[currentwave].everysecond()

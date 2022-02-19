@@ -15,8 +15,7 @@
 
 function addpickup(x, y, type)
     local pickup = {}
-    x = x
-    y = y
+    --x,y = x,y
     type = type or rnd({"fastshoot", "3shoot"})
     
     function pickup.draw(pickup)
@@ -38,7 +37,7 @@ function addpickup(x, y, type)
     end
 
     function pickup:affect(player)
-        pickupcolor = 8 --health
+        local pickupcolor = 8 --health
         if type == "fastshoot" then
             player.shootspeed = 0.17
             pickupcolor = 12

@@ -87,7 +87,7 @@ function addbasicenemy(x, y, speed) --basic small weak enemy
     }
 
     function enemy.draw()
-        sprite = enemy.sprite
+        local sprite = enemy.sprite
         if flr(sin(time()*speed)) ~= 0 then --if the ships heading up, change sprite
             sprite += 1
         end
@@ -149,7 +149,7 @@ function addwallshooter(x, shootup, speed, offset, bulletspeed)
         if enemy.shootcooldown < 0 then
             if (t()+enemy.offset)%1>0.5/enemy.bulletspeed then
                 enemy.shootcooldown = 0.08/enemy.bulletspeed
-                velywall = -1
+                local velywall = -1
                 if shootup then velywall = 1 end
                 if enemy.x < 120 and enemy.x > 20 then
                     addbullet(enemy.x, enemy.y, -speed, enemy.bulletspeed*velywall)
@@ -188,7 +188,7 @@ function addballshooter(x, y, speed)
 
     function enemy.draw()
         if enemy.inv < 0 or flashtime then
-            sprite = 11
+            local sprite = 11
             if enemy.health < 4 then
                 damagesmoke(enemy)
                 sprite = 27
@@ -228,7 +228,6 @@ function addtargetingenemy(x, y, speed)
         health = 3,
         shootcooldown = rnd(0.4)+0.2,
         speed = speed,
-        bulletcounter = 0,
         shot = enemyshot,
         collide = enemycollide
     }
@@ -246,12 +245,10 @@ function addtargetingenemy(x, y, speed)
         enemy.x -= speed
         if enemy.shootcooldown < 0 and currentwavetime%1.5>1.2 then
             enemy.shootcooldown = 0.1
-            enemy.bulletcounter += 1
-            ptarget = enemy.bulletcounter%#players+1
-            if enemy.x < canshootatx and players[ptarget].x < enemy.x+30 then --math involving a distance check to get the proper velocity for aiming
-                distancetarget = sqrt((players[ptarget].x - enemy.x)^2+(players[ptarget].y - enemy.y)^2)
-                velxtarget = (players[ptarget].x - enemy.x)/distancetarget
-                velytarget = (players[ptarget].y - enemy.y)/distancetarget
+            if enemy.x < canshootatx and players[targetplayer].x < enemy.x+30 then --math involving a distance check to get the proper velocity for aiming
+                local distancetarget = sqrt((players[targetplayer].x - enemy.x)^2+(players[targetplayer].y - enemy.y)^2)
+                local velxtarget = (players[targetplayer].x - enemy.x)/distancetarget
+                local velytarget = (players[targetplayer].y - enemy.y)/distancetarget
                 addbullet(enemy.x-3, enemy.y, velxtarget, velytarget) -- shoot if on screen
                 sfx(15, 2) -- play shoot sound if on screen
             end
@@ -285,7 +282,7 @@ function addlasershooter(x, y, points, speed, stay, isboss)
 
     function enemy:draw()
         if enemy.inv < 0 or flashtime then
-            sprite = 64
+            local sprite = 64
             if enemy.health < 10 then
                 damagesmoke(enemy)
                 sprite = 96
@@ -365,8 +362,8 @@ function addwallboss(x, y, length, points, speed, stay, move, isboss)
     end
 
     function enemy.draw()
-        x,y = enemy.x,enemy.y
-        dmgwall = 0
+        local x,y = enemy.x,enemy.y
+        local dmgwall = 0
         if enemy.health < enemy.starthealth*0.25 then
             damagesmoke(enemy)
             dmgwall = 32
@@ -451,11 +448,11 @@ function addbomb(x, y, delay) --BIG BOMB!!!! KILL IIT QUICKLY!!!!
         shot = enemyshot,
         collide = enemycollide
     }
-    pointsbomb = 50 --points by default if killed by player
+    local pointsbomb = 50 --points by default if killed by player
 
     function enemy.draw()
-        x,y = enemy.x,enemy.y
-        sprite = 73
+        local x,y = enemy.x,enemy.y
+        local sprite = 73
         if everysecondtimer > 0.5 then sprite = 75 end --animation
         if enemy.health < 7 then
             damagesmoke(enemy)
@@ -463,7 +460,7 @@ function addbomb(x, y, delay) --BIG BOMB!!!! KILL IIT QUICKLY!!!!
         end
         if enemy.inv < 0 or flashtime then
             circfill(x+15, y+16, sin(enemy.shootcooldown^2)*3-enemy.shootcooldown, rnd({7,11,3}))
-            offsetbomb = mid(0, -enemy.shootcooldown-2, 3)
+            local offsetbomb = mid(0, -enemy.shootcooldown-2, 3)
             spr(sprite, x, y-offsetbomb, 2, 2)
             spr(sprite, x, y+16+offsetbomb, 2, 2, false, true)
             spr(sprite, x+15, y-offsetbomb, 2, 2, true)
@@ -518,7 +515,7 @@ function addmissileboss(x, y) --boss that shoots missiles!!!
     }
 
     function enemy.draw()
-        sprite = 68
+        local sprite = 68
         if enemy.health < 11 then
             sprite = 100
             damagesmoke(enemy)
@@ -530,14 +527,13 @@ function addmissileboss(x, y) --boss that shoots missiles!!!
     end
 
     function enemy.update()
-        playertarget = ceil((t()/2.4)%#players)
         enemy.targetchangetimer -= ft
         --some cool different moves, shout out to dont get a virus fans!
         if currentwavetime%18 > 8 and currentwavetime%20 < 12 then
             enemy.targety = flr(everysecondtimer*1.99)*96
         elseif currentwavetime%18 > 17.3 then --INTIMIDATION TACTICS!!!!!
-            enemy.targety = players[playertarget].y
-            enemy.targetx = players[playertarget].x+24
+            enemy.targety = players[targetplayer].y
+            enemy.targetx = players[targetplayer].x+24
             enemy.shootcooldown = 0.4
         end
         enemy.x = lerp(enemy.x, enemy.targetx, enemy.speed)
@@ -549,13 +545,13 @@ function addmissileboss(x, y) --boss that shoots missiles!!!
         end
         if enemy.shootcooldown < 0 then
             enemy.shootcooldown = 0.3 + rnd(1.2)
-            if enemy.x < canshootatx and players[playertarget] ~= nil then
-                offsetmissleboss = 2
+            if enemy.x < canshootatx and players[targetplayer] ~= nil then
+                local offsetmissleboss = 2
                 if currentwavetime%2 > 1 then offsetmissleboss = 30 end
-                addmissile(enemy.x, enemy.y+offsetmissleboss, playertarget)
+                addmissile(enemy.x, enemy.y+offsetmissleboss, targetplayer)
                 if enemy.health < 11 then
                     sfx(15, 2)
-                    addbullet(enemy.x,enemy.y+16,(players[playertarget].x-enemy.x)/70,(players[playertarget].y-enemy.y-16)/70)
+                    addbullet(enemy.x,enemy.y+16,(players[targetplayer].x-enemy.x)/70,(players[targetplayer].y-enemy.y-16)/70)
                     -- ERROR attempting to find a non existant player
                 end
                 enemy.speed += 0.001
@@ -587,7 +583,7 @@ function addfinalboss() --THE FINAL BOSS!!!!!!! WOOOAAAHHHHHH!!!!!!!!!!!!!!!!!!!
     --thrusters that each fall off once the portal's health is 1/5th depleated
     function addportalthruster(x,y,id,isflipped)
         if id*40-40 < enemy.health then
-            spritethruster = 128
+            local spritethruster = 128
             isflipped = isflipped or 1
             if flashtime then spritethruster = 132 end --animation
             spr(spritethruster, x, isflipped*(sin(time()*enemy.speed)*3.5)+y, 4, 2)
@@ -599,11 +595,11 @@ function addfinalboss() --THE FINAL BOSS!!!!!!! WOOOAAAHHHHHH!!!!!!!!!!!!!!!!!!!
     function enemy:draw()
         -- portal
         local x,y,speed,amount = enemy.x-8,10+sin(time()*enemy.speed+0.2)*2,enemy.speed,enemy.amount
-        ovaly1 = (sin(time()*speed-0.12)*amount/2)+y+24
+        local ovaly1 = (sin(time()*speed-0.12)*amount/2)+y+24
         --local ovaly2 = (-sin(time()*speed-0.12)*amount/2)+y+84
-        ovaly2 = -ovaly1+128
+        local ovaly2 = -ovaly1+128
         ovalfill(x+28,ovaly1,x+6,ovaly2,14)
-        portalcolors = {11,3}
+        local portalcolors = {11,3}
         for i = 1, 260, 1 do --cool swirling portal effect
             pset(x+17+sin(i/53.3465+t()/8)*i/24+sin(i/350.23548+t()), y+54+cos(i/53.3465+t()/8)*i/9,portalcolors[(ceil(i/20))%#portalcolors+1])
         end
@@ -611,7 +607,7 @@ function addfinalboss() --THE FINAL BOSS!!!!!!! WOOOAAAHHHHHH!!!!!!!!!!!!!!!!!!!
         oval(x+28,ovaly1,x+6,ovaly2,11)
         addportalthruster(x-19,y-4,3)
         addportalthruster(x-19,y+97,4,-1)
-        spriteportal = 136
+        local spriteportal = 136
         if enemy.health < 40 then spriteportal = 140 end
         spr(spriteportal, x, (sin(time()*speed)*amount)+y, 4, 3)
         spr(spriteportal, x, (-sin(time()*speed)*amount)+y+85, 4, 3, false,true)
@@ -629,7 +625,7 @@ function addfinalboss() --THE FINAL BOSS!!!!!!! WOOOAAAHHHHHH!!!!!!!!!!!!!!!!!!!
                     addbullet(110,64, rnd(0.5)-1, rnd(2)-1)
                 end
                 if rnd() < 0.4 then
-                    addmissile(110, 60, 1)
+                    addmissile(110, 60, targetplayer)
                 end
             end
             if rnd() < 0.4 then

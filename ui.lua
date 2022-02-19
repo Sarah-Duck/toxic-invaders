@@ -14,7 +14,7 @@ function invaderslogotext(x,y)
     -- x = 12
     -- y = 20
 
-    invaderstext = "I N V A D E R S"
+    local invaderstext = "I N V A D E R S"
     for i = 1, 12, 1 do
         print(invaderstext, x+i%3-1, y+i%4-1, 3)
     end
@@ -85,8 +85,8 @@ function credits(x,y)
     -- default vaues
     -- x = 10
     -- y = 100
-    sintimecredits = sin(t())*2
-    timemodcredits = (t()%2<1)
+    local sintimecredits = sin(t())*2
+    local timemodcredits = (t()%2<1)
 
     palt(2,true)
     palt(0,false)
@@ -99,8 +99,8 @@ end
 
 --Ending screen
 function finalscorescreen(x,y)
-    playercolour0 = 12
-    playercolour1 = 15
+    local playercolour0 = 12
+    local playercolour1 = 15
     if coopmode then
         playercolour0 = 9
         playercolour1 = 2

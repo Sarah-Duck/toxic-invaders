@@ -6,9 +6,6 @@ circletimex = sin(t())*3 -- for elements that move in a circle (respawn timer)
 circletimey = cos(t())*3
 screenshakex = sin(shake+t())*shake
 screenshakey = sin(shake+gt/2.1)*shake
-if #players > 1 then
-    coopmode = true
-end
 
 if gameover then
     scrollspeed = mid(-1/10,scrollspeed-1/3000,ft)
@@ -36,6 +33,7 @@ elseif not gamerunning and t() > 1 then --main menu
         addplayer(18, 60, 16, 18)
         startgame()
     elseif btn(5) then
+        coopmode = true
         addplayer(18, 45, 16, 18)
         addplayer(18, 75, 32, 34)
         startgame()
