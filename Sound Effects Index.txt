@@ -1,19 +1,19 @@
 CHANNELS
 --------
 0 Melody Track
-1 Bass Track / Player / Pickup / Bomb Charge
-2 Short SFX - Bullets / Basic Enemy Hits/Kills
+1 Bass Track / Player / Pickup
+2 Short SFX - Bullets / Basic Enemy Hits/Kills / Bomb Charge
 3 Long SFX - Tough Enemy/Bosses
 
 SOUNDS
 ------
 00 Intro Transition
-01 
-02 
-03 
+01 Portal Shoot
+02 Portal Thruster Kill
+03 Portal Kill
 04 
-05 
-06 
+05 Bomb Kill
+06 Bomb Explode
 07 Bomb Charge First Half
 08 Bomb Charge Second Half
 09 Player Shoot
@@ -26,8 +26,8 @@ SOUNDS
 16 Basic Enemy Hit
 17 Basic Enemy Killed
 18 Wall Crawl Shoot
-19 Ball Shooter/Bomb Shoot
-20 Ball Shooter/Bomb Kill
+19 Ball Shooter
+20 Ball Shooter
 21 Boss Kill
 22 
 23 Laser Charge (1.5 Seconds)
@@ -39,35 +39,4 @@ SOUNDS
 29 Rewind Checkpoint
 30 Powerup Get!
 31 
-32 MUSIC
-33 MUSIC
-34 MUSIC
-35 MUSIC
-36 MUSIC
-37 MUSIC
-38 MUSIC
-39 MUSIC
-40 MUSIC
-41 MUSIC
-42 MUSIC
-43 MUSIC
-44 MUSIC
-45 MUSIC
-46 MUSIC
-47 MUSIC
-48 MUSIC
-49 MUSIC
-50 MUSIC
-51 MUSIC
-52 MUSIC
-53 MUSIC
-54 MUSIC
-55 MUSIC
-56 MUSIC
-57 MUSIC
-58 MUSIC
-59 MUSIC
-60 MUSIC
-61 MUSIC
-62 MUSIC
-63 MUSIC
+.. MUSIC

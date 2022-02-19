@@ -1,11 +1,12 @@
 pico-8 cartridge // http://www.pico-8.com
 version 35
 __lua__
-cls(0)
+--▶  toxic invaders cart label  ◀
+--▶         ribboncable         ◀
 
---pallete replacement1
+cls(0)
 pal(15,140,1)
-pal(14,3,1) --5 tokens
+pal(14,3,1)
 pal(13,133,1)
 pal(11,139,1)
 pal(10,137,1)
@@ -14,11 +15,10 @@ pal(4,141,1)
 pal(3,131,1)
 pal(0,130,1)
 
+function _draw()
 spr(0,0,0,16,16)
-
-
-function _update() 
 end
+
 __gfx__
 000000000000000000000000aaaaaaaa0000000000000000000000000000000000000000000000000000000000000000aaaaaaaa000000000000000000000000
 000000000000000000000000aaaaaaaa0000000000000000000000000000000000000000000000000000000000000000aaaaaaaa000000000000000000000000
