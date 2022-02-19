@@ -23,7 +23,7 @@ function addplayer(x, y, sprite, bulletsprite)
         -- print(player.health)
         
         --draw a different sprite when moving, and blink when hurt
-        if (player.inv < 0 or flashtime == 1) and player.health > 0 then
+        if (player.inv < 0 or flashtime) and player.health > 0 then
             if (player.ymov == 0) then
                 spr(sprite, player.x, player.y)
             elseif (player.ymov == 1) then
@@ -48,9 +48,7 @@ function addplayer(x, y, sprite, bulletsprite)
             gameover = true -- gameover set to true
             respawntimer = 5 --respawns all players in 5 seconds
             player.inv = 20
-            for i = 1, #enemies, 1 do
-                enemies[i].health = -1
-            end
+            killallenemies()
             currentscore-=10
             sfx(11, 3)
             sfx(29, 1)

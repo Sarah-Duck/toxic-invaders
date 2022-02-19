@@ -77,7 +77,7 @@ end
 --shown on edge of screen (blue for solo - orange for coop)
 function runningscore(currentscore,isflashing)
     if isflashing or gt < 2 then
-        if flashtime == 1 then
+        if flashtime then
             playerscore()
         end
     else
@@ -114,13 +114,10 @@ function finalscorescreen(x,y)
         playercolour1 = 2
     end
 
-    -- if #players > 1 and currentscore > highscore1 or #players == 1 and currentscore > highscore0 then
-        if flashtime == 1 then
+    if (#players > 1 and currentscore > highscore1) or (#players == 1 and currentscore > highscore0) then
+        if flashtime then
             printdropshadow("! new high score !", x+27,y+32,11,3)
-            -- if babymode then
-            --     printdropshadow("! BABYMODE !", x+40,y+70,9,2)
-            -- end
-        -- end
+        end
     end
     
     poke(0x5f58, 0x0 | 0x9 | 0x4) --makes score BIG

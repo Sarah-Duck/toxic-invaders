@@ -1,5 +1,5 @@
 wave = {} --store wave functions here
-currentwave = 1 --THIS IS THE CURRENT WAVE, SHOLD BE 1 UNLESS TESTING SOMETHING
+currentwave = 19 --THIS IS THE CURRENT WAVE, SHOLD BE 1 UNLESS TESTING SOMETHING
 currentwavetime = 0
 delaytimer = 0
 everysecondtimer = 0
@@ -91,7 +91,7 @@ wave[6] = {
         
     end,
     everysecond = function()
-        if rnd(100) < 10 and #enemies > 1 then
+        if rnd() < 0.1 and #enemies > 1 then
             for i = 1, rnd(2), 1 do
                 addbasicenemy(128+rnd(20), rnd(20)+54, 0.6) 
             end
@@ -184,9 +184,9 @@ wave[13] = {
         addbasicenemy(130, 58, 0.6)
         addbasicenemy(130, 68, 0.5)
         addbasicenemy(130, 63, 0.7)
-        addlasershooter(128, -2, 50, 0.1, false)
+        addlasershooter(128, 2, 50, 0.1, false)
         addbomb(128,46, 0)
-        addlasershooter(128, 90, 50, 0.1, false)
+        addlasershooter(128, 94, 50, 0.1, false)
     end,
     everysecond = wave[6].everysecond,
 }
@@ -251,9 +251,7 @@ wave[17] = {
 wave[18] = {
     delay = 0,
     start = function()
-        for i = 1, #enemies, 1 do
-            enemies[i].health = 0
-        end
+        killallenemies()
         addmissileboss(128, 0)
     end,
     everysecond = wave[6].everysecond,
@@ -264,6 +262,7 @@ wave[18] = {
 wave[19] = {
     delay = 7,
     start = function()
+        canshootatx = 110
         addfinalboss()
     end,
     boss = true
@@ -273,9 +272,9 @@ wave[19] = {
 wave[20] = {
     delay = 3,
     start = function()
-        if #players == 1 then
+        if #players == 1 and highscore0 < currentscore then
             dset(0, currentscore) --set singleplayer score
-        else
+        elseif #players > 1 and highscore1 < currentscore then
             dset(1, currentscore) --set multiplayer score
         end
     end,

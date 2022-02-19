@@ -1,5 +1,10 @@
 enemies = {}
-
+canshootatx = 126
+function killallenemies()
+    for i = 1, #enemies, 1 do
+        enemies[i].health = -1
+    end
+end
 --universal functions:
 function enemyshot(enemy)
     enemy.inv = 0.5
@@ -22,27 +27,33 @@ function enemycollide(enemy, object) --f this enemy collides with something, do 
 end
 
 function enemydie(enemy, sound, soundchannel, points, isboss)
-    local x,y = enemy.x,enemy.y
-    for i = 1, rnd(enemy.h)+6, 1 do
-        addcircle(x+rnd(enemy.w), y+rnd(enemy.h), rnd(4)-2, -rnd(2)-1, 1, 2, rnd({3, 11, 9}), -0.1)
+    if enemy.health < 1 then --no health? die.
+        local x,y = enemy.x,enemy.y
+        for i = 1, rnd(enemy.h)+6, 1 do
+            addcircle(x+rnd(enemy.w), y+rnd(enemy.h), rnd(4)-2, -rnd(2)-1, 1, 2, rnd({3, 11, 9}), -0.1)
+        end
+        if rnd(100) < sqrt(enemy.w*enemy.h)/1.5 then --you get a better chance of a randomly dropped health from bigger enemies
+            addpickup(x+rnd(enemy.w), y+rnd(enemy.h), "health")
+        end
+        if isboss then
+            music(-1, 3000)
+            sfx(60,-2) --stop missle sound, less tokens to just have it here.
+            despawnallbullets = true
+            killallenemies()
+            if not gameover then
+                addpickup(x+rnd(32), y+rnd(32))
+                addpickup(x+rnd(32), y+rnd(32), "health")
+            end
+        end
+        if shake < 3 then
+            shake = enemy.h/2
+        end
+        currentscore += points
+        sfx(sound, soundchannel)
+        explosion(x, y, enemy.w, enemy.h)
+        del(enemies, enemy)
+        enemy.x,enemy.y = x,y
     end
-    if rnd(100) < sqrt(enemy.w*enemy.h)/1.5 then --you get a better chance of a randomly dropped health from bigger enemies
-        addpickup(x+rnd(enemy.w), y+rnd(enemy.h), "health")
-    end
-    if isboss and not gameover then
-        music(-1, 3000)
-        despawnallbullets = true
-        addpickup(x+rnd(32), y+rnd(32))
-        addpickup(x+rnd(32), y+rnd(32), "health")
-    end
-    if shake < 3 then
-        shake = enemy.h/2
-    end
-    currentscore += points
-    sfx(sound, soundchannel)
-    explosion(x, y, enemy.w, enemy.h)
-    del(enemies, enemy)
-    enemy.x,enemy.y = x,y
 end
 
 function enemymisc(enemy) --misc stuff every enemy needs
@@ -80,7 +91,7 @@ function addbasicenemy(x, y, speed) --basic small weak enemy
         if flr(sin(time()*speed)) ~= 0 then --if the ships heading up, change sprite
             sprite += 1
         end
-        if enemy.inv < 0 or flashtime == 1 then
+        if enemy.inv < 0 or flashtime then
             spr(sprite, enemy.x, enemy.y)
         end
     end
@@ -90,15 +101,13 @@ function addbasicenemy(x, y, speed) --basic small weak enemy
         enemy.y += sin(time()*speed)*speed
         if enemy.shootcooldown < 0 then
             enemy.shootcooldown = 0.5 + rnd(1.5)
-            if enemy.x < 124 and enemy.x > 5 then
+            if enemy.x < canshootatx and enemy.x > 5 then
                 addbullet(enemy.x-3, enemy.y, -1, 0) -- shoot if on screen
                 sfx(15, 2) -- play shoot sound if on screen
             end
         end
         enemymisc(enemy)
-        if enemy.health <= 0 then -- die!!!!!
-            enemydie(enemy,17,2,10)
-        end
+        enemydie(enemy,17,2,10) --die!!!!
     end
 
     add(enemies, enemy)
@@ -132,7 +141,7 @@ function addwallshooter(x, shootup, health, speed, offset, bulletspeed)
         if enemy.health < health*0.25 then
             damagesmoke(enemy)
         end
-        if enemy.inv < 0 or flashtime == 1 then
+        if enemy.inv < 0 or flashtime then
             spr(enemy.sprite+t()*10%2, enemy.x, enemy.y)
         end
     end
@@ -156,9 +165,7 @@ function addwallshooter(x, shootup, health, speed, offset, bulletspeed)
             end
         end
         enemymisc(enemy)
-        if enemy.health <= 0 then
-            enemydie(enemy,17,2,15)
-        end
+        enemydie(enemy,17,2,15)
     end
 
     add(enemies, enemy)
@@ -182,7 +189,7 @@ function addballshooter(x, y, speed)
     }
 
     function enemy.draw(enemy)
-        if enemy.inv < 0 or flashtime == 1 then
+        if enemy.inv < 0 or flashtime then
             local sprite = 11
             if enemy.health < 4 then
                 damagesmoke(enemy)
@@ -197,7 +204,7 @@ function addballshooter(x, y, speed)
         enemy.x -= speed
         if enemy.shootcooldown < 0 then
             enemy.shootcooldown = 2
-            if enemy.x < 126 and enemy.x > 0 then
+            if enemy.x < canshootatx and enemy.x > 0 then
                 for i = 1, 48, 1 do --shoot ring of bullets if on screen
                     if sin(i/48) < 0.3 and sin((i+currentwavetime)/8) < 0.4 then
                         addbullet(enemy.x+4, enemy.y+4, sin(i/48)/2, cos(i/48)/2)
@@ -207,9 +214,7 @@ function addballshooter(x, y, speed)
             end
         end
         enemymisc(enemy)
-        if enemy.health <= 0 then
-            enemydie(enemy,20,3,40)
-        end
+        enemydie(enemy,20,3,40)
     end
 
     add(enemies, enemy)
@@ -234,7 +239,7 @@ function addtargetingenemy(x, y, speed)
         if enemy.health < 2 then
             damagesmoke(enemy)
         end
-        if enemy.inv < 0 or flashtime == 1 then
+        if enemy.inv < 0 or flashtime then
             spr(58, enemy.x, enemy.y, 2, 1)
         end
     end
@@ -245,7 +250,7 @@ function addtargetingenemy(x, y, speed)
             enemy.shootcooldown = 0.1
             enemy.bulletcounter += 1
             local p = enemy.bulletcounter%#players+1
-            if enemy.x < 126 and players[p].x < enemy.x+30 then --math involving a distance check to get the proper velocity for aiming
+            if enemy.x < canshootatx and players[p].x < enemy.x+30 then --math involving a distance check to get the proper velocity for aiming
                 local distance = sqrt((players[p].x - enemy.x)^2+(players[p].y - enemy.y)^2)
                 local velx = (players[p].x - enemy.x)/distance
                 local vely = (players[p].y - enemy.y)/distance
@@ -254,9 +259,7 @@ function addtargetingenemy(x, y, speed)
             end
         end
         enemymisc(enemy)
-        if enemy.health <= 0 then -- die!!!!!
-            enemydie(enemy,17,2,20)
-        end
+        enemydie(enemy,17,2,20)
     end
 
     add(enemies, enemy)
@@ -280,17 +283,17 @@ function addlasershooter(x, y, points, speed, stay, isboss)
         shot = enemyshot,
         collide = enemycollide
     }
-    if stay then enemy.y = 44 end
+    if stay then enemy.y = 48 end
 
     function enemy:draw()
-        if enemy.inv < 0 or flashtime == 1 then
+        if enemy.inv < 0 or flashtime then
             local sprite = 64
             if enemy.health < 10 then
                 damagesmoke(enemy)
                 sprite = 96
             end
-            spr(sprite,enemy.x+0,enemy.y+4,4,2)
-            spr(sprite,enemy.x+0,enemy.y+20,4,2,false,true)
+            spr(sprite,enemy.x+0,enemy.y,4,2)
+            spr(sprite,enemy.x+0,enemy.y+16,4,2,false,true)
         end
     end
 
@@ -305,7 +308,7 @@ function addlasershooter(x, y, points, speed, stay, isboss)
         end
 
         if enemy.lasertimer > 4 and stay then
-            enemy.y = 64-20 + sin(enemy.moveoffset+enemy.lasertimer/enemy.sinspeed) * 40
+            enemy.y = 48 + sin(enemy.moveoffset+enemy.lasertimer/enemy.sinspeed) * 40
             if enemy.shootcooldown < 0 then
                 enemy.shootcooldown = 0.18
                 addbullet(enemy.x+6, enemy.y+20, -1, rnd(2)-1) --shoooot!!!!!
@@ -315,10 +318,10 @@ function addlasershooter(x, y, points, speed, stay, isboss)
 
         if enemy.x <= 90 then
             if not enemy.firedlaser then
-                addlaser(enemy.x+6, enemy.y+20, 10, enemy)
+                addlaser(enemy.x+6, enemy.y+16, 10, enemy)
                 enemy.moveoffset = rnd({0,0.5}) --add offset so not moving in same direction each time
-                enemy.sinspeed = rnd({4,4,4,4,4,4,4,4,4,4,4,4,1,8,2,2,2,2}) --add differing speeds to sin up and down randomly
-                if enemy.health < 15*#players then
+                enemy.sinspeed = rnd({4,4,4,4,4,1,8,2}) --add differing speeds to sin up and down randomly
+                if enemy.health < 20*#players then
                     enemy.sinspeed /= 2
                 end
             end
@@ -331,10 +334,7 @@ function addlasershooter(x, y, points, speed, stay, isboss)
         end
 
         enemymisc(enemy)
-
-        if enemy.health <= 0 then -- die!!!!!
-            enemydie(enemy,21,3,points,isboss)
-        end
+        enemydie(enemy,21,3,points,isboss)
     end
 
     add(enemies, enemy)
@@ -360,7 +360,7 @@ function addwallboss(x, y, length, points, speed, stay, move, isboss)
         collide = enemycollide
     }
     enemy.starthealth = enemy.health
-    if enemy.isboss then enemy.health *= 3 end -- triple health if the boss
+    if isboss then enemy.health *= 3 end -- triple health if the boss
 
     for i = 1, length, 1 do
         enemy.bulletfired[i] = 0
@@ -371,19 +371,19 @@ function addwallboss(x, y, length, points, speed, stay, move, isboss)
         local dmg = 0
         if enemy.health < enemy.starthealth*0.25 then
             damagesmoke(enemy)
-            dmg = 16
+            dmg = 32
         end
-        if enemy.inv < 0 or flashtime == 1 then
+        if enemy.inv < 0 or flashtime then
             for i = 2, length-1, 1 do
                 spr(93+enemy.bulletfired[i]+dmg, x, -8+y+i*8)
                 if i < length-2 then
-                    spr(79+((i%3)%2*16)+dmg*2, x+8, -8+y+i*8, 1, 1, false, (i%3 == 2))
+                    spr(79+((i%3)%2*16)+dmg, x+8, -8+y+i*8, 1, 1, false, (i%3 == 2))
                 end
             end
-            spr(77+enemy.bulletfired[1]+dmg*2, x, y)
-            spr(77+enemy.bulletfired[1]+dmg*2, x, y+length*8-8, 1, 1, false, true)
+            spr(77+enemy.bulletfired[1]+dmg, x, y)
+            spr(77+enemy.bulletfired[1]+dmg, x, y+length*8-8, 1, 1, false, true)
             spr(70+dmg,x+8,y,2,2)
-            spr(70+dmg*2,x+8,y+length*8-16,2,2,false,true)
+            spr(70+dmg,x+8,y+length*8-16,2,2,false,true)
             spr(79+dmg,x+8,y+length*8-24,1,1, false, true)
         end
     end
@@ -397,7 +397,7 @@ function addwallboss(x, y, length, points, speed, stay, move, isboss)
         end
         if enemy.shootcooldown < 0 then
             enemy.shootcooldown = 0.095
-            if enemy.x < 129 then
+            if enemy.x < canshootatx then
 
                 local function attack(i, move) -- these are all the conditions to shoot depending on what "move" this guys on
                     if move == 0 and (flr((t()*4)%length) == i or flr((-t()*4)%length) == i) and i%2 == 1 then --this one shoots lines in a pattern
@@ -435,9 +435,7 @@ function addwallboss(x, y, length, points, speed, stay, move, isboss)
             end
         end
         enemymisc(enemy)
-        if enemy.health <= 0 then -- die!!!!!
-            enemydie(enemy,21,3,points,isboss)
-        end
+        enemydie(enemy,21,3,points,isboss) --die
     end
 
     add(enemies, enemy)
@@ -465,7 +463,7 @@ function addbomb(x, y, delay) --BIG BOMB!!!! KILL IIT QUICKLY!!!!
             damagesmoke(enemy)
             sprite += 32
         end
-        if enemy.inv < 0 or flashtime == 1 then
+        if enemy.inv < 0 or flashtime then
             circfill(x+15, y+16, sin(enemy.shootcooldown^2)*3-enemy.shootcooldown, rnd({7,11,3}))
             local offset = mid(0, -enemy.shootcooldown-2, 3)
             spr(sprite, x, y-offset, 2, 2)
@@ -489,9 +487,7 @@ function addbomb(x, y, delay) --BIG BOMB!!!! KILL IIT QUICKLY!!!!
             enemy.x = lerp(enemy.x, 80, 0.02)
         end
         enemymisc(enemy)
-        if enemy.health <= 0 then -- die!!!!!
-            enemydie(enemy,20,3,points)
-        end
+        enemydie(enemy,20,3,points) --die bastard!!!!!!
         --charge sound
         if enemy.x < 120 and everysecondtimer > 0.45 then
             if enemy.shootcooldown < -5 then
@@ -530,13 +526,13 @@ function addmissileboss(x, y) --boss that shoots missiles!!!
             sprite = 100
             damagesmoke(enemy)
         end
-        if enemy.inv < 0 or flashtime == 1 then
+        if enemy.inv < 0 or flashtime then
             spr(sprite, enemy.x, enemy.y, 4, 2)
             spr(sprite, enemy.x, enemy.y+16, 4, 2, false, true)
         end
     end
 
-    function enemy.update(enemy)
+    function enemy.update()
         local playertarget = ceil((t()/2.4)%#players)
         enemy.targetchangetimer -= ft
         --some cool different moves, shout out to dont get a virus fans!
@@ -556,7 +552,7 @@ function addmissileboss(x, y) --boss that shoots missiles!!!
         end
         if enemy.shootcooldown < 0 then
             enemy.shootcooldown = 0.3 + rnd(1.2)
-            if enemy.x < 122 and players[playertarget] ~= nil then
+            if enemy.x < canshootatx and players[playertarget] ~= nil then
                 local offset = 2
                 if currentwavetime%2 > 1 then offset = 30 end
                 addmissile(enemy.x, enemy.y+offset, playertarget)
@@ -569,12 +565,7 @@ function addmissileboss(x, y) --boss that shoots missiles!!!
             end
         end
         enemymisc(enemy)
-        if enemy.health <= 0 then -- die!!!!!
-            music(-1, 3000)
-            sfx(60,-2) --stop missle sound
-            enemydie(enemy,21,3,300,true)
-            
-        end
+        enemydie(enemy,21,3,300,true) --death!!!!
     end
 
     add(enemies, enemy)
@@ -587,27 +578,33 @@ function addfinalboss() --THE FINAL BOSS!!!!!!! WOOOAAAHHHHHH!!!!!!!!!!!!!!!!!!!
         w = 32,
         h = 120,
         inv = -1,
-        health = 150*#players, --150
+        health = 200*#players, --200
         shootcooldown = 4,
         shot = enemyshot,
         collide = enemycollide,
         speed = 1.5,
-        amount = 3
+        amount = 3,
+        thrustery = {0,0,0,0}
     }
 
     --thrusters that each fall off once the portal's health is 1/5th depleated
-    function addportalthruster(x,y,isflipped)
+    function addportalthruster(x,y,id,isflipped)
+        if id*40-40 < enemy.health then
             local sprite = 128
             isflipped = isflipped or 1
-            if everysecondtimer%0.1 > 0.05 then sprite = 132 end --animation
+            if flashtime then sprite = 132 end --animation
             spr(sprite, x, isflipped*(sin(time()*enemy.speed)*3.5)+y, 4, 2)
+        elseif rnd() < 0.4 then
+            addcircle(x+20+rnd(4), y+rnd(6), -0.5, rnd(0.5)-0.25, rnd(7), 1.4, rnd({5,9}))
+        end
     end
 
     function enemy:draw()
         -- portal
-        local x,y,speed,amount = enemy.x-8,enemy.y,enemy.speed,enemy.amount
+        local x,y,speed,amount = enemy.x-8,10+sin(time()*enemy.speed+0.2)*2,enemy.speed,enemy.amount
         local ovaly1 = (sin(time()*speed-0.12)*amount/2)+y+24
-        local ovaly2 = (-sin(time()*speed-0.12)*amount/2)+y+84
+        --local ovaly2 = (-sin(time()*speed-0.12)*amount/2)+y+84
+        local ovaly2 = -ovaly1+128
         ovalfill(x+28,ovaly1,x+6,ovaly2,14)
         local portalcolors = {11,3}
         for i = 1, 260, 1 do --cool swirling portal effect
@@ -615,44 +612,65 @@ function addfinalboss() --THE FINAL BOSS!!!!!!! WOOOAAAHHHHHH!!!!!!!!!!!!!!!!!!!
         end
         addcircle(x+17, y+54, rnd(0.5)-0.25, rnd(1)-0.5, 5, 2, 11)
         oval(x+28,ovaly1,x+6,ovaly2,11)
-        addportalthruster(x-19,y-4)
-        addportalthruster(x-19,y+97,-1)
+        addportalthruster(x-19,y-4,3)
+        addportalthruster(x-19,y+97,4,-1)
         local sprite = 136
+        if enemy.health < 40 then sprite = 140 end
         spr(sprite, x, (sin(time()*speed)*amount)+y, 4, 3)
         spr(sprite, x, (-sin(time()*speed)*amount)+y+85, 4, 3, false,true)
-        addportalthruster(x+6,y-4)
-        addportalthruster(x+6,y+97,-1)
-        clip(0,0,x+17+circletimex/3,128)
+        addportalthruster(x+6,y-4,1)
+        addportalthruster(x+6,y+97,2,-1)
+        clip(0,0,x+17,128)
     end
 
     function enemy.update()
-        enemy.y = 10+sin(time()*enemy.speed+0.2)*2 --bouncy!!!!
         enemy.x = lerp(enemy.x, 103, 0.025)--lerps into place
         if enemy.shootcooldown < 0 then
             enemy.shootcooldown = 1
-            addbasicenemy(115,rnd(30)+50,0.4+rnd(0.6))
-            if flr(currentwavetime%14+8) == 13 then
+            if #enemies < 2 then
+                for i = 1, 10, 1 do
+                    addbullet(110,64, rnd(0.5)-1, rnd(2)-1)
+                end
+                if rnd() < 0.4 then
+                    addmissile(110, 60, 1)
+                end
+            end
+            if rnd() < 0.4 then
+                addbasicenemy(115,rnd(30)+50,0.4+rnd(0.6))
+            elseif rnd() < 0.02 then
+                addtargetingenemy(115, rnd(30)+50, 0.2)
+            end
+            if flr(currentwavetime%14) == 5 then
                 local moves = {
                     function()
-                        addballshooter(110, 48, 0.08)
-                        addballshooter(110, 72, 0.08)
+                        if currentwavetime < 20 then
+                            addballshooter(110, 56, 0.08)
+                        else 
+                            addballshooter(110, 40, 0.08)
+                            addballshooter(140, 72, 0.08)
+                        end
                     end,
                     function()
-                        addwallboss(110, 35, 7, 30, 0.05, false, 3, false)
+                        addwallboss(110, 30, 8, 30, 0.05, false, 3, false)
                     end,
                     function()
                         for i = 1, 7, 1 do
                             addwallshooter(100 + (54-i)*i, (i%2==1), 10, 0.4)
                         end
+                        addlasershooter(128,48,100,0.2,false,false)
+                        addbomb(128, 48, 9)
                     end,
+                    function ()
+                        for i = 1, 5, 1 do
+                            addtargetingenemy(128, i*10+32, 0.085)
+                        end
+                    end
                 }
                 moves[flr((currentwavetime/14)%#moves+1)]()
             end
         end
         enemymisc(enemy)
-        if enemy.health <= 0 then -- die!!!!!
-            enemydie(enemy,17,2,1000)
-        end
+        enemydie(enemy,17,2,1000,true) --die!!!!!!!
     end
 
     add(enemies, enemy)

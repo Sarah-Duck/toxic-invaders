@@ -40,7 +40,7 @@ function addpickup(x, y, type)
     function pickup:affect(player)
         local color = 8
         if type == "fastshoot" then
-            player.shootspeed = 0.1
+            player.shootspeed = 0.17
             color = 12
         elseif type == "3shoot" then
             player.shoot3 = true

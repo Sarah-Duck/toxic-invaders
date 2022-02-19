@@ -26,7 +26,7 @@ function addcircle(x, y, velx, vely, r, time, color, grav)
         end
     end
 
-    add(obj, circle)
+    add(obj, circle, 1)
 end
 
 function explosion(x,y, w, h)
@@ -42,8 +42,7 @@ end
 
 function damagesmoke(object)
     --smokes when damaged!
-    addcircle(object.x+rnd(object.w*0.5), object.y+rnd(object.w*0.5), -0.5, -0.2, rnd(6), rnd(1.5)+1, 5)
-    if ceil(rnd(2)) == 1 then
-        addcircle(object.x+rnd(object.w*0.5), object.y+rnd(object.w*0.5), -0.4, -0.2, rnd(6), rnd(1)+0.5, 9)
+    if rnd() < 0.4 then
+        addcircle(object.x+rnd(object.w*0.5), object.y+rnd(object.w*0.5), -0.5, -0.2, rnd(6), rnd(1.5)+1, rnd({5,5,9}))
     end
 end

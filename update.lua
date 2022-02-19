@@ -1,7 +1,7 @@
 --scrolling and respawn stuff
 respawntimer -= ft
 --similar math elements grouped to lower tokens
-flashtime = ceil(t()*10%2) --for flashing elements (ship, score)
+flashtime = (ceil(t()*10%2) == 1) --for flashing elements (ship, score)
 circletimex = sin(t())*3 -- for elements that move in a circle (respawn timer)
 circletimey = cos(t())*3
 screenshakex = sin(shake+t())*shake
@@ -45,7 +45,7 @@ if gamerunning or t() < 1.95 then -- weird if because of freezing bubbles in the
 end
 
 --screenshake math
-shake = shake + 0.11 * (0 - shake);
+shake = lerp(shake, 0, 0.11)
 if shake < 1 or not doshake then
     shake = 0
 end

@@ -80,7 +80,7 @@ function addlaser(x, y, r, enemy)
 
     function laser.collide(object)
         --local _ENV = laser
-        if object.x < x and y+r*2 > object.y+object.h and y-r*2 < object.y and object.inv < 0 then
+        if object.x < x and y+r*2 > object.y+object.h and y-r*2 < object.y and object.inv < 0 and not object.stay then
             object:shot()
         end
     end
@@ -103,7 +103,7 @@ function addlaser(x, y, r, enemy)
             del(obj, laser)
             sfx(25, 3)
             for i = 1, 16, 1 do
-                addcircle(rnd(x), y-r/2+rnd(r), -0.5, -0.5, rnd(3), rnd(2), rnd({11,14,3}))
+                addcircle(rnd(x), y-5+rnd(r), -0.5, -0.5, rnd(3), rnd(2), rnd({11,14,3}))
             end
         end
     end
