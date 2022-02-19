@@ -20,11 +20,11 @@ function addpickup(x, y, type)
     type = type or rnd({"fastshoot", "3shoot"})
     
     function pickup.draw(pickup)
-        sprite = 4 --had to move these checks into draw or they'd have incorrect sprites
+        local sprite = 4 --had to move these checks into draw or they'd have incorrect sprites
         if type == "fastshoot" then
             sprite = 20
         elseif type == "3shoot" then
-            sprite = 36 --health
+            sprite = 36
         end
 
         spr(sprite, x, y)
@@ -33,26 +33,23 @@ function addpickup(x, y, type)
     function pickup.collide(player)
         if x+4 >= player.x-4 and x+4 <= player.x+4+player.w and y+4 >= player.y-4 and y+4 <= player.y+player.h+4 and player.health > 0 then
             pickup:affect(player)
-            for i = 1, 8, 1 do
-                local color = 8
-                if type == "fastshoot" then
-                    color = 12
-                elseif type == "3shoot" then
-                    color = 9 --health
-                end
-                addcircle(x, y, sin(i/8), cos(i/8), 2, 0.6, color)
-            end
             del(obj, pickup)
         end
     end
 
     function pickup:affect(player)
-        if type == "health" then
-            player.health = 3
-        elseif type == "fastshoot" then
+        local color = 8
+        if type == "fastshoot" then
             player.shootspeed = 0.1
+            color = 12
         elseif type == "3shoot" then
             player.shoot3 = true
+            color = 9
+        else
+            player.health = 3
+        end
+        for i = 1, 8, 1 do
+            addcircle(x, y, sin(i/8), cos(i/8), 2, 0.6, color)
         end
         currentscore+=10 --10 points
         sfx(30, 1)

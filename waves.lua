@@ -4,7 +4,7 @@ currentwavetime = 0
 delaytimer = 0
 everysecondtimer = 0
 checkpoint = 1
-changedmusic = false
+bossmusic = false
 
 --NOTE - slow BG during boss waves / make bosses their own checkpoint
 
@@ -82,7 +82,30 @@ wave[5] = {
 }
 
 wave[6] = {
-    delay = 0,
+    delay = 2,
+    start = function()
+        addbasicenemy(240, 58, 1.1)
+        addbasicenemy(240, 68, 0.9)
+        addbasicenemy(240, 63, 1)
+        addlasershooter(128, 64, 100, 0.4, true, true)
+        
+    end,
+    everysecond = function()
+        if rnd(100) < 10 and #enemies > 1 then
+            for i = 1, rnd(2), 1 do
+                addbasicenemy(128+rnd(20), rnd(20)+54, 0.6) 
+            end
+        end
+    end,
+    conditions = function()
+        if #enemies < 1 then checkpoint = currentwave+1 return true
+        end
+    end,
+    boss = true
+}
+
+wave[7] = {
+    delay = 5,
     start = function()
         addballshooter(128, 56, 0.1)
         addballshooter(160, 14, 0.1)
@@ -90,7 +113,7 @@ wave[6] = {
     end,
 }
 
-wave[7] = {
+wave[8] = {
     delay = 1,
     start = function()
         addballshooter(140, 56, 0.2)
@@ -103,33 +126,8 @@ wave[7] = {
     end,
 }
 
---music doesnt transition yet
-wave[8] = {
-    delay = 1,
-    start = function()
-        music(9, 0, 3)
-        changedmusic = true
-        addbasicenemy(240, 58, 1.1)
-        addbasicenemy(240, 68, 0.9)
-        addbasicenemy(240, 63, 1)
-        addlasershooter(128, 64, 100, 0.4, true, true)
-        
-    end,
-    everysecond = function()
-        if flr(currentwavetime%3) == 2 and rnd(100) < 40 then
-            for i = 1, rnd(2), 1 do
-                addbasicenemy(128+rnd(20), rnd(20)+54, 0.6) 
-            end
-        end
-    end,
-    conditions = function()
-        if #enemies < 1 then checkpoint = currentwave+1 return true
-        end
-    end
-}
-
 wave[9] = {
-    delay = 5,
+    delay = 1,
     start = function()
         addtargetingenemy(128,1,0.1)
         addtargetingenemy(262,60,0.2)
@@ -149,7 +147,8 @@ wave[10] = {
     delay = 3,
     start = function()
         for i = 1, 7, 1 do
-            addtargetingenemy(128, i*16-4, 0.1)
+            addtargetingenemy(128, i*16-4, 0.085)
+            addtargetingenemy(144, i*16-4, 0.085)
         end
     end,
     conditions = function()
@@ -169,16 +168,14 @@ wave[11] = {
     end,
 }
 
---music doesnt transition yet
 wave[12] = {
-    delay = 1,
+    delay = 2,
     start = function()
-        music(9, 0, 3)
-        changedmusic = true
         addwallboss(128,4,15,225,0.05,true,false,true)
     end,
-    everysecond = wave[8].everysecond,
-    conditions = wave[8].conditions
+    everysecond = wave[6].everysecond,
+    conditions = wave[6].conditions,
+    boss = true
 }
 
 wave[13] = {
@@ -191,7 +188,7 @@ wave[13] = {
         addbomb(128,46, 0)
         addlasershooter(128, 90, 50, 0.1, false)
     end,
-    everysecond = wave[8].everysecond,
+    everysecond = wave[6].everysecond,
 }
 
 wave[14] = {
@@ -207,14 +204,41 @@ wave[14] = {
 
 wave[15] = {
     delay = 0,
+    start = function()
+        for i = 1, 6, 1 do
+            addtargetingenemy(128, i*16-14+flr(i/4)*36, 0.05)
+        end
+        addbomb(140,46, 1)
+    end
+}
+
+wave[16] = {
+    delay = 0,
+    start = function()
+        addwallboss(128, 2, 7, 30, 0.05, false, 3, false)
+        addwallboss(128, 70, 7, 30, 0.05, false, 3, false)
+    end,
+    everysecond = function ()
+        if flr(currentwavetime%6) == 5 and currentwavetime < 20 then
+            local y = 16
+            if players[1].y > 64 then
+                y = 80
+            end
+            addlasershooter(128, y, 50, 0.1, false)
+        end
+    end
+}
+
+wave[17] = {
+    delay = 0,
     start = wave[5].start,
     everysecond = function()
         if currentwavetime%5 > 4 and currentwavetime < 20 then
             addbomb(128,20+currentwavetime*2,0)
         end
-        if currentwavetime > 18 and not changedmusic then
+        if currentwavetime > 18 and not bossmusic then
             music(8, 0, 3)
-            changedmusic = true
+            bossmusic = true
         end
         addbasicenemy(128,rnd(100)+14,0.4+rnd(0.4))
     end,
@@ -224,7 +248,7 @@ wave[15] = {
     end
 }
 
-wave[16] = {
+wave[18] = {
     delay = 0,
     start = function()
         for i = 1, #enemies, 1 do
@@ -232,23 +256,21 @@ wave[16] = {
         end
         addmissileboss(128, 0)
     end,
-    everysecond = wave[8].everysecond,
+    everysecond = wave[6].everysecond,
+    conditions = wave[6].conditions,
+    boss = true
 }
 
-wave[17] = {
-    delay = 0,
+wave[19] = {
+    delay = 7,
     start = function()
         addfinalboss()
-        addballshooter(128, 56, 0.1)
     end,
-    everysecond = function()
-        local y = rnd(30)+50
-        addbasicenemy(115,y,0.4+rnd(0.4))
-    end
+    boss = true
 }
 
 --ending score screen
-wave[18] = {
+wave[20] = {
     delay = 3,
     start = function()
         if #players == 1 then
@@ -258,11 +280,8 @@ wave[18] = {
         end
     end,
     conditions = function()
-    end 
+    end
 }
-
---wave[currentwave].start()
---music(0, 0, 3)
 
 foreach(wave, function(wave) if not wave.conditions then wave.conditions = function() if #enemies < 1 then return true end end end end) --if there are no conditons for a wave, give them one. look at all those ends!!!!
 
@@ -276,14 +295,18 @@ function updatewaves()
         end
     end
     if wave[currentwave].conditions() then
+        if wave[currentwave+1].boss and not bossmusic then
+            bossmusic = true
+            music(8,0,3)
+        end
         delaytimer += ft
         if delaytimer > wave[min(currentwave+1, #wave)].delay then
-            if changedmusic and currentwave ~= 15 then
-                music(0, 0, 3)
-                changedmusic = false
-            end
             everysecondtimer = 0
             currentwave += 1
+            if not wave[currentwave].boss and bossmusic then
+                music(2,0,3)
+                bossmusic = false
+            end
             currentwavetime = 0
             delaytimer = 0
             -- currentwave = (currentwave - 1) % #wave+1 --temporarily looping the waves
@@ -301,7 +324,5 @@ function setwave(num)
     currentwavetime = 0
     delaytimer = 0
     wave[currentwave].start()
-    if changedmusic then
-        music(0, 0, 3)
-    end
+    music(2, 0, 3)
 end

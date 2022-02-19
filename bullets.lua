@@ -1,3 +1,5 @@
+despawnallbullets = false
+
 function addbullet(x, y, velx, vely, good, sprite)
     local bullet = {
     }
@@ -37,7 +39,7 @@ function addbullet(x, y, velx, vely, good, sprite)
         end
 
         --delete bullet if off screen
-        if y > 128 or y < -8 or x > 128 or x < -8 then
+        if y > 128 or y < -8 or x > 128 or x < -8 or despawnallbullets then
             del(obj, bullet)
         end
     end
@@ -53,12 +55,11 @@ function addlaser(x, y, r, enemy)
     playingsound = false
 
     function laser:draw()
-        --local mid,line,pset,circfill,rectfill,sin,cos,t = mid,line,pset,circfill,rectfill,sin,cos,t
-        --local _ENV = self
         if timer > 1.5 then
             local radius = (min(timer*r*0.7,r)+sin(t()*6))-mid(0, timer-3, r)*r
             for i = -10, x, 1 do
-                line(i, y+radius*sin(t()*3+i/(10+timer^3.5))*1.6, i, y-radius*sin(t()*3+i/(10+timer^3.5))*1.6, 14)
+                local offset = radius*sin(t()*3+i/(10+timer^3.5))*1.6
+                line(i, y+offset, i, y-offset, 14)
                 pset(i, y+(cos(t()+i/50)+sin(i/4.32535+t())*2)*radius/1.8, 14)
             end
             --circfill(x, y, radius, 14)

@@ -27,6 +27,7 @@ function updateobjs()
     foreach(players, function(obj) obj:update() end)
     foreach(enemies, function(obj) obj:update() end)
     foreach(obj, function(obj) obj:update() end)
+    despawnallbullets = false
 end
 
 function drawobjs()
@@ -34,4 +35,8 @@ function drawobjs()
     foreach(enemies, function(obj) obj:draw() end)
     clip() --for the final boss
     foreach(players, function(obj) obj:draw() end)
+end
+
+function lerp(start, destination, amount)
+    return start + amount * (destination - start);
 end

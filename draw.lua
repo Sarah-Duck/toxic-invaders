@@ -1,13 +1,14 @@
 --pallete replacement
-pal(15,140,1)
-pal(14,3,1) --5 tokens
-pal(13,133,1)
-pal(11,139,1)
-pal(10,137,1)
-pal(8,136,1)
-pal(4,141,1)
-pal(3,131,1)
-pal(0,130,1)
+pal({1,2,131,141,5,6,7,136,9,137,139,12,133,3,140,130}, 1) --don't ask me why, but this table of colors starts at 1, and 0 is the final color
+-- pal(15,140,1)
+-- pal(14,3,1) --5 tokens
+-- pal(13,133,1)
+-- pal(11,139,1)
+-- pal(10,137,1)
+-- pal(8,136,1)
+-- pal(4,141,1)
+-- pal(3,131,1)
+-- pal(0,130,1)
 
 
 
@@ -15,18 +16,18 @@ drawbg()
 drawobjs()
 camera() --so the score doesn't shake
 if gamerunning then
-    local scoreflash = false
     if gameover then --gameover timer, it does a cute spinny! 😵
         printdropshadow(ceil(respawntimer),63+circletimex,55+circletimey,6,5)
-        runningscore(currentscore,true) --flashes score
-    elseif players[1].health <=0 then
-        printdropshadow(ceil(players[1].inv),players[1].x+circletimex,players[1].y+circletimey,12,15)
-        runningscore(currentscore,true) --flashes score
-    elseif #players > 1 and players[2].health <=0 then
-        printdropshadow(ceil(players[2].inv),players[2].x+circletimex,players[2].y+circletimey,9,2)
-        runningscore(currentscore,true) --flashes score
+        runningscore(currentscore,true)
     else
-        runningscore(currentscore,false) --current game score
+        runningscore(currentscore,false)
+        local textcolors = {{12,15},{9,2}}
+        for i = 1, #players, 1 do
+            local player = players[i]
+            if player.health < 1 then
+                printdropshadow(ceil(player.inv),player.x+circletimex,player.y+circletimey,textcolors[i][i],textcolors[i][i+1])
+            end
+        end
     end
 end
 if not gamerunning or menuscroll < 1 then
@@ -56,7 +57,7 @@ if not gamerunning or menuscroll < 1 then
 end
 
 --final score screen and outro transition
-if currentwave == 18 then
+if currentwave == 20 then
     finalscorescreen(0,0)
 
     --outro acid transition

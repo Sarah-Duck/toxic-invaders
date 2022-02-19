@@ -22,22 +22,20 @@ elseif gamerunning then
 end
 gt += scrollspeed + 1/600
 
-if currentwave == 18 then --ending screen
+if currentwave == 20 then --ending screen
     if btn(4) and btn(5) and not isoutro then --press both buttons to reset cart
         acidcounter = 2
         isoutro = true
         music(-1, 2000) --fades music
     end
-else --main menu
-    if not gamerunning and t() > 1 then
-        if btn(4) then
-            addplayer(18, 60, 16, 18)
-            startgame()
-        elseif btn(5) then
-            addplayer(18, 45, 16, 18)
-            addplayer(18, 75, 32, 34)
-            startgame()
-        end
+elseif not gamerunning and t() > 1 then --main menu
+    if btn(4) then
+        addplayer(18, 60, 16, 18)
+        startgame()
+    elseif btn(5) then
+        addplayer(18, 45, 16, 18)
+        addplayer(18, 75, 32, 34)
+        startgame()
     end
 end
 

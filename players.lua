@@ -68,11 +68,7 @@ function addplayer(x, y, sprite, bulletsprite)
             addcircle(player.x+4, player.y+4, sin(i/8), cos(i/8), 2, 0.6, 7)
         end
         --normal and light respawn sfx for co-op
-        if #players == 1 then
-            sfx(27, 1)
-        else
-            sfx(28, 1)
-        end
+        sfx(26+#players,1)
     end
 
     function player:update()
