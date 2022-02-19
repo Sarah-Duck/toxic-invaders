@@ -1,27 +1,20 @@
 shake = 0
 function addcircle(x, y, velx, vely, r, time, color, grav)
     local circle = {
-        x = x,
-        y = y,
-        velx = velx,
-        vely = vely,
-        r = r,
-        time = time,
         t = time,
-        col = color,
-        grav = grav or 0
     }
+    grav = grav or 0
 
     function circle.draw()
-        circfill(circle.x, circle.y, circle.r*sin(circle.time/circle.t), circle.col)
+        circfill(x, y, r*sin(time/circle.t), color)
     end
 
-    function circle.update(cirle)
-        circle.x += circle.velx
-        circle.vely -= circle.grav
-        circle.y += circle.vely
-        circle.time -= ft
-        if circle.time < 0 then
+    function circle.update()
+        x += velx
+        vely -= grav
+        y += vely
+        time -= ft
+        if time < 0 then
             del(obj, circle)
         end
     end
@@ -42,7 +35,7 @@ end
 
 function damagesmoke(object)
     --smokes when damaged!
-    if rnd() < 0.4 then
-        addcircle(object.x+rnd(object.w*0.5), object.y+rnd(object.w*0.5), -0.5, -0.2, rnd(6), rnd(1.5)+1, rnd({5,5,9}))
+    if rnd() < 0.2 then
+        addcircle(object.x+rnd(object.w*0.5), object.y+rnd(object.w*0.5), -0.5, -0.2, rnd(7), rnd(1.2)+1, rnd({5,5,9}))
     end
 end
