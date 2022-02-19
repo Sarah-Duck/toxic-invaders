@@ -14,16 +14,14 @@ function invaderslogotext(x,y)
     -- x = 12
     -- y = 20
 
-    --font
-    local text = "I N V A D E R S"
+    invaderstext = "I N V A D E R S"
     for i = 1, 12, 1 do
-        print(text, x+i%3-1, y+i%4-1, 3)
+        print(invaderstext, x+i%3-1, y+i%4-1, 3)
     end
-    print(text,x,y,14)
+    print(invaderstext,x,y,14)
     clip(x, y, 63, 3)
-    print(text,x,y,11)
+    print(invaderstext,x,y,11)
     clip()
-
 end
 
 function drawlogo(x,y)
@@ -31,8 +29,6 @@ function drawlogo(x,y)
     -- x = 24
     -- y = 26
 
-    --this is a horrible way to draw the logo, but I'm doing it anyways. x3
-    -- muahahahahahahaha!!!!!!
     sspr(88,88,16,8,x-3,y+2,32,16) --to shadow
     sspr(88,88,16,8,x-3,y,32,16) --to
     sspr(120,88,8,8,x+55,y+2,16,16) --ic shadow
@@ -67,7 +63,7 @@ function titlehighscores(x,y)
 end
 
 function playerscore()
-    if #players > 1 then
+    if coopmode then
         printdropshadow(scorewithzeros(tostring(currentscore),4),2,121,9,4) --2P current score
     else
         printdropshadow(scorewithzeros(tostring(currentscore),4),2,2,12,15) --1P current score
@@ -89,43 +85,40 @@ function credits(x,y)
     -- default vaues
     -- x = 10
     -- y = 100
-    local sintime = sin(t())*2
-    local timemod = (t()%2<1)
+    sintimecredits = sin(t())*2
+    timemodcredits = (t()%2<1)
 
     palt(2,true)
     palt(0,false)
-    spr(186,x-4,y+6+sintime,1,1,timemod) --duck
-    spr(184,x+104,y+6+-sintime,1,1,timemod) --bot
+    spr(186,x-4,y+6+sintimecredits,1,1,timemodcredits) --duck
+    spr(184,x+104,y+6+-sintimecredits,1,1,timemodcredits) --bot
     palt()
     printdropshadow("1029chris\nLUA TUNES",x+10,y+5,9,2)
     printdropshadow("ribboncable\nART  SOUNDS",x+56,y+5,12,15)
-    -- printdropshadow("CODE TUNES",x+8,y+12,11,3)
-    -- printdropshadow("ART SOUNDS",x+58,y+12,11,3)
 end
 
 --Ending screen
 function finalscorescreen(x,y)
-    local playercolour0 = 12
-    local playercolour1 = 15
-
-    printdropshadow("fINAL sCORE", x+41,y+22,6,5)
-    if #players > 1 then
+    playercolour0 = 12
+    playercolour1 = 15
+    if coopmode then
         playercolour0 = 9
         playercolour1 = 2
     end
 
-    if (#players > 1 and currentscore > highscore1) or (#players == 1 and currentscore > highscore0) then
+    poke(0x5f58, 0x9 | 0x4) --makes score BIG
+    printdropshadow("vICTORY!", x+32,y+18,6,5)
+    printdropshadow(scorewithzeros(tostring(currentscore),4),x+48+circletimex,y+50+circletimey,playercolour0,playercolour1) --2P high score
+    poke(0x5f58)
+    -- printdropshadow("fINAL sCORE", x+43,y+22,6,5)
+
+    if (coopmode and currentscore > highscore1) or (not coopmode and currentscore > highscore0) then
         if flashtime then
-            printdropshadow("! new high score !", x+27,y+32,11,3)
+            printdropshadow("! new high score !", x+27,y+34,11,3)
         end
     end
-    
-    poke(0x5f58, 0x0 | 0x9 | 0x4) --makes score BIG
-    printdropshadow(scorewithzeros(tostring(currentscore),4),x+48+circletimex,y+50+circletimey,playercolour0,playercolour1) --2P high score
-    poke(0x5f58, 0)
 
     printdropshadow("  THANKS FOR PLAYING\nPRESS ❎ ⁙ 🅾️ TO RETRY", x+19,y+80,11,3)
-    -- printdropshadow("PRESS ❎ ⁙ 🅾️ TO RETRY", x+18,y+88,11,3)
 
     printdropshadow("MADE WITH ♥ IN VANCOUVER\n       ◆ 2022 ◆", x+14,y+113,9,2)
     -- printdropshadow("◆ 2022 ◆", x+42,y+118,11,3)
@@ -149,4 +142,3 @@ sfx(0,3,3)
 doshake = true
 menuitem(1, "(\129) screenshake", function() doshake = not doshake end)
 menuitem(2, "(\144) autofire", function() alwaysfire = not alwaysfire end)
--- menuitem(3, "(\137) BABYMODE", function() babymode = true end)

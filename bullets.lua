@@ -7,7 +7,7 @@ function addbullet(x, y, velx, vely, good, sprite)
     sprite = sprite or 2
     good = good or false
 
-    function bullet.draw(bullet)
+    function bullet.draw()
         spr(sprite, x, y)
     end
 
@@ -26,7 +26,7 @@ function addbullet(x, y, velx, vely, good, sprite)
         end
     end
 
-    function bullet.update(bullet)
+    function bullet.update()
         --applying velocity
         x += velx
         y += vely
@@ -85,7 +85,7 @@ function addlaser(x, y, r, enemy)
         end
     end
 
-    function laser.update(laser)
+    function laser.update()
         timer += ft
         --collision detection after the warm up
         if timer > 1.5 and timer < 3.6 then
@@ -127,7 +127,7 @@ function addmissile(x, y, target) --basic small weak enemy
         collide = enemycollide
     }
 
-    function enemy.draw(enemy)
+    function enemy.draw()
         if enemy.inv < 0 or ceil(enemy.inv*10%2) == 1 then
             spr(42, enemy.x, enemy.y, 2, 1)
         end
@@ -140,7 +140,7 @@ function addmissile(x, y, target) --basic small weak enemy
         addcircle(enemy.x+12, enemy.y+rnd(8), 0, rnd()/8, 2.1, 0.6, rnd({9,5}))
         enemymisc(enemy)
         if enemy.health <= 0 then -- die!!!!!
-            enemydie(enemy,17,2,10)
+            enemydie(enemy,17,2,17)
         end
     end
 

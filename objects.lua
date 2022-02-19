@@ -13,14 +13,13 @@ cartdata("toxicinvaders_bychrisandribbon")
 highscore0 = dget(0) --scores (0 is solo - 1 is coop)
 highscore1 = dget(1)
 currentscore = 0 --used for both gamemodes, but passed into highscore at end of game
--- babymode = false --makes game a lot easier
 
 
 function startgame()
     music(0, 0, 3)
     wave[currentwave].start()
     gamerunning = true
-    print(gt,10,10)
+    -- print(gt,10,10)
 end
 
 function updateobjs()

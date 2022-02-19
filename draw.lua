@@ -1,7 +1,7 @@
 --pallete replacement
 pal({1,2,131,141,5,6,7,136,9,137,139,12,133,3,140,130}, 1) --don't ask me why, but this table of colors starts at 1, and 0 is the final color
 -- pal(15,140,1)
--- pal(14,3,1) --5 tokens
+-- pal(14,3,1)
 -- pal(13,133,1)
 -- pal(11,139,1)
 -- pal(10,137,1)
@@ -21,11 +21,11 @@ if gamerunning then
         runningscore(currentscore,true)
     else
         runningscore(currentscore,false)
-        local textcolors = {{12,15},{9,2}}
+        scoretextcolors = {{12,15},{2,9}} --shows incorrect shadow colour for 2P counter (shows as 0)
         for i = 1, #players, 1 do
-            local player = players[i]
+            player = players[i]
             if player.health < 1 then
-                printdropshadow(ceil(player.inv),player.x+circletimex,player.y+circletimey,textcolors[i][i],textcolors[i][i+1])
+                printdropshadow(ceil(player.inv),player.x+circletimex,player.y+circletimey,scoretextcolors[i][i],scoretextcolors[i][i+1])
             end
         end
     end

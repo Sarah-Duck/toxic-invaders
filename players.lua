@@ -3,7 +3,7 @@ players = {}
 
 function addplayer(x, y, sprite, bulletsprite)
     local player = {
-        health = 3,
+        health = 33, --3
         x = x,
         y = y,
         w = 8,
@@ -93,10 +93,14 @@ function addplayer(x, y, sprite, bulletsprite)
         --particles from rockets, and smoke/sparks from damage
         player.particlecooldown -= ft
         if player.particlecooldown < 0 and player.health > 0 then
-            addcircle(player.x-1, player.y, -0.5, 0, 1.5, 0.5, 9)
-            addcircle(player.x-1, player.y+7, -0.5, 0, 1.5, 0.5, 9)
+            thrusteroffset = {0,7}
+            for i = 1, 2, 1 do
+                addcircle(player.x-1, player.y+thrusteroffset[i], -0.5, 0, 1.5, 0.5, 9)
+            end
+            -- addcircle(player.x-1, player.y, -0.5, 0, 1.5, 0.5, 9)
+            -- addcircle(player.x-1, player.y+7, -0.5, 0, 1.5, 0.5, 9)
             if player.health < 3 then
-                addcircle(player.x+rnd(8), player.y+rnd(8), rnd(1.5)-0.75, -1.5, 1, rnd(1)+0.5, 9, -0.1)
+                addcircle(player.x+rnd(8), player.y+rnd(8), rnd(1.5)-0.75, -1.5, 1, rnd(1)+0.5, rnd({9,10}), -0.1)
                 if player.health < 2 then
                     damagesmoke(player)
                 end

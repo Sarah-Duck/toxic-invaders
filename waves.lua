@@ -5,6 +5,7 @@ delaytimer = 0
 everysecondtimer = 0
 checkpoint = 1
 bossmusic = false
+targetplayer = 1
 
 --NOTE - slow BG during boss waves / make bosses their own checkpoint
 
@@ -49,7 +50,7 @@ wave[3] = {
 wave[4] = {
     delay = 0,
     start = function()
-        addwallshooter(140, true, 10, 0.4)
+        addwallshooter(140, true, 0.4)
         addbasicenemy(128, 30, 0.5)
         addtargetingenemy(155, 60, 0.15)
         addbasicenemy(128, 90, 0.5)
@@ -64,7 +65,7 @@ wave[5] = {
     delay = 2,
     start = function()
         for i = 1, 12, 1 do
-            addwallshooter(100 + (54-i)*i, (i%2==1), 10, 0.4)
+            addwallshooter(100 + (54-i)*i, (i%2==1), 0.4)
         end
         addpickup(490, 60, "health")
     end,
@@ -117,8 +118,8 @@ wave[8] = {
     delay = 1,
     start = function()
         addballshooter(140, 56, 0.2)
-        addwallshooter(120, true, 10, 0.3)
-        addwallshooter(220, true, 10, 0.3)
+        addwallshooter(120, true, 0.3)
+        addwallshooter(220, true, 0.3)
         addbasicenemy(128, 30, 0.5)
         addbasicenemy(128, 110, 0.5)
         addbasicenemy(140, 30, 0.2)
@@ -131,10 +132,10 @@ wave[9] = {
     start = function()
         addtargetingenemy(128,1,0.1)
         addtargetingenemy(262,60,0.2)
-        addwallshooter(138, true, 10, 0.4, 0)
-        addwallshooter(144, true, 10, 0.4, 0)
-        addwallshooter(185, false, 10, 0.4, 0)
-        addwallshooter(230, true, 10, 0.4)
+        addwallshooter(138, true, 0.4, 0)
+        addwallshooter(144, true, 0.4, 0)
+        addwallshooter(185, false, 0.4, 0)
+        addwallshooter(230, true, 0.4)
         addballshooter(230, 56, 0.2)
     end,
     conditions = function()
@@ -161,8 +162,8 @@ wave[11] = {
     delay = 1,
     start = function()
         for i = 1, 3, 1 do
-            addwallshooter(128+i*65, true, 10, 0.4, 0, 0.68)
-            addwallshooter(128+i*65, false, 10, 0.4, 0, 0.68)
+            addwallshooter(128+i*65, true, 0.4, 0, 0.68)
+            addwallshooter(128+i*65, false, 0.4, 0, 0.68)
         end
         addballshooter(200, 56, 0.2)
     end,
@@ -220,11 +221,11 @@ wave[16] = {
     end,
     everysecond = function ()
         if flr(currentwavetime%6) == 5 and currentwavetime < 20 then
-            local y = 16
-            if players[1].y > 64 then
-                y = 80
+            ylaserpos = 16
+            if players[targetplayer].y > 64 then
+                ylaserpos = 80
             end
-            addlasershooter(128, y, 50, 0.1, false)
+            addlasershooter(128, ylaserpos, 50, 0.1, false)
         end
     end
 }
@@ -272,9 +273,9 @@ wave[19] = {
 wave[20] = {
     delay = 3,
     start = function()
-        if #players == 1 and highscore0 < currentscore then
+        if not coopmode and highscore0 < currentscore then
             dset(0, currentscore) --set singleplayer score
-        elseif #players > 1 and highscore1 < currentscore then
+        elseif coopmode and highscore1 < currentscore then
             dset(1, currentscore) --set multiplayer score
         end
     end,
@@ -285,6 +286,7 @@ wave[20] = {
 foreach(wave, function(wave) if not wave.conditions then wave.conditions = function() if #enemies < 1 then return true end end end end) --if there are no conditons for a wave, give them one. look at all those ends!!!!
 
 function updatewaves()
+    if coopmode then targetplayer = rnd({1,2}) end
     currentwavetime += ft
     everysecondtimer += ft
     if everysecondtimer >= 1 then
