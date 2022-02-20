@@ -34,7 +34,7 @@ function enemydie(enemy, sound, soundchannel, points, isboss, drop)
             addcircle(x+rnd(enemy.w), y+rnd(enemy.h), rnd(4)-2, -rnd(2)-1, 1, 2, rnd({3, 11, 9}), -0.1)
         end
         if rnd(100) < sqrt(enemy.w*enemy.h)/1.5 and not drop then --you get a better chance of a randomly dropped health from bigger enemies
-            addpickup(x+rnd(enemy.w), y+rnd(enemy.h), "health")
+            addpickup(x+rnd(enemy.w), y+rnd(enemy.h), 48)
         end
         if isboss then
             playsong(-1, 3000)
@@ -43,7 +43,7 @@ function enemydie(enemy, sound, soundchannel, points, isboss, drop)
             killallenemies()
             if not gameover and not drop then
                 addpickup(x+rnd(32), y+rnd(32))
-                addpickup(x+rnd(32), y+rnd(32), "health")
+                addpickup(x+rnd(32), y+rnd(32), 48)
             end
         end
         if shake < 3 then
@@ -189,13 +189,13 @@ function addballshooter(x, y, speed)
 
     function enemy.draw()
         if enemy.inv < 0 or flashtime then
-            local sprite = 11
+            local sprite = 9
             if enemy.health < 4 then
                 damagesmoke(enemy)
-                sprite = 27
+                sprite = 41
             end
-            spr(sprite, enemy.x, enemy.y, 3, 1, false, true)
-            spr(sprite, enemy.x, enemy.y+8, 3, 1)
+            -- spr(sprite, enemy.x, enemy.y, 3, 1, false, true)
+            spr(sprite, enemy.x, enemy.y, 3, 2) --non-flipped image for token's sake
         end
     end
 
@@ -238,7 +238,7 @@ function addtargetingenemy(x, y, speed)
             damagesmoke(enemy)
         end
         if enemy.inv < 0 or flashtime then
-            spr(58, enemy.x, enemy.y, 2, 1)
+            spr(28, enemy.x, enemy.y, 2, 1)
         end
     end
 
@@ -284,13 +284,13 @@ function addlasershooter(x, y, points, speed, stay, isboss)
 
     function enemy:draw()
         if enemy.inv < 0 or flashtime then
-            local sprite = 64
+            local sprite = 5
             if enemy.health < 10 then
                 damagesmoke(enemy)
-                sprite = 96
+                sprite = 65
             end
-            spr(sprite,enemy.x+0,enemy.y,4,2)
-            spr(sprite,enemy.x+0,enemy.y+16,4,2,false,true)
+            spr(sprite,enemy.x,enemy.y,4,2) --non-flipped sprite to reduce tokens
+            -- spr(sprite,enemy.x+0,enemy.y+16,4,2,false,true)
         end
     end
 
@@ -517,9 +517,9 @@ function addmissileboss(x, y) --boss that shoots missiles!!!
     }
 
     function enemy.draw()
-        local sprite = 68
+        local sprite = 69
         if enemy.health < 11 then
-            sprite = 100
+            sprite = 101
             damagesmoke(enemy)
         end
         if enemy.inv < 0 or flashtime then

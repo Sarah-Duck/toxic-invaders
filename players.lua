@@ -2,7 +2,7 @@ alwaysfire = false
 coopmode = false
 players = {}
 
-function addplayer(x, y, sprite, bulletsprite)
+function addplayer(x, y, sprite, spriteup, spritedwn, bulletsprite)
     local player = {
         health = 3, --3
         x = x,
@@ -19,19 +19,20 @@ function addplayer(x, y, sprite, bulletsprite)
         shootspeed = 0.25,
         shoot3 = false
     }
+    
 
-    function player:draw()
-        -- print(player.health)
-        
-        --draw a different sprite when moving, and blink when hurt
+    function player:draw()        
+        --draw a different sprite when moving
+        if (player.ymov == 0) then
+            spritelocal = sprite
+        elseif (player.ymov == 1) then
+            spritelocal = spriteup
+        elseif (player.ymov == -1) then
+            spritelocal = spritedwn
+        end
+        --blink when hurt
         if (player.inv < 0 or flashtime) and player.health > 0 then
-            if (player.ymov == 0) then
-                spr(sprite, player.x, player.y)
-            elseif (player.ymov == 1) then
-                spr(sprite+1, player.x, player.y)
-            elseif (player.ymov == -1) then
-                spr(sprite+1, player.x, player.y, 1, 1, false, true)
-            end
+            spr(spritelocal, player.x, player.y)
         end
     end
 
@@ -43,7 +44,7 @@ function addplayer(x, y, sprite, bulletsprite)
         player.shootspeed = 0.25
         player.shoot3 = false
         shake = 9
-        sfx(10, 1)
+        sfx(10, 1) --hit, ouch!
         explosion(player.x, player.y)
         if isgameover() then --FUCK, GAME OVER YOU DIED!
             gameover = true -- gameover set to true
@@ -51,8 +52,8 @@ function addplayer(x, y, sprite, bulletsprite)
             player.inv = 20
             killallenemies()
             currentscore-=10
-            sfx(11, 3)
-            sfx(29, 1)
+            sfx(11, 3) --killed
+            sfx(22, 1) --rewind beat
         elseif player.health <= 0 then
             currentscore = ceil(currentscore * 0.5) --halves score if coop
             sfx(11, 3)
@@ -66,8 +67,7 @@ function addplayer(x, y, sprite, bulletsprite)
         for i = 1, 8, 1 do
             addcircle(player.x+4, player.y+4, sin(i/8), cos(i/8), 2, 0.6, 7)
         end
-        --normal and light respawn sfx for co-op
-        sfx(26+#players,1)
+        sfx(25+#players,1) --normal and light respawn sfx for co-op
     end
 
     function player:update()
@@ -119,9 +119,9 @@ function addplayer(x, y, sprite, bulletsprite)
             if player.shoot3 then
                 addbullet(player.x+3, player.y+3, 2, 0.25, true, bulletsprite)
                 addbullet(player.x+3, player.y-3, 2, -0.25, true, bulletsprite)
-                sfx(12, 2)
+                sfx(12, 2) --3shoot
             else
-                sfx(9, 2)
+                sfx(9, 2) --normal shoot
             end
             player.shootcooldown = player.shootspeed
         end

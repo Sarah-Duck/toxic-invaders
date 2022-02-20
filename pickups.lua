@@ -14,18 +14,12 @@
 -- add(obj, randompickups)
 
 function addpickup(x, y, type)
+    --if type is "48," then health. otherwise it'll be a rnd powerup
     local pickup = {}
-    --x,y = x,y
-    type = type or rnd({"fastshoot", "3shoot"})
+    type = type or rnd({49, 50}) --48 = health / 49 = fastshoot / 50 = 3shoot
+    local sprite = type
     
-    function pickup.draw(pickup)
-        local sprite = 4 --health
-        if type == "fastshoot" then
-            sprite = 20
-        elseif type == "3shoot" then
-            sprite = 36
-        end
-
+    function pickup.draw()
         spr(sprite, x, y)
     end
 
@@ -38,10 +32,10 @@ function addpickup(x, y, type)
 
     function pickup:affect(player)
         local pickupcolor = 8 --health
-        if type == "fastshoot" then
+        if type == 49 then --fastshoot
             player.shootspeed = 0.17
             pickupcolor = 12
-        elseif type == "3shoot" then
+        elseif type == 50 then --3shoot
             player.shoot3 = true
             player.shootspeed = 0.4
             pickupcolor = 9
@@ -52,10 +46,10 @@ function addpickup(x, y, type)
             addcircle(x, y, sin(i/8), cos(i/8), 2, 0.6, pickupcolor)
         end
         currentscore+=10 --10 points
-        sfx(30, 1)
+        sfx(13, 1)
     end
 
-    function pickup.update(pickup)
+    function pickup.update()
         x -= 0.3
         y += sin(time()/2)*0.2
         foreach(players, pickup.collide)
@@ -67,4 +61,5 @@ function addpickup(x, y, type)
     add(obj, pickup)
 end
 
- --addpickup(120, 60)
+--  addpickup(128, 60, 48)
+--  addpickup(128, 70)

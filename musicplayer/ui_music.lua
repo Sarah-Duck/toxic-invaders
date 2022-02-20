@@ -54,7 +54,7 @@ function mainmenutext(x,y,currentlyplaying)
     printdropshadow("(\139) track selection (\145)\n",x,y,9,2)
 
     poke(0x5f58, 0x9 | 0x4) --makes score BIG
-    printdropshadow(tracktext,x+24+circletimex,y+18+circletimey,11,3)
+    printdropshadow("mENU mUSE          bATTLE bASS          bOSSY bEATS          fISSURE fINALE          vICTORY vESSLE",x-tracktitleposition+circletimex,y+18+circletimey,11,3)
     poke(0x5f58)
 end
 
@@ -67,9 +67,9 @@ function credits(x,y)
 
     palt(2,true)
     palt(0,false)
-    spr(186,x+30,y+7+sintimecredits,1,1,timemodcredits) --duck
+    spr(186,x,y+sintimecredits,1,1,timemodcredits) --duck
     palt()
-    printdropshadow("1029chris",x+42,y+9,9,2)
+    printdropshadow("1029chris",x+11,y+2,9,2)
 end
 
 --intro/ending acid effect
@@ -86,4 +86,5 @@ end
 --sfx for the intro transition
 sfx(0,3,3)
 
-menuitem(1, "(❎ ⁙ 🅾️) to end", function() music(-1,3000,3) end)
+menuitem(1, "(\152) hide ui", function() hideui = not hideui end)
+menuitem(3, "(❎ ⁙ 🅾️) to end", function() music(-1,3000,3) end)

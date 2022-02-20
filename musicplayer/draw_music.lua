@@ -4,8 +4,6 @@ pal({1,2,131,141,5,6,7,136,9,137,139,12,133,3,140,130}, 1) --don't ask me why, b
 
 
 drawbg()
-drawobjs()
-
 menushipscroll += ft
 
 for i = 1, 3, 1 do
@@ -17,13 +15,16 @@ if t() < 1 then
 else
     drawlogo(24,26)
 end
+credits(40,116)
 
---main screen items
-mainmenutext(15,74)
-credits(10,108)
+if not hideui then
+    --main screen items
+    mainmenutext(15,74)
 
---intro acid transtition
-acidcounter+=ft
-acidtransition()
+    --intro acid transtition
+    acidcounter+=ft
+    acidtransition()
+    drawobjs() --only used for acid trans here
+end
 
--- print(tracknumber,0,0)
+-- print(autoplay,0,0,7)

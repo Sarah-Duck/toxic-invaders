@@ -129,7 +129,7 @@ function addmissile(x, y, target) --basic small weak enemy
 
     function enemy.draw()
         if enemy.inv < 0 or ceil(enemy.inv*10%2) == 1 then
-            spr(42, enemy.x, enemy.y, 2, 1)
+            spr(12, enemy.x, enemy.y, 2, 1)
         end
     end
 

@@ -66,7 +66,7 @@ wave[5] = {
         for i = 1, 12, 1 do
             addwallshooter(100 + (54-i)*i, (i%2==1), 0.4)
         end
-        addpickup(490, 60, "health")
+        addpickup(490, 60, 48)
     end,
     everysecond = function()
         if flr(currentwavetime%3) == 2 and currentwavetime < 16 then

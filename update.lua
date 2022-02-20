@@ -14,7 +14,7 @@ if gameover then
         gameover = false
         foreach(players, function(obj) obj:respawn() end)
         setwave(mid(checkpoint,currentwave-1,#wave)) --goes back one wave
-        sfx(29, -2)
+        sfx(22, -2) --stops respawn rewind beat
     end
 elseif gamerunning then
     updatewaves() -- update the wave function
@@ -37,12 +37,12 @@ if currentwave == 20 then --ending screen
     end
 elseif not gamerunning and t() > 1 then --main menu
     if btn(4) then
-        addplayer(18, 60, 16, 18)
+        addplayer1() --reduces tokens, found in objects.lua
         startgame()
     elseif btn(5) then
         coopmode = true
-        addplayer(18, 45, 16, 18)
-        addplayer(18, 75, 32, 34)
+        addplayer1() --reduces tokens, found in objects.lua
+        addplayer(18, 75, 32, 33, 34, 4)
         startgame()
     end
 end
@@ -64,3 +64,11 @@ function scorewithzeros(string,length)
     if #string == length then return string end
     return "0"..scorewithzeros(string, length-1)
 end
+
+-- screenshake accessibility setting
+if doshake then screenshaketext = "(▒) screenshake" end --adds 9 tokens to visually show the toggle
+menuitem(1,screenshaketext,
+    function()
+        doshake = not doshake
+        screenshaketext = "(█) screenshake"
+    end)

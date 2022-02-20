@@ -4,43 +4,67 @@ ft = 1/60 --frametime
 scrollspeed = 0
 menushipscroll = 0
 acidcounter = 0
+hideui = false
+autoplay = false
+autoplaytimer = 90
 tracknumber = 0
-tracktext = ""
+currentsong = -1
+fadeouttimer = 1
+tracktitleposition = -200
+newtracktitleposition = 0
 cartdata("toxicinvaderssoundtrack_by1029chris")
 
-
-function playmusic()
-    if tracknumber == 0 then
-        tracktext = " mENU"
-        music(-1,0,3)
-       elseif tracknumber == 1 then
-        tracktext = "fORWARD"
-        music(2,0,3)
-       elseif tracknumber == 2 then
-        tracktext = " bOSSY"
-        music(8, 0, 3)
-       elseif tracknumber == 3 then
-        tracktext = " pORTAL"
-        music(-1,0,3)
-       end
+function playsong(song, fade)
+    fade = fade or 0
+    if song ~= currentsong then
+        music(song, fade)
+        currentsong = song
     end
+end
+
+function fadeoutsong()
+    fadeouttimer = 1
+    playsong(-1,1000) --fades out currentsong
+end
+
+function selectmusic()
+    if tracknumber == -1 then
+        tracknumber = 0
+    elseif tracknumber == 0 then
+        playsong(-1,0)
+    elseif tracknumber == 1 then
+        playsong(0)
+    elseif tracknumber == 2 then
+        playsong(8)
+    elseif tracknumber == 3 then
+        playsong(17)
+    elseif tracknumber == 4 then
+        playsong(-1,0)
+    end
+end
+
+function updatetracktitlepos()
+    if tracknumber == 0 then
+        newtracktitleposition = -16
+    elseif tracknumber == 1 then
+        newtracktitleposition = 145
+    elseif tracknumber == 2 then
+        newtracktitleposition = 313
+    elseif tracknumber == 3 then
+        newtracktitleposition = 493
+    elseif tracknumber == 4 then
+        newtracktitleposition = 685
+    end
+end
 
 function updateobjs()
-    foreach(players, function(obj) obj:update() end)
-    foreach(enemies, function(obj) obj:update() end)
     foreach(obj, function(obj) obj:update() end)
-    despawnallbullets = false
 end
 
 function drawobjs()
     foreach(obj, function(obj) obj:draw() end)
-    foreach(enemies, function(obj) obj:draw() end)
-    clip() --for the final boss
-    foreach(players, function(obj) obj:draw() end)
 end
 
 function lerp(start, destination, amount)
     return start + amount * (destination - start);
 end
-
-playmusic()

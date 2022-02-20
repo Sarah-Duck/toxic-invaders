@@ -48,7 +48,7 @@ function mainmenutext(x,y)
     -- y = 62
     x -= 1
 
-    spr(5,x+2,y+7+(sin(t()*0.7)*2),1,3) --ships
+    spr(64,x+2,y+7+(sin(t()*0.7)*2),1,3) --ships
     printdropshadow("(\142) - lone wolf\n\n(\151) - companion",x+15,y+7,6,5)
 end
 
@@ -58,7 +58,7 @@ function titlehighscores(x,y)
     -- 110
     
     printdropshadow(scorewithzeros(tostring(highscore0),4),x-10,y,12,15) --1P high score
-    spr(48,x+8,y)
+    spr(112,x+8,y)
     printdropshadow(scorewithzeros(tostring(highscore1),4),x+18,y,9,2) --2P high score
 end
 
@@ -111,7 +111,6 @@ function finalscorescreen(x,y)
     printdropshadow(scorewithzeros(tostring(currentscore),4),x+48+circletimex,y+50+circletimey,playercolour0,playercolour1) --2P high score
     poke(0x5f58)
     -- printdropshadow("fINAL sCORE", x+43,y+22,6,5)
-
     if (coopmode and currentscore > highscore1) or (not coopmode and currentscore > highscore0) then
         if flashtime then
             printdropshadow("! new high score !", x+27,y+34,11,3)
@@ -138,7 +137,5 @@ end
 --sfx for the intro transition
 sfx(0,3,3)
 
---this creates menu items that allow players to turn off screenshake, or always fire the ships gun.
-doshake = true
-menuitem(1, "(\129) screenshake", function() doshake = not doshake end)
-menuitem(2, "(\144) autofire", function() alwaysfire = not alwaysfire end)
+-- autofire accessibility setting
+menuitem(2, "(…) autofire", function() alwaysfire = not alwaysfire end)

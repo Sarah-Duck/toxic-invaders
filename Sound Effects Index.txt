@@ -1,7 +1,10 @@
+--NOTES--
+Have portal kill as music to sound above all SFX (AND SAVE ON TOKENS)
+
 CHANNELS
 --------
 0 Melody Track
-1 Bass Track / Player / Pickup
+1 Bass Track / Player / Pickup / Portal Thruster Kill
 2 Short SFX - Bullets / Basic Enemy Hits/Kills / Bomb Charge
 3 Long SFX - Tough Enemy/Bosses
 
@@ -10,8 +13,8 @@ SOUNDS
 00 Intro Transition
 01 Portal Shoot
 02 Portal Thruster Kill
-03 Portal Kill
-04 
+03 Portal Kill Channel 0
+04 Portal Kill Channel 1
 05 Bomb Kill
 06 Bomb Explode
 07 Bomb Charge First Half
@@ -20,23 +23,19 @@ SOUNDS
 10 Player Hit
 11 Player Killed
 12 Triple Shot
-13 
+13 Powerup Get!
 14 Rocket Shoot / Thruster Loop
 15 Basic Enemy Shoot
 16 Basic Enemy Hit
 17 Basic Enemy Killed
 18 Wall Crawl Shoot
-19 Ball Shooter
-20 Ball Shooter
+19 Ball Shooter Shoot
+20 Ball Shooter Kill
 21 Boss Kill
-22 
+22 Rewind Checkpoint
 23 Laser Charge (1.5 Seconds)
 24 Laser Loop
 25 Laser Finished
-26 
+26 Respawn
 27 Light Respawn
-28 Respawn
-29 Rewind Checkpoint
-30 Powerup Get!
-31 
 .. MUSIC

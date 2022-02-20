@@ -1,4 +1,5 @@
 obj = {}
+doshake = true
 gt = 0 -- game time, but not actually, this is only used by the background for scrolling.
 ft = 1/60 --frametime
 scrollspeed = 0
@@ -42,7 +43,11 @@ end
 function playsong(song, fade)
     fade = fade or 0
     if song ~= currentsong then
-        music(song, fade, 3)
+        music(song, fade)
         currentsong = song
     end
+end
+
+function addplayer1() --reduces tokens since called once per gamemmode
+    addplayer(18, 60, 16, 17, 18, 3)
 end
