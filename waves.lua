@@ -4,7 +4,6 @@ currentwavetime = 0
 delaytimer = 0
 everysecondtimer = 0
 checkpoint = 1
-bossmusic = false
 targetplayer = 1
 
 --NOTE - slow BG during boss waves / make bosses their own checkpoint
@@ -102,7 +101,7 @@ wave[6] = {
         if #enemies < 1 then checkpoint = currentwave+1 return true
         end
     end,
-    boss = true
+    song = 8
 }
 
 wave[7] = {
@@ -170,13 +169,13 @@ wave[11] = {
 }
 
 wave[12] = {
-    delay = 2,
+    delay = 3,
     start = function()
         addwallboss(128,4,15,225,0.05,true,false,true)
     end,
     everysecond = wave[6].everysecond,
     conditions = wave[6].conditions,
-    boss = true
+    song = 8
 }
 
 wave[13] = {
@@ -220,7 +219,7 @@ wave[16] = {
         addwallboss(128, 70, 7, 30, 0.05, false, 3, false)
     end,
     everysecond = function ()
-        if flr(currentwavetime%6) == 5 and currentwavetime < 20 then
+        if flr(currentwavetime%6) == 5 and currentwavetime < 18 then
             local ylaserpos = 16
             if players[targetplayer].y > 64 then
                 ylaserpos = 80
@@ -237,11 +236,12 @@ wave[17] = {
         if currentwavetime%5 > 4 and currentwavetime < 20 then
             addbomb(128,20+currentwavetime*2,0)
         end
-        if currentwavetime > 18 and not bossmusic then
-            music(8, 0, 3)
-            bossmusic = true
+        if currentwavetime > 18 then
+            playsong(8)
         end
-        addbasicenemy(128,rnd(100)+14,0.4+rnd(0.4))
+        if rnd() < 0.3 then
+            addbasicenemy(128,rnd(100)+14,0.4+rnd(0.4))
+        end
     end,
     conditions = function()
         if currentwavetime > 24 then return true
@@ -255,9 +255,8 @@ wave[18] = {
         killallenemies()
         addmissileboss(128, 0)
     end,
-    everysecond = wave[6].everysecond,
     conditions = wave[6].conditions,
-    boss = true
+    song = 8
 }
 
 wave[19] = {
@@ -266,12 +265,12 @@ wave[19] = {
         canshootatx = 110
         addfinalboss()
     end,
-    boss = true
+    song = 8
 }
 
 --ending score screen
 wave[20] = {
-    delay = 3,
+    delay = 4,
     start = function()
         if not coopmode and highscore0 < currentscore then
             dset(0, currentscore) --set singleplayer score
@@ -296,34 +295,20 @@ function updatewaves()
         end
     end
     if wave[currentwave].conditions() then
-        if wave[currentwave+1].boss and not bossmusic then
-            bossmusic = true
-            music(8,0,3)
+        if wave[currentwave+1].song then
+            playsong(wave[currentwave+1].song)
         end
         delaytimer += ft
         if delaytimer > wave[currentwave+1].delay then
-            everysecondtimer = 0
-            currentwave += 1
-            if not wave[currentwave].boss and bossmusic then
-                music(2,0,3)
-                bossmusic = false
-            end
-            currentwavetime = 0
-            delaytimer = 0
-            -- currentwave = (currentwave - 1) % #wave+1 --temporarily looping the waves
-            -- if currentwave < checkpoint then
-            --     checkpoint = 1
-            -- end
-            wave[currentwave].start()
+            setwave(currentwave+1)
         end
     end
 end
 
 function setwave(num)
-    everysecondtimer = 0
     currentwave = num
-    currentwavetime = 0
-    delaytimer = 0
+    everysecondtimer,currentwavetime,delaytimer = 0,0,0
     wave[currentwave].start()
-    music(2, 0, 3)
+    local song = wave[currentwave].song or 0
+    playsong(song)
 end

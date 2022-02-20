@@ -1,4 +1,3 @@
---scrolling and respawn stuff
 respawntimer -= ft
 --similar math elements grouped to lower tokens
 flashtime = ceil(t()*10%2) == 1 --for flashing elements (ship, score)
@@ -7,6 +6,7 @@ circletimey = cos(t())*3
 screenshakex = sin(shake+t())*shake
 screenshakey = sin(shake+gt/2.1)*shake
 
+--stuff for scrolling background and respawning
 if gameover then
     scrollspeed = lerp(scrollspeed, -1/22, 0.01) -- scroll backwards
     currentscore = 0 --depleats score
@@ -19,18 +19,21 @@ if gameover then
 elseif gamerunning then
     updatewaves() -- update the wave function
     local targetspeed = ft
-    if bossmusic then
+    if currentsong >= 8 then
         targetspeed /= 2 --half scroll speed when boss
+    elseif currentwave == 20 then
+        targetspeed /= 8
     end
     scrollspeed = lerp(scrollspeed, targetspeed, 0.03)
 end
 gt += scrollspeed + 1/600
 
+--stuff for starting or ending the game
 if currentwave == 20 then --ending screen
     if btn(4) and btn(5) and not isoutro then --press both buttons to reset cart
         acidcounter = 2
         isoutro = true
-        music(-1, 2000) --fades music
+        playsong(-1, 2000) --fades music
     end
 elseif not gamerunning and t() > 1 then --main menu
     if btn(4) then
@@ -44,9 +47,10 @@ elseif not gamerunning and t() > 1 then --main menu
     end
 end
 
+--updating objects
 if gamerunning or t() < 1.95 then -- weird if because of freezing bubbles in the menu
     updateobjs() --update all objects
-    if currentscore > 9999 then currentscore = 9999 elseif currentscore < 0 then currentscore = 0 end --attempts to avoid hitting the OOM error or being negative
+    currentscore = mid(0,currentscore,9999) --attempts to avoid hitting the OOM error or being negative
 end
 
 --screenshake math

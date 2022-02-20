@@ -39,11 +39,11 @@ if not gamerunning or menuscroll < 1 then
     for i = 1, 3, 1 do
         spr(14+i*16, (-menushipscroll*(i*20)+(sin(i/3)*128)+8)%(128+8)-1*8-menuscroll*240, i*36+sin(menushipscroll*i/3)*i*2-20-menuscroll*50,1,1)
     end
-    
+    local x = 24-menuscroll*120
     if t() < 1 then
-        drawlogo(24-menuscroll*120,19.5+sin(0.25+t()*0.5)*6.5)
+        drawlogo(x,19.5+sin(0.25+t()*0.5)*6.5)
     else
-        drawlogo(24-menuscroll*120,26)
+        drawlogo(x,26)
     end
 
     --main screen items

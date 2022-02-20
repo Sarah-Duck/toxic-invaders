@@ -1,5 +1,5 @@
 enemies = {}
-canshootatx = 126
+canshootatx = 126 --the point on screen when they can start shooting. this needs to be a thing for the final boss portal
 function killallenemies()
     for i = 1, #enemies, 1 do
         enemies[i].health = -1
@@ -26,21 +26,22 @@ function enemycollide(enemy, object) --f this enemy collides with something, do 
     end
 end
 
-function enemydie(enemy, sound, soundchannel, points, isboss)
+function enemydie(enemy, sound, soundchannel, points, isboss, drop)
+    --the drop option is a stupid hack, only the final boss gets to use it.
     if enemy.health < 1 then --no health? die.
         local x,y = enemy.x,enemy.y
         for i = 1, rnd(enemy.h)+6, 1 do
             addcircle(x+rnd(enemy.w), y+rnd(enemy.h), rnd(4)-2, -rnd(2)-1, 1, 2, rnd({3, 11, 9}), -0.1)
         end
-        if rnd(100) < sqrt(enemy.w*enemy.h)/1.5 then --you get a better chance of a randomly dropped health from bigger enemies
+        if rnd(100) < sqrt(enemy.w*enemy.h)/1.5 and not drop then --you get a better chance of a randomly dropped health from bigger enemies
             addpickup(x+rnd(enemy.w), y+rnd(enemy.h), "health")
         end
         if isboss then
-            music(-1, 3000)
+            playsong(-1, 3000)
             sfx(60,-2) --stop missle sound, less tokens to just have it here.
             despawnallbullets = true
             killallenemies()
-            if not gameover then
+            if not gameover and not drop then
                 addpickup(x+rnd(32), y+rnd(32))
                 addpickup(x+rnd(32), y+rnd(32), "health")
             end
@@ -245,10 +246,11 @@ function addtargetingenemy(x, y, speed)
         enemy.x -= speed
         if enemy.shootcooldown < 0 and currentwavetime%1.5>1.2 then
             enemy.shootcooldown = 0.1
-            if enemy.x < canshootatx and players[targetplayer].x < enemy.x+30 then --math involving a distance check to get the proper velocity for aiming
-                local distancetarget = sqrt((players[targetplayer].x - enemy.x)^2+(players[targetplayer].y - enemy.y)^2)
-                local velxtarget = (players[targetplayer].x - enemy.x)/distancetarget
-                local velytarget = (players[targetplayer].y - enemy.y)/distancetarget
+            local player = players[targetplayer]
+            if enemy.x < canshootatx and player.x < enemy.x+30 then --math involving a distance check to get the proper velocity for aiming
+                local distancetarget = sqrt((player.x - enemy.x)^2+(player.y - enemy.y)^2)
+                local velxtarget = (player.x - enemy.x)/distancetarget
+                local velytarget = (player.y - enemy.y)/distancetarget
                 addbullet(enemy.x-3, enemy.y, velxtarget, velytarget) -- shoot if on screen
                 sfx(15, 2) -- play shoot sound if on screen
             end
@@ -355,7 +357,7 @@ function addwallboss(x, y, length, points, speed, stay, move, isboss)
     }
     bulletfired = {}
     enemy.starthealth = enemy.health
-    if isboss then enemy.health *= 3 end -- triple health if the boss
+    if isboss then enemy.health *= 4 end -- triple health if the boss
 
     for i = 1, length, 1 do
         bulletfired[i] = 0
@@ -534,7 +536,7 @@ function addmissileboss(x, y) --boss that shoots missiles!!!
         elseif currentwavetime%18 > 17.3 then --INTIMIDATION TACTICS!!!!!
             enemy.targety = players[targetplayer].y
             enemy.targetx = players[targetplayer].x+24
-            enemy.shootcooldown = 0.4
+            enemy.shootcooldown = 0.8
         end
         enemy.x = lerp(enemy.x, enemy.targetx, enemy.speed)
         enemy.y = lerp(enemy.y, enemy.targety, enemy.speed)
@@ -544,7 +546,7 @@ function addmissileboss(x, y) --boss that shoots missiles!!!
             enemy.targety = rnd(96)
         end
         if enemy.shootcooldown < 0 then
-            enemy.shootcooldown = 0.3 + rnd(1.2)
+            enemy.shootcooldown = 0.6 + rnd(0.5)
             if enemy.x < canshootatx and players[targetplayer] ~= nil then
                 local offsetmissleboss = 2
                 if currentwavetime%2 > 1 then offsetmissleboss = 30 end
@@ -567,19 +569,20 @@ end
 function addfinalboss() --THE FINAL BOSS!!!!!!! WOOOAAAHHHHHH!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     local enemy = {
         x = 150,
-        y = 10,
+        y = 30,
         w = 32,
-        h = 120,
+        h = 66,
         inv = -1,
         health = 200*#players, --200
         shootcooldown = 4,
         shot = enemyshot,
         collide = enemycollide,
-        speed = 1.5,
-        amount = 3,
     }
     dramaticdeathtimer = 6
     thrusterexplode = {}
+    portaldestabilize = 0
+    speed = 1.5
+    amount = 3
 
     --thrusters that each fall off once the portal's health is 1/5th depleated
     function addportalthruster(x,y,id,isflipped)
@@ -591,32 +594,33 @@ function addfinalboss() --THE FINAL BOSS!!!!!!! WOOOAAAHHHHHH!!!!!!!!!!!!!!!!!!!
             if thrusterhealth > enemy.health - 20 then
                 spritethruster += 32
             end
-            if (enemy.inv < 0 or flashtime) or thrusterhealth < enemy.health-50 then
-                spr(spritethruster, x, isflipped*(sin(time()*enemy.speed)*3.5)+y, 4, 2)
-            end
+            spr(spritethruster, x, isflipped*(sin(time()*speed)*3.5)+y, 4, 2)
         elseif rnd() < 0.4 then
             addcircle(x+20+rnd(4), y+rnd(6), -0.5, rnd(0.5)-0.25, rnd(7), 1.4, rnd({5,9}))
             if not thrusterexplode[id] then
                 thrusterexplode[id] = true
                 explosion(x+10,y,32)
                 shake = 12
+                sfx(21,3)
             end
         end
     end
 
     function enemy:draw()
-        -- portal
-        local x,y,speed,amount = enemy.x-8,10+sin(time()*enemy.speed+0.2)*2,enemy.speed,enemy.amount
-        local ovaly1 = (sin(time()*speed-0.12)*amount/2)+y+24
-        --local ovaly2 = (-sin(time()*speed-0.12)*amount/2)+y+84
-        local ovaly2 = -ovaly1+128
-        ovalfill(x+28,ovaly1,x+6,ovaly2,14)
-        local portalcolors = {11,3}
-        for i = 1, 260, 1 do --cool swirling portal effect
-            pset(x+17+sin(i/53.3465+t()/8)*i/24+sin(i/350.23548+t()), y+54+cos(i/53.3465+t()/8)*i/9,portalcolors[(ceil(i/20))%#portalcolors+1])
+        local x,y = enemy.x-8,10+sin(time()*speed+0.2)*2
+        if flashtime or enemy.inv < 0 or enemy.health == 0 then
+            -- portal
+            local ovaly1 = (sin(time()*speed-0.12)*amount/2)+y+24+portaldestabilize
+            --local ovaly2 = (-sin(time()*speed-0.12)*amount/2)+y+84
+            local ovaly2 = -ovaly1+128-portaldestabilize
+            ovalfill(x+28,ovaly1,x+6,ovaly2,14)
+            local portalcolors = {11,3}
+            for i = 1, 260, 1 do --cool swirling portal effect
+                pset(x+17+sin(i/53.3465+t()/8)*i/24+sin(i/350.23548+t())*portaldestabilize, y+54+cos(i/53.3465+t()/8)*i/9,portalcolors[(ceil(i/20))%#portalcolors+1])
+            end
+            addcircle(x+17, y+54, rnd(0.5)-0.25, rnd(1)-0.5, 5, 2, 11)
+            oval(x+28,ovaly1,x+6,ovaly2,11)
         end
-        addcircle(x+17, y+54, rnd(0.5)-0.25, rnd(1)-0.5, 5, 2, 11)
-        oval(x+28,ovaly1,x+6,ovaly2,11)
         addportalthruster(x-19,y-4,3)
         addportalthruster(x-19,y+97,4,-1)
         local spriteportal = 136
@@ -637,6 +641,7 @@ function addfinalboss() --THE FINAL BOSS!!!!!!! WOOOAAAHHHHHH!!!!!!!!!!!!!!!!!!!
                     for i = 1, 10, 1 do
                         addbullet(110,64, rnd(0.5)-1, rnd(2)-1)
                     end
+                    sfx(19,3) --sound for barrage of bullets
                     if rnd() < 0.4 then
                         addmissile(110, 60, targetplayer)
                     end
@@ -675,12 +680,14 @@ function addfinalboss() --THE FINAL BOSS!!!!!!! WOOOAAAHHHHHH!!!!!!!!!!!!!!!!!!!
                     moves[flr((currentwavetime/14)%#moves+1)]()
                 end
             end
-            enemydie(enemy,17,2,1000,true) --die!!!!!!!
+            enemydie(enemy,17,2,1000,true,1) --die!!!!!!!
         else
-            music(-1)
+            playsong(-1)
             killallenemies()
             despawnallbullets = true
-            enemy.speed += 0.002
+            speed += 0.0003
+            amount += 0.02
+            portaldestabilize += 0.05
             dramaticdeathtimer -= ft
             if enemy.shootcooldown < 0 then
                 enemy.shootcooldown = dramaticdeathtimer/8

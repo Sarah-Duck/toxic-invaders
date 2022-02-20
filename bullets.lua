@@ -141,6 +141,9 @@ function addmissile(x, y, target) --basic small weak enemy
         enemymisc(enemy)
         if enemy.health <= 0 then -- die!!!!!
             enemydie(enemy,17,2,17)
+            if currentwave == 19 then
+                sfx(14,-2)
+            end
         end
     end
 
