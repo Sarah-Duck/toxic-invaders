@@ -546,7 +546,7 @@ function addmissileboss(x, y) --boss that shoots missiles!!!
             enemy.targety = rnd(96)
         end
         if enemy.shootcooldown < 0 then
-            enemy.shootcooldown = 0.6 + rnd(0.6)
+            enemy.shootcooldown = 0.6 + rnd(0.5)
             if enemy.x < canshootatx and players[targetplayer] ~= nil then
                 local offsetmissleboss = 2
                 if currentwavetime%2 > 1 then offsetmissleboss = 30 end
@@ -586,7 +586,7 @@ function addfinalboss() --THE FINAL BOSS!!!!!!! WOOOAAAHHHHHH!!!!!!!!!!!!!!!!!!!
 
     --thrusters that each fall off once the portal's health is 1/5th depleated
     function addportalthruster(x,y,id,isflipped)
-        local thrusterhealth = id*50-50
+        local thrusterhealth = id*50*#players-50
         if thrusterhealth < enemy.health or id == 1 then
             local spritethruster = 128
             isflipped = isflipped or 1
