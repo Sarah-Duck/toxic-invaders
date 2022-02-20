@@ -11,10 +11,10 @@ CHANNELS
 SOUNDS
 ------
 00 Intro Transition
-01 Portal Shoot
-02 Portal Thruster Kill
-03 Portal Kill Channel 0
-04 Portal Kill Channel 1
+01 Respawn
+02 Light Respawn
+03 Portal Shoot ---
+04 Portal Thruster Kill ---
 05 Bomb Kill
 06 Bomb Explode
 07 Bomb Charge First Half
@@ -36,6 +36,4 @@ SOUNDS
 23 Laser Charge (1.5 Seconds)
 24 Laser Loop
 25 Laser Finished
-26 Respawn
-27 Light Respawn
 .. MUSIC

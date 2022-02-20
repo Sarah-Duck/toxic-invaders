@@ -90,7 +90,7 @@ function addlaser(x, y, r, enemy)
         --collision detection after the warm up
         if timer > 1.5 and timer < 3.6 then
             if not playingsound then
-                sfx(24,3)
+                sfx(24,3) -- laser loop
                 playingsound = true
             end
             shake = rnd(8)/timer
@@ -101,14 +101,14 @@ function addlaser(x, y, r, enemy)
         --delete laser once its done
         if timer > 4 or enemy.health <= 0 then
             del(obj, laser)
-            sfx(25, 3)
+            sfx(25, 3) -- laser finish
             for i = 1, 16, 1 do
                 addcircle(rnd(x), y-5+rnd(r), -0.5, -0.5, rnd(3), rnd(2), rnd({11,14,3}))
             end
         end
     end
     add(obj, laser)
-    sfx(23,3)
+    sfx(23,3) -- laser charge
 end
 
 

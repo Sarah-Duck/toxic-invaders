@@ -104,7 +104,7 @@ function addbasicenemy(x, y, speed) --basic small weak enemy
             enemy.shootcooldown = 0.5 + rnd(1.5)
             if enemy.x < canshootatx and enemy.x > 5 then
                 addbullet(enemy.x-3, enemy.y, -1, 0) -- shoot if on screen
-                sfx(15, 2) -- play shoot sound if on screen
+                sfx(15,2) -- play shoot sound if on screen
             end
         end
         enemymisc(enemy)
@@ -154,9 +154,9 @@ function addwallshooter(x, shootup, speed, offset, bulletspeed)
                 if shootup then velywall = 1 end
                 if enemy.x < 120 and enemy.x > 20 then
                     addbullet(enemy.x, enemy.y, -speed, enemy.bulletspeed*velywall)
-                    if not enemy.shoottoggle then --implemented a toggle so that the sound effect for firing gets played only once.
+                    if not enemy.shoottoggle and currentwave ~= 19 then --implemented a toggle so that the sound effect for firing gets played only once.
                         enemy.shoottoggle = true
-                        sfx(18, 3)
+                        sfx(18,3)
                     end
                 end
             else
@@ -209,7 +209,7 @@ function addballshooter(x, y, speed)
                         addbullet(enemy.x+4, enemy.y+4, sin(i/48)/2, cos(i/48)/2)
                     end
                 end
-                sfx(19, 3) -- play shoot sound
+                sfx(19,3) -- play shoot sound
             end
         end
         enemymisc(enemy)
@@ -252,7 +252,7 @@ function addtargetingenemy(x, y, speed)
                 local velxtarget = (player.x - enemy.x)/distancetarget
                 local velytarget = (player.y - enemy.y)/distancetarget
                 addbullet(enemy.x-3, enemy.y, velxtarget, velytarget) -- shoot if on screen
-                sfx(15, 2) -- play shoot sound if on screen
+                sfx(15,2) -- play shoot sound if on screen
             end
         end
         enemymisc(enemy)
@@ -309,7 +309,7 @@ function addlasershooter(x, y, points, speed, stay, isboss)
             if enemy.shootcooldown < 0 then
                 enemy.shootcooldown = 0.18
                 addbullet(enemy.x+6, enemy.y+20, -1, rnd(2)-1) --shoooot!!!!!
-                sfx(15, 2)
+                sfx(15,2)
             end
         end
 
@@ -423,7 +423,7 @@ function addwallboss(x, y, length, points, speed, stay, move, isboss)
                 for i = 1, length, 1 do
                     if attack(i, enemy.move) then
                         addbullet(enemy.x, enemy.y-8+i*8, -1, 0)
-                        sfx(15, 2)
+                        sfx(15,2)
                         bulletfired[i] = 1
                     else
                         bulletfired[i] = 0
@@ -451,6 +451,7 @@ function addbomb(x, y, delay) --BIG BOMB!!!! KILL IIT QUICKLY!!!!
         collide = enemycollide
     }
     local pointsbomb = 50 --points by default if killed by player
+    local sfxbomb = 5
 
     function enemy.draw()
         local x,y = enemy.x,enemy.y
@@ -475,22 +476,21 @@ function addbomb(x, y, delay) --BIG BOMB!!!! KILL IIT QUICKLY!!!!
         if enemy.shootcooldown < -8 then -- detonation
             for i = 1, 60, 1 do
                 addbullet(enemy.x+16, enemy.y+16, sin(i/60), cos(i/60))
-                enemy.health = 0
+                sfxbomb = 6 --killboom
                 pointsbomb = -40 --loss of points
-                sfx(19,2)
-                sfx(8,-2)
+                enemy.health = 0
             end
         elseif enemy.shootcooldown < 0 then
             enemy.x = lerp(enemy.x, 80, 0.02)
         end
         enemymisc(enemy)
-        enemydie(enemy,20,3,pointsbomb) --die bastard!!!!!!
+        enemydie(enemy,sfxbomb,3,pointsbomb) --die bastard!!!!!!
         --charge sound
-        if enemy.x < 120 and everysecondtimer > 0.45 then
+        if enemy.x < 120 and everysecondtimer%0.2 < 0.025 then
             if enemy.shootcooldown < -5 then
-                sfx(8,2) --rapid
+                sfx(8,3) --rapid
             else
-                sfx(7,2) --normal
+                sfx(7,3) --normal
             end
         end 
     end
@@ -552,7 +552,7 @@ function addmissileboss(x, y) --boss that shoots missiles!!!
                 if currentwavetime%2 > 1 then offsetmissleboss = 30 end
                 addmissile(enemy.x, enemy.y+offsetmissleboss, targetplayer)
                 if enemy.health < 11 then
-                    sfx(15, 2)
+                    sfx(15,2)
                     addbullet(enemy.x,enemy.y+16,(players[targetplayer].x-enemy.x)/70,(players[targetplayer].y-enemy.y-16)/70)
                     -- ERROR attempting to find a non existant player
                 end
@@ -601,7 +601,7 @@ function addfinalboss() --THE FINAL BOSS!!!!!!! WOOOAAAHHHHHH!!!!!!!!!!!!!!!!!!!
                 thrusterexplode[id] = true
                 explosion(x+10,y,32)
                 shake = 12
-                sfx(21,3)
+                sfx(4,3) --thruster die!
             end
         end
     end
@@ -641,7 +641,7 @@ function addfinalboss() --THE FINAL BOSS!!!!!!! WOOOAAAHHHHHH!!!!!!!!!!!!!!!!!!!
                     for i = 1, 10, 1 do
                         addbullet(110,64, rnd(0.5)-1, rnd(2)-1)
                     end
-                    sfx(19,3) --sound for barrage of bullets
+                    sfx(3,3) --sound for barrage of bullets
                     if rnd() < 0.4 then
                         addmissile(110, 60, targetplayer)
                     end
@@ -682,7 +682,7 @@ function addfinalboss() --THE FINAL BOSS!!!!!!! WOOOAAAHHHHHH!!!!!!!!!!!!!!!!!!!
             end
             enemydie(enemy,17,2,1000,true,1) --die!!!!!!!
         else
-            playsong(-1)
+            music(-1,1000)
             killallenemies()
             despawnallbullets = true
             speed += 0.0003
@@ -693,10 +693,11 @@ function addfinalboss() --THE FINAL BOSS!!!!!!! WOOOAAAHHHHHH!!!!!!!!!!!!!!!!!!!
                 enemy.shootcooldown = dramaticdeathtimer/8
                 explosion(103+rnd(8), rnd(128),32)
                 shake = rnd(10)
-                sfx(17,1)
-                sfx(21,0)
+                sfx(17,2)
+                sfx(21,3)
             end
         end
+        if dramaticdeathtimer < 0 then music(63,3) end --final big boom
         enemymisc(enemy)
     end
 

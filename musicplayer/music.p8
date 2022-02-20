@@ -4,7 +4,7 @@ __lua__
 --▶  toxic invaders soundtrack  ◀
 --▶ WIP      1029chris          ◀
 
---    0-27 SLOTS RESERVED FOR SFX
+--    0-26 SLOTS RESERVED FOR SFX
 --     SPRITEWORK BY RIBBONCABLE
 
 #include objects_music.lua

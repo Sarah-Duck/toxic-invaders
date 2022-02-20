@@ -52,11 +52,11 @@ function addplayer(x, y, sprite, spriteup, spritedwn, bulletsprite)
             player.inv = 20
             killallenemies()
             currentscore-=10
-            sfx(11, 3) --killed
+            sfx(11, 0) --killed
             sfx(22, 1) --rewind beat
         elseif player.health <= 0 then
             currentscore = ceil(currentscore * 0.5) --halves score if coop
-            sfx(11, 3)
+            sfx(11, 0)
             player.inv = 5
         end
     end
@@ -67,7 +67,7 @@ function addplayer(x, y, sprite, spriteup, spritedwn, bulletsprite)
         for i = 1, 8, 1 do
             addcircle(player.x+4, player.y+4, sin(i/8), cos(i/8), 2, 0.6, 7)
         end
-        sfx(25+#players,1) --normal and light respawn sfx for co-op
+        sfx(#players,1) --normal and light respawn sfx for co-op
     end
 
     function player:update()

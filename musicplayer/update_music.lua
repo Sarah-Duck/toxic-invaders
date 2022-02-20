@@ -6,7 +6,9 @@ circletimey = cos(t())*3
 gt += scrollspeed + 1/600
 fadeouttimer -= ft
 
-updateobjs() --update all objects
+if t() < 2 then -- weird if because of freezing bubbles in the menu
+    updateobjs() --update all objects
+end
 
 if tracknumber < 0 then
     tracknumber = 4
