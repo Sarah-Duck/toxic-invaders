@@ -5,7 +5,7 @@ function addbullet(x, y, velx, vely, good, sprite)
     }
 
     sprite = sprite or 2
-    good = good or false
+    --good = good or false
 
     function bullet.draw()
         spr(sprite, x, y)

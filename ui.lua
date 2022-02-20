@@ -85,8 +85,8 @@ function credits(x,y)
     -- default vaues
     -- x = 10
     -- y = 100
-    local sintimecredits = sin(t())*2
-    local timemodcredits = (t()%2<1)
+    local sintimecredits = circletimex*1.5
+    local timemodcredits = t()%2<1
 
     palt(2,true)
     palt(0,false)

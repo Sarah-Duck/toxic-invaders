@@ -1,7 +1,7 @@
 --scrolling and respawn stuff
 respawntimer -= ft
 --similar math elements grouped to lower tokens
-flashtime = (ceil(t()*10%2) == 1) --for flashing elements (ship, score)
+flashtime = ceil(t()*10%2) == 1 --for flashing elements (ship, score)
 circletimex = sin(t())*3 -- for elements that move in a circle (respawn timer)
 circletimey = cos(t())*3
 screenshakex = sin(shake+t())*shake

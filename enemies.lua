@@ -350,15 +350,15 @@ function addwallboss(x, y, length, points, speed, stay, move, isboss)
         health = 3.5*length*#players, --3.5
         shootcooldown = 3,
         speed = speed,
-        bulletfired = {},
         shot = enemyshot,
         collide = enemycollide
     }
+    bulletfired = {}
     enemy.starthealth = enemy.health
     if isboss then enemy.health *= 3 end -- triple health if the boss
 
     for i = 1, length, 1 do
-        enemy.bulletfired[i] = 0
+        bulletfired[i] = 0
     end
 
     function enemy.draw()
@@ -370,13 +370,13 @@ function addwallboss(x, y, length, points, speed, stay, move, isboss)
         end
         if enemy.inv < 0 or flashtime then
             for i = 2, length-1, 1 do
-                spr(93+enemy.bulletfired[i]+dmgwall, x, -8+y+i*8)
+                spr(93+bulletfired[i]+dmgwall, x, -8+y+i*8)
                 if i < length-2 then
                     spr(79+((i%3)%2*16)+dmgwall, x+8, -8+y+i*8, 1, 1, false, (i%3 == 2))
                 end
             end
-            spr(77+enemy.bulletfired[1]+dmgwall, x, y)
-            spr(77+enemy.bulletfired[1]+dmgwall, x, y+length*8-8, 1, 1, false, true)
+            spr(77+bulletfired[1]+dmgwall, x, y)
+            spr(77+bulletfired[1]+dmgwall, x, y+length*8-8, 1, 1, false, true)
             spr(70+dmgwall,x+8,y,2,2)
             spr(70+dmgwall,x+8,y+length*8-16,2,2,false,true)
             spr(79+dmgwall,x+8,y+length*8-24,1,1, false, true)
@@ -422,9 +422,9 @@ function addwallboss(x, y, length, points, speed, stay, move, isboss)
                     if attack(i, enemy.move) then
                         addbullet(enemy.x, enemy.y-8+i*8, -1, 0)
                         sfx(15, 2)
-                        enemy.bulletfired[i] = 1
+                        bulletfired[i] = 1
                     else
-                        enemy.bulletfired[i] = 0
+                        bulletfired[i] = 0
                     end
                 end
             end
@@ -677,16 +677,17 @@ function addfinalboss() --THE FINAL BOSS!!!!!!! WOOOAAAHHHHHH!!!!!!!!!!!!!!!!!!!
             end
             enemydie(enemy,17,2,1000,true) --die!!!!!!!
         else
+            music(-1)
             killallenemies()
             despawnallbullets = true
-            --enemy.speed += 0.002
+            enemy.speed += 0.002
             dramaticdeathtimer -= ft
             if enemy.shootcooldown < 0 then
                 enemy.shootcooldown = dramaticdeathtimer/8
                 explosion(103+rnd(8), rnd(128),32)
                 shake = rnd(10)
-                --sfx(17,1)
-                --sfx(21,0)
+                sfx(17,1)
+                sfx(21,0)
             end
         end
         enemymisc(enemy)

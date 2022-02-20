@@ -43,6 +43,7 @@ function addpickup(x, y, type)
             pickupcolor = 12
         elseif type == "3shoot" then
             player.shoot3 = true
+            player.shootspeed = 0.35
             pickupcolor = 9
         else
             player.health = 3
