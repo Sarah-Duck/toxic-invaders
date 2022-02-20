@@ -580,7 +580,7 @@ function addfinalboss() --THE FINAL BOSS!!!!!!! WOOOAAAHHHHHH!!!!!!!!!!!!!!!!!!!
     }
     dramaticdeathtimer = 6
     thrusterexplode = {}
-    portaldestabilize = 0
+    portaldestabilize = 1
     speed = 1.5
     amount = 3
 

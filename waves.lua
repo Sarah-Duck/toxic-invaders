@@ -265,7 +265,7 @@ wave[19] = {
         canshootatx = 110
         addfinalboss()
     end,
-    song = 8
+    song = 17
 }
 
 --ending score screen
