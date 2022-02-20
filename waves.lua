@@ -208,7 +208,7 @@ wave[15] = {
     delay = 0,
     start = function()
         for i = 1, 6, 1 do
-            addtargetingenemy(128, i*16-14+flr(i/4)*36, 0.05)
+            addtargetingenemy(128, i*16-14+i\4*36, 0.05)
         end
         addbomb(140,46, 1)
     end

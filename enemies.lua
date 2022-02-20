@@ -390,18 +390,18 @@ function addwallboss(x, y, length, points, speed, stay, move, isboss)
             enemy.x -= speed
         else 
             enemy.x = lerp(enemy.x, 102, 0.025) --lerp if boss
-            enemy.move = flr((currentwavetime/5)%5) -- loops through moveset
+            enemy.move = currentwavetime\5%5 -- loops through moveset
         end
         if enemy.shootcooldown < 0 then
             enemy.shootcooldown = 0.095
             if enemy.x < canshootatx then
 
                 local function attack(i, move) -- these are all the conditions to shoot depending on what "move" this guys on
-                    if move == 0 and (flr((t()*4)%length) == i or flr((-t()*4)%length) == i) and i%2 == 1 then --this one shoots lines in a pattern
+                    if move == 0 and (t()\0.25%length == i or -t()\0.25%length == i) and i%2 == 1 then --this one shoots lines in a pattern
                         return true
                     elseif move == 1 then -- this one targets the players and shoots some random ones
                         for p = 1, #players, 1 do
-                            if flr(players[p].y/8) == i-1 and everysecondtimer < 0.7 then
+                            if players[p].y\8 == i-1 and everysecondtimer < 0.7 then
                                 return true
                             end
                         end
@@ -532,7 +532,7 @@ function addmissileboss(x, y) --boss that shoots missiles!!!
         enemy.targetchangetimer -= ft
         --some cool different moves, shout out to dont get a virus fans!
         if currentwavetime%18 > 8 and currentwavetime%20 < 12 then
-            enemy.targety = flr(everysecondtimer*1.99)*96
+            enemy.targety = everysecondtimer\0.501*96
         elseif currentwavetime%18 > 17.3 then --INTIMIDATION TACTICS!!!!!
             enemy.targety = players[targetplayer].y
             enemy.targetx = players[targetplayer].x+24
@@ -677,12 +677,12 @@ function addfinalboss() --THE FINAL BOSS!!!!!!! WOOOAAAHHHHHH!!!!!!!!!!!!!!!!!!!
                             end
                         end
                     }
-                    moves[flr((currentwavetime/14)%#moves+1)]()
+                    moves[(currentwavetime\14)%#moves+1]()
                 end
             end
             enemydie(enemy,17,2,1000,true,1) --die!!!!!!!
         else
-            music(-1,1000)
+            playsong(-1,1000)
             killallenemies()
             despawnallbullets = true
             speed += 0.0003
@@ -697,7 +697,7 @@ function addfinalboss() --THE FINAL BOSS!!!!!!! WOOOAAAHHHHHH!!!!!!!!!!!!!!!!!!!
                 sfx(21,3)
             end
         end
-        if dramaticdeathtimer < 0 then music(63,3) end --final big boom
+        if dramaticdeathtimer < 0 then playsong(63,3) end --final big boom
         enemymisc(enemy)
     end
 

@@ -55,7 +55,7 @@ function addplayer(x, y, sprite, spriteup, spritedwn, bulletsprite)
             sfx(11, 0) --killed
             sfx(22, 1) --rewind beat
         elseif player.health <= 0 then
-            currentscore = ceil(currentscore * 0.5) --halves score if coop
+            currentscore = currentscore \ 0.5 --halves score if coop
             sfx(11, 0)
             player.inv = 5
         end
