@@ -546,7 +546,7 @@ function addmissileboss(x, y) --boss that shoots missiles!!!
             enemy.targety = rnd(96)
         end
         if enemy.shootcooldown < 0 then
-            enemy.shootcooldown = 0.6 + rnd(0.5)
+            enemy.shootcooldown = 0.6 + rnd(0.6)
             if enemy.x < canshootatx and players[targetplayer] ~= nil then
                 local offsetmissleboss = 2
                 if currentwavetime%2 > 1 then offsetmissleboss = 30 end
