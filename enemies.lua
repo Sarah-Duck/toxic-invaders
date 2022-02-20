@@ -289,7 +289,7 @@ function addlasershooter(x, y, points, speed, stay, isboss)
                 damagesmoke(enemy)
                 sprite = 65
             end
-            spr(sprite,enemy.x,enemy.y,4,2) --non-flipped sprite to reduce tokens
+            spr(sprite,enemy.x,enemy.y,4,4) --non-flipped sprite to reduce tokens
             -- spr(sprite,enemy.x+0,enemy.y+16,4,2,false,true)
         end
     end
@@ -546,7 +546,7 @@ function addmissileboss(x, y) --boss that shoots missiles!!!
             enemy.targety = rnd(96)
         end
         if enemy.shootcooldown < 0 then
-            enemy.shootcooldown = 0.6 + rnd(0.5)
+            enemy.shootcooldown = 0.6 + rnd(0.6)
             if enemy.x < canshootatx and players[targetplayer] ~= nil then
                 local offsetmissleboss = 2
                 if currentwavetime%2 > 1 then offsetmissleboss = 30 end

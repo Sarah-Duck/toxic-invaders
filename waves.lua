@@ -1,5 +1,5 @@
 wave = {} --store wave functions here
-currentwave = 1 --THIS IS THE CURRENT WAVE, SHOLD BE 1 UNLESS TESTING SOMETHING
+currentwave = tonum(stat(6)) or 1 --THIS IS THE CURRENT WAVE, SHOLD BE 1 UNLESS TESTING SOMETHING (the stat part is a cheat, shhh)
 currentwavetime = 0
 delaytimer = 0
 everysecondtimer = 0
@@ -84,6 +84,7 @@ wave[5] = {
 wave[6] = {
     delay = 2,
     start = function()
+        checkpoint = currentwave
         addbasicenemy(240, 58, 1.1)
         addbasicenemy(240, 68, 0.9)
         addbasicenemy(240, 63, 1)
@@ -171,6 +172,7 @@ wave[11] = {
 wave[12] = {
     delay = 3,
     start = function()
+        checkpoint = currentwave
         addwallboss(128,4,15,225,0.05,true,false,true)
     end,
     everysecond = wave[6].everysecond,
@@ -252,6 +254,7 @@ wave[17] = {
 wave[18] = {
     delay = 0,
     start = function()
+        checkpoint = currentwave
         killallenemies()
         addmissileboss(128, 0)
     end,
