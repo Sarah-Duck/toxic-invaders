@@ -19,12 +19,12 @@ function addcircle(x, y, velx, vely, r, time, color, grav)
         end
     end
 
-    add(obj, circle, 1)
+    add(obj, circle)
 end
 
 function explosion(x,y, w, h)
     w = w or 8
-    h = h or 8
+    h = h or w
     for i = 1, w/2, 1 do
         addcircle(x+rnd(w), y+rnd(h), -0.5, 0, rnd(8), rnd(1.5)+1, 5)
     end

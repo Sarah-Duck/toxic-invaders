@@ -577,18 +577,30 @@ function addfinalboss() --THE FINAL BOSS!!!!!!! WOOOAAAHHHHHH!!!!!!!!!!!!!!!!!!!
         collide = enemycollide,
         speed = 1.5,
         amount = 3,
-        thrustery = {0,0,0,0}
     }
+    dramaticdeathtimer = 6
+    thrusterexplode = {}
 
     --thrusters that each fall off once the portal's health is 1/5th depleated
     function addportalthruster(x,y,id,isflipped)
-        if id*40-40 < enemy.health then
+        local thrusterhealth = id*50-50
+        if thrusterhealth < enemy.health or id == 1 then
             local spritethruster = 128
             isflipped = isflipped or 1
             if flashtime then spritethruster = 132 end --animation
-            spr(spritethruster, x, isflipped*(sin(time()*enemy.speed)*3.5)+y, 4, 2)
+            if thrusterhealth > enemy.health - 20 then
+                spritethruster += 32
+            end
+            if (enemy.inv < 0 or flashtime) or thrusterhealth < enemy.health-50 then
+                spr(spritethruster, x, isflipped*(sin(time()*enemy.speed)*3.5)+y, 4, 2)
+            end
         elseif rnd() < 0.4 then
             addcircle(x+20+rnd(4), y+rnd(6), -0.5, rnd(0.5)-0.25, rnd(7), 1.4, rnd({5,9}))
+            if not thrusterexplode[id] then
+                thrusterexplode[id] = true
+                explosion(x+10,y,32)
+                shake = 12
+            end
         end
     end
 
@@ -617,53 +629,67 @@ function addfinalboss() --THE FINAL BOSS!!!!!!! WOOOAAAHHHHHH!!!!!!!!!!!!!!!!!!!
     end
 
     function enemy.update()
-        enemy.x = lerp(enemy.x, 103, 0.025)--lerps into place
-        if enemy.shootcooldown < 0 then
-            enemy.shootcooldown = 1
-            if #enemies < 2 then
-                for i = 1, 10, 1 do
-                    addbullet(110,64, rnd(0.5)-1, rnd(2)-1)
+        if enemy.health > 0 or dramaticdeathtimer < 0 or gameover then
+            enemy.x = lerp(enemy.x, 103, 0.025)--lerps into place
+            if enemy.shootcooldown < 0 then
+                enemy.shootcooldown = 1
+                if #enemies < 2 then
+                    for i = 1, 10, 1 do
+                        addbullet(110,64, rnd(0.5)-1, rnd(2)-1)
+                    end
+                    if rnd() < 0.4 then
+                        addmissile(110, 60, targetplayer)
+                    end
                 end
                 if rnd() < 0.4 then
-                    addmissile(110, 60, targetplayer)
+                    addbasicenemy(115,rnd(30)+50,0.4+rnd(0.6))
+                elseif rnd() < 0.02 then
+                    addtargetingenemy(115, rnd(30)+50, 0.2)
+                end
+                if flr(currentwavetime%14) == 5 then
+                    local moves = {
+                        function()
+                            if currentwavetime < 20 then
+                                addballshooter(110, 56, 0.08)
+                            else 
+                                addballshooter(110, 40, 0.08)
+                                addballshooter(140, 72, 0.08)
+                            end
+                        end,
+                        function()
+                            addwallboss(110, 30, 8, 30, 0.05, false, 3, false)
+                        end,
+                        function()
+                            for i = 1, 7, 1 do
+                                addwallshooter(100 + (54-i)*i, (i%2==1), 0.4)
+                            end
+                            addlasershooter(128,48,100,0.2,false,false)
+                            addbomb(128, 48, 9)
+                        end,
+                        function ()
+                            for i = 1, 5, 1 do
+                                addtargetingenemy(128, i*10+32, 0.085)
+                            end
+                        end
+                    }
+                    moves[flr((currentwavetime/14)%#moves+1)]()
                 end
             end
-            if rnd() < 0.4 then
-                addbasicenemy(115,rnd(30)+50,0.4+rnd(0.6))
-            elseif rnd() < 0.02 then
-                addtargetingenemy(115, rnd(30)+50, 0.2)
-            end
-            if flr(currentwavetime%14) == 5 then
-                local moves = {
-                    function()
-                        if currentwavetime < 20 then
-                            addballshooter(110, 56, 0.08)
-                        else 
-                            addballshooter(110, 40, 0.08)
-                            addballshooter(140, 72, 0.08)
-                        end
-                    end,
-                    function()
-                        addwallboss(110, 30, 8, 30, 0.05, false, 3, false)
-                    end,
-                    function()
-                        for i = 1, 7, 1 do
-                            addwallshooter(100 + (54-i)*i, (i%2==1), 0.4)
-                        end
-                        addlasershooter(128,48,100,0.2,false,false)
-                        addbomb(128, 48, 9)
-                    end,
-                    function ()
-                        for i = 1, 5, 1 do
-                            addtargetingenemy(128, i*10+32, 0.085)
-                        end
-                    end
-                }
-                moves[flr((currentwavetime/14)%#moves+1)]()
+            enemydie(enemy,17,2,1000,true) --die!!!!!!!
+        else
+            killallenemies()
+            despawnallbullets = true
+            --enemy.speed += 0.002
+            dramaticdeathtimer -= ft
+            if enemy.shootcooldown < 0 then
+                enemy.shootcooldown = dramaticdeathtimer/8
+                explosion(103+rnd(8), rnd(128),32)
+                shake = rnd(10)
+                --sfx(17,1)
+                --sfx(21,0)
             end
         end
         enemymisc(enemy)
-        enemydie(enemy,17,2,1000,true) --die!!!!!!!
     end
 
     add(enemies, enemy)

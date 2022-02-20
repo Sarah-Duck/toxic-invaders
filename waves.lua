@@ -1,5 +1,5 @@
 wave = {} --store wave functions here
-currentwave = 1 --THIS IS THE CURRENT WAVE, SHOLD BE 1 UNLESS TESTING SOMETHING
+currentwave = 19 --THIS IS THE CURRENT WAVE, SHOLD BE 1 UNLESS TESTING SOMETHING
 currentwavetime = 0
 delaytimer = 0
 everysecondtimer = 0
@@ -301,7 +301,7 @@ function updatewaves()
             music(8,0,3)
         end
         delaytimer += ft
-        if delaytimer > wave[min(currentwave+1, #wave)].delay then
+        if delaytimer > wave[currentwave+1].delay then
             everysecondtimer = 0
             currentwave += 1
             if not wave[currentwave].boss and bossmusic then

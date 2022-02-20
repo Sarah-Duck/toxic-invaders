@@ -39,7 +39,7 @@ function addbullet(x, y, velx, vely, good, sprite)
         end
 
         --delete bullet if off screen
-        if y > 128 or y < -8 or x > 128 or x < -8 or despawnallbullets then
+        if y > 128 or y < -8 or x > 128 or x < -8 or (despawnallbullets and not good) then
             del(obj, bullet)
         end
     end

@@ -21,11 +21,11 @@ if gamerunning then
         runningscore(currentscore,true)
     else
         runningscore(currentscore,false)
-        local scoretextcolors = {{12,15},{2,9}} --shows incorrect shadow colour for 2P counter (shows as 0)
+        local scoretextcolors = {{12,15},{9,2}}
         for i = 1, #players, 1 do
             local player = players[i]
             if player.health < 1 then
-                printdropshadow(ceil(player.inv),player.x+circletimex,player.y+circletimey,scoretextcolors[i][i],scoretextcolors[i][i+1])
+                printdropshadow(ceil(player.inv),player.x+circletimex,player.y+circletimey,scoretextcolors[i][1],scoretextcolors[i][2])
             end
         end
     end

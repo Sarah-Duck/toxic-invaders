@@ -104,7 +104,7 @@ function addplayer(x, y, sprite, bulletsprite)
             end
             player.particlecooldown = 0.1
         end
-        if player.health < 2 then
+        if player.health == 1 then
             damagesmoke(player)
         end
 

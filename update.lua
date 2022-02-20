@@ -8,7 +8,7 @@ screenshakex = sin(shake+t())*shake
 screenshakey = sin(shake+gt/2.1)*shake
 
 if gameover then
-    scrollspeed = mid(-1/10,scrollspeed-1/3000,ft)
+    scrollspeed = lerp(scrollspeed, -1/22, 0.01) -- scroll backwards
     currentscore = 0 --depleats score
     if respawntimer < 0 then
         gameover = false
@@ -18,7 +18,11 @@ if gameover then
     end
 elseif gamerunning then
     updatewaves() -- update the wave function
-    scrollspeed = mid(0,scrollspeed+1/2000,ft)
+    local targetspeed = ft
+    if bossmusic then
+        targetspeed /= 2 --half scroll speed when boss
+    end
+    scrollspeed = lerp(scrollspeed, targetspeed, 0.03)
 end
 gt += scrollspeed + 1/600
 
