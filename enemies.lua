@@ -490,7 +490,7 @@ function addbomb(x, y, delay) --BIG BOMB!!!! KILL IIT QUICKLY!!!!
             if enemy.shootcooldown < -5 then
                 sfx(8,3) --rapid
             else
-                sfx(7,3) --normal
+                sfx(7,2) --normal
             end
         end 
     end
