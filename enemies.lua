@@ -379,8 +379,8 @@ function addwallboss(x, y, length, points, speed, stay, move, isboss)
             end
             spr(77+bulletfired[1]+dmgwall, x, y)
             spr(77+bulletfired[1]+dmgwall, x, y+length*8-8, 1, 1, false, true)
-            spr(70+dmgwall,x+8,y,2,2)
-            spr(70+dmgwall,x+8,y+length*8-16,2,2,false,true)
+            spr(71+dmgwall,x+8,y,2,2)
+            spr(71+dmgwall,x+8,y+length*8-16,2,2,false,true)
             spr(79+dmgwall,x+8,y+length*8-24,1,1, false, true)
         end
     end
