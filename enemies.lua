@@ -246,12 +246,11 @@ function addtargetingenemy(x, y, speed)
         enemy.x -= speed
         if enemy.shootcooldown < 0 and currentwavetime%1.5>1.2 then
             enemy.shootcooldown = 0.1
-            local player = players[targetplayer]
-            if enemy.x < canshootatx and player.x < enemy.x+30 then --math involving a distance check to get the proper velocity for aiming
-                local distancetarget = sqrt((player.x - enemy.x)^2+(player.y - enemy.y)^2)
-                local velxtarget = (player.x - enemy.x)/distancetarget
-                local velytarget = (player.y - enemy.y)/distancetarget
-                addbullet(enemy.x-3, enemy.y, velxtarget, velytarget) -- shoot if on screen
+            if enemy.x < canshootatx and targetplayer.x < enemy.x+30 then --math involving a distance check to get the proper velocity for aiming
+                local distance = sqrt((targetplayer.x - enemy.x)^2+(targetplayer.y - enemy.y)^2)
+                local velx = (targetplayer.x - enemy.x)/distance
+                local vely = (targetplayer.y - enemy.y)/distance
+                addbullet(enemy.x-3, enemy.y, velx, vely) -- shoot if on screen
                 sfx(15,2) -- play shoot sound if on screen
             end
         end
@@ -536,8 +535,8 @@ function addmissileboss(x, y) --boss that shoots missiles!!!
         if currentwavetime%18 > 8 and currentwavetime%20 < 12 then
             enemy.targety = everysecondtimer\0.501*96
         elseif currentwavetime%18 > 17.3 then --INTIMIDATION TACTICS!!!!!
-            enemy.targety = players[targetplayer].y
-            enemy.targetx = players[targetplayer].x+24
+            enemy.targety = targetplayer.y
+            enemy.targetx = targetplayer.x+24
             enemy.shootcooldown = 0.8
         end
         enemy.x = lerp(enemy.x, enemy.targetx, enemy.speed)
@@ -549,13 +548,13 @@ function addmissileboss(x, y) --boss that shoots missiles!!!
         end
         if enemy.shootcooldown < 0 then
             enemy.shootcooldown = 0.6 + rnd(0.6)
-            if enemy.x < canshootatx and players[targetplayer] ~= nil then
+            if enemy.x < canshootatx then
                 local offsetmissleboss = 2
                 if currentwavetime%2 > 1 then offsetmissleboss = 30 end
                 addmissile(enemy.x, enemy.y+offsetmissleboss, targetplayer)
                 if enemy.health < 11 then
                     sfx(15,2)
-                    addbullet(enemy.x,enemy.y+16,(players[targetplayer].x-enemy.x)/70,(players[targetplayer].y-enemy.y-16)/70)
+                    addbullet(enemy.x,enemy.y+16,(targetplayer.x-enemy.x)/70,(targetplayer.y-enemy.y-16)/70)
                     -- ERROR attempting to find a non existant player
                 end
                 enemy.speed += 0.001

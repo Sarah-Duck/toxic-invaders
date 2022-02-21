@@ -2,9 +2,9 @@ wave = {} --store wave functions here
 currentwave = tonum(stat(6)) or 1 --THIS IS THE CURRENT WAVE, SHOLD BE 1 UNLESS TESTING SOMETHING (the stat part is a cheat, shhh)
 currentwavetime = 0
 delaytimer = 0
-everysecondtimer = 0
+everysecondtimer = 1
 checkpoint = 1
-targetplayer = 1
+targetplayer = nil
 
 --NOTE - slow BG during boss waves / make bosses their own checkpoint
 
@@ -230,7 +230,7 @@ wave[16] = {
     everysecond = function ()
         if flr(currentwavetime%6) == 5 and currentwavetime < 15 then
             local ylaserpos = 16
-            if players[targetplayer].y > 64 then
+            if targetplayer.y > 64 then
                 ylaserpos = 80
             end
             addlasershooter(128, ylaserpos, 50, 0.1, false)
@@ -301,7 +301,7 @@ function updatewaves()
     currentwavetime += ft
     everysecondtimer += ft
     if everysecondtimer >= 1 then
-        targetplayer = rnd({1,#players}) --swaps target every second
+        targetplayer = rnd(players) --swaps target every second
         everysecondtimer = 0
         if wave[currentwave].everysecond then
             wave[currentwave].everysecond()

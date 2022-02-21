@@ -136,7 +136,7 @@ function addmissile(x, y, target) --basic small weak enemy
     function enemy.update()
         enemy.x -= enemy.speed
         enemy.speed += 0.015
-        enemy.y += (players[target].y - enemy.y)/30
+        enemy.y += (target.y - enemy.y)/30
         addcircle(enemy.x+12, enemy.y+rnd(8), 0, rnd()/8, 2.1, 0.6, rnd({9,5}))
         enemymisc(enemy)
         if enemy.health <= 0 then -- die!!!!!
