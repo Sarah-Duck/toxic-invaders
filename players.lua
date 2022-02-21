@@ -91,7 +91,7 @@ function addplayer(x, y, sprite, spriteup, spritedwn, bulletsprite)
             end
             player.x = mid(0, player.x, 120)
         else
-            player.x = lerp(player.x, 200, 0.01) --slides the ship offscreen duing the scorescreen
+            player.x += min(currentwavetime*2.25, 2) --slides the ship offscreen duing the scorescreen
         end
         player.y = mid(0, player.y, 120)
 

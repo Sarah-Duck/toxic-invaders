@@ -19,10 +19,10 @@ if gameover then
 elseif gamerunning then
     updatewaves() -- update the wave function
     local targetspeed = ft
-    if currentsong >= 8 then
+    if currentwave == 20 then
+        targetspeed /= 8 --slow scroll on score screen
+    elseif currentsong >= 8 then
         targetspeed /= 2 --half scroll speed when boss
-    elseif currentwave == 20 then
-        targetspeed /= 8
     end
     scrollspeed = lerp(scrollspeed, targetspeed, 0.03)
 end

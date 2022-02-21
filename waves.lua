@@ -281,7 +281,7 @@ wave[19] = {
 
 --ending score screen
 wave[20] = {
-    delay = 4,
+    delay = 5,
     start = function()
         menuscroll = 128 --so that the score menu can scroll in
         if not coopmode and highscore0 < currentscore then
@@ -292,7 +292,7 @@ wave[20] = {
     end,
     conditions = function()
     end,
-    song = 31,
+    song = 35,
 }
 
 foreach(wave, function(wave) if not wave.conditions then wave.conditions = function() if #enemies < 1 then return true end end end end) --if there are no conditons for a wave, give them one. look at all those ends!!!!
