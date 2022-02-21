@@ -64,9 +64,9 @@ end
 
 function playerscore()
     if coopmode then
-        printdropshadow(scorewithzeros(tostring(currentscore),4),2,121,9,4) --2P current score
+        printdropshadow(scorewithzerosstore,2,121,9,4) --2P current score
     else
-        printdropshadow(scorewithzeros(tostring(currentscore),4),2,2,12,15) --1P current score
+        printdropshadow(scorewithzerosstore,2,2,12,15) --1P current score
     end
 end
 
@@ -108,7 +108,7 @@ function finalscorescreen(x)
 
     poke(0x5f58, 0x9 | 0x4) --makes score BIG
     printdropshadow("vICTORY!", x+32,18,6,5)
-    printdropshadow(scorewithzeros(tostring(currentscore),4),x+48+circletimex,50+circletimey,playercolour0,playercolour1) --2P high score
+    printdropshadow(scorewithzerosstore,x+48+circletimex,50+circletimey,playercolour0,playercolour1) --2P high score
     poke(0x5f58)
     -- printdropshadow("fINAL sCORE", x+43,y+22,6,5)
     if (coopmode and currentscore > highscore1) or (not coopmode and currentscore > highscore0) then
@@ -120,7 +120,6 @@ function finalscorescreen(x)
     printdropshadow("   THANKS FOR PLAYING\nPRESS (❎ ⁙ 🅾️) TO RETRY", x+15,80,11,3)
 
     printdropshadow("MADE WITH ♥ IN VANCOUVER\n       ◆ 2022 ◆", x+14,113,9,2)
-    -- printdropshadow("◆ 2022 ◆", x+42,y+118,11,3)
 end
 
 --intro/ending acid effect

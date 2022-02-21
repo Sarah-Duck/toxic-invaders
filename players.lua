@@ -51,11 +51,10 @@ function addplayer(x, y, sprite, spriteup, spritedwn, bulletsprite)
             respawntimer = 5 --respawns all players in 5 seconds
             player.inv = 20
             killallenemies()
-            currentscore-=10
             sfx(11, 0) --killed
             sfx(22, 1) --rewind beat
         elseif player.health <= 0 then
-            currentscore = currentscore \ 0.5 --halves score if coop
+            currentscore = currentscore \ 2 --halves score if coop (backslash to floor division)
             sfx(11, 0)
             player.inv = 5
         end
@@ -133,7 +132,7 @@ function addplayer(x, y, sprite, spriteup, spritedwn, bulletsprite)
 end
 
 function isgameover()
-    currentscore+=-10 --lose points if hit
+    currentscore -= 10 --lose points if hit
     for i = 1, #players, 1 do
         if players[i].health > 0 then
             return

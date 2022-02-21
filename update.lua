@@ -5,6 +5,7 @@ circletimex = sin(t())*3 -- for elements that move in a circle (respawn timer)
 circletimey = cos(t())*3
 screenshakex = sin(shake+t())*shake
 screenshakey = sin(shake+gt/2.1)*shake
+scorewithzerosstore = scorewithzeros(tostring(currentscore),4)
 
 --stuff for scrolling background and respawning
 if gameover then
