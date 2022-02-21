@@ -12,7 +12,6 @@ currentsong = -1
 fadeouttimer = 1
 tracktitleposition = -200
 newtracktitleposition = 0
--- cartdata("toxicinvaderssoundtrack_by1029chris")
 
 function playsong(song, fade)
     fade = fade or 0
@@ -39,7 +38,7 @@ function selectmusic()
     elseif tracknumber == 3 then
         playsong(17)
     elseif tracknumber == 4 then
-        playsong(17)
+        playsong(35)
     end
 end
 
@@ -47,13 +46,13 @@ function updatetracktitlepos()
     if tracknumber == 0 then
         newtracktitleposition = -4
     elseif tracknumber == 1 then
-        newtracktitleposition = 167
+        newtracktitleposition = 164
     elseif tracknumber == 2 then
         newtracktitleposition = 336
     elseif tracknumber == 3 then
         newtracktitleposition = 517
     elseif tracknumber == 4 then
-        newtracktitleposition = 660
+        newtracktitleposition = 700
     end
 end
 
