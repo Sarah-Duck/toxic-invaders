@@ -308,11 +308,12 @@ function updatewaves()
         end
     end
     if wave[currentwave].conditions() then
-        if wave[currentwave+1].song and currentwave ~= 19 then --dont want the final wave to play the next song for dramatic effect
-            playsong(wave[currentwave+1].song)
+        local nextwave = wave[currentwave+1]
+        if nextwave.song and currentwave ~= 19 then --dont want the final wave to play the next song for dramatic effect
+            playsong(nextwave.song)
         end
         delaytimer += ft
-        if delaytimer > wave[currentwave+1].delay then
+        if delaytimer > nextwave.delay then
             setwave(currentwave+1)
         end
     end
