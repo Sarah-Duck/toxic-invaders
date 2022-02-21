@@ -13,6 +13,13 @@ wave[1] = {
     start = function()
         addbasicenemy(150, 60, 0.15)
     end,
+    everysecond = function ()
+        if currentwavetime > 1.9 then
+            playsong(0)
+        end
+    end,
+    song = -1,
+    fade = 1800
 }
 
 for i = 2, 16, 1 do
@@ -268,13 +275,15 @@ wave[19] = {
         canshootatx = 110
         addfinalboss()
     end,
-    song = 17
+    song = 17,
+    fade = 500
 }
 
 --ending score screen
 wave[20] = {
     delay = 4,
     start = function()
+        menuscroll = 128 --so that the score menu can scroll in
         if not coopmode and highscore0 < currentscore then
             dset(0, currentscore) --set singleplayer score
         elseif coopmode and highscore1 < currentscore then
@@ -282,7 +291,8 @@ wave[20] = {
         end
     end,
     conditions = function()
-    end
+    end,
+    song = 31,
 }
 
 foreach(wave, function(wave) if not wave.conditions then wave.conditions = function() if #enemies < 1 then return true end end end end) --if there are no conditons for a wave, give them one. look at all those ends!!!!
@@ -298,8 +308,8 @@ function updatewaves()
         end
     end
     if wave[currentwave].conditions() then
-        if wave[currentwave+1].song then
-            playsong(wave[currentwave+1].song)
+        if wave[currentwave+1].song and currentwave ~= 19 then --dont want the final wave to play the next song for dramatic effect
+            playsong(wave[currentwave+1].song, wave[currentwave+1].fade or 0)
         end
         delaytimer += ft
         if delaytimer > wave[currentwave+1].delay then
@@ -312,6 +322,5 @@ function setwave(num)
     currentwave = num
     everysecondtimer,currentwavetime,delaytimer = 0,0,0
     wave[currentwave].start()
-    local song = wave[currentwave].song or 0
-    playsong(song)
+    playsong(wave[currentwave].song or 0, wave[currentwave].fade or 0)
 end

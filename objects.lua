@@ -47,6 +47,7 @@ function playsong(song, fade)
         currentsong = song
     end
 end
+playsong(29) --main menu music
 
 function addplayer1() --reduces tokens since called once per gamemmode
     addplayer(18, 60, 16, 17, 18, 3)

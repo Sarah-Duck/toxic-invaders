@@ -30,7 +30,7 @@ if gamerunning then
         end
     end
 end
-if not gamerunning or menuscroll < 1 then
+if not gamerunning or currentwave == 1 then
 
     menuscroll += scrollspeed
 
@@ -58,7 +58,8 @@ end
 
 --final score screen and outro transition
 if currentwave == 20 then
-    finalscorescreen(0,0)
+    menuscroll = lerp(menuscroll,1,0.05)
+    finalscorescreen(menuscroll,0)
 
     --outro acid transition
     if isoutro then

@@ -1,5 +1,6 @@
 enemies = {}
 canshootatx = 126 --the point on screen when they can start shooting. this needs to be a thing for the final boss portal
+finalbossalive = true --final boss WONT drop shit
 function killallenemies()
     for i = 1, #enemies, 1 do
         enemies[i].health = -1
@@ -26,14 +27,13 @@ function enemycollide(enemy, object) --f this enemy collides with something, do 
     end
 end
 
-function enemydie(enemy, sound, soundchannel, points, isboss, drop)
-    --the drop option is a stupid hack, only the final boss gets to use it.
+function enemydie(enemy, sound, soundchannel, points, isboss)
     if enemy.health < 1 then --no health? die.
         local x,y = enemy.x,enemy.y
         for i = 1, rnd(enemy.h)+6, 1 do
             addcircle(x+rnd(enemy.w), y+rnd(enemy.h), rnd(4)-2, -rnd(2)-1, 1, 2, rnd({3, 11, 9}), -0.1)
         end
-        if rnd(100) < sqrt(enemy.w*enemy.h)/1.5 and not drop then --you get a better chance of a randomly dropped health from bigger enemies
+        if rnd(100) < sqrt(enemy.w*enemy.h)/1.5 and finalbossalive then --you get a better chance of a randomly dropped health from bigger enemies
             addpickup(x+rnd(enemy.w), y+rnd(enemy.h), 48)
         end
         if isboss then
@@ -41,7 +41,7 @@ function enemydie(enemy, sound, soundchannel, points, isboss, drop)
             sfx(60,-2) --stop missle sound, less tokens to just have it here.
             despawnallbullets = true
             killallenemies()
-            if not gameover and not drop then
+            if not gameover and finalbossalive then
                 addpickup(x+rnd(32), y+rnd(32))
                 addpickup(x+rnd(32), y+rnd(32), 48)
             end
@@ -680,8 +680,9 @@ function addfinalboss() --THE FINAL BOSS!!!!!!! WOOOAAAHHHHHH!!!!!!!!!!!!!!!!!!!
                     moves[(currentwavetime\14)%#moves+1]()
                 end
             end
-            enemydie(enemy,17,2,1000,true,1) --die!!!!!!!
+            enemydie(enemy,17,2,1000,true) --die!!!!!!!
         else
+            finalbossalive = false
             playsong(-1,1000)
             killallenemies()
             despawnallbullets = true
