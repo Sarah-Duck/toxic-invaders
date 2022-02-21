@@ -59,7 +59,7 @@ end
 --final score screen and outro transition
 if currentwave == 20 then
     menuscroll = lerp(menuscroll,1,0.05)
-    finalscorescreen(menuscroll,0)
+    finalscorescreen(menuscroll)
 
     --outro acid transition
     if isoutro then

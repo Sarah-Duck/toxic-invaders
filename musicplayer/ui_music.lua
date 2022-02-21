@@ -51,10 +51,10 @@ function mainmenutext(x,y,currentlyplaying)
     -- y = 62
     x -= 1
 
-    printdropshadow("(\139) track selection (\145)\n",x,y,9,2)
+    printdropshadow("(\139) track selection (\145)",x,y,9,2)
 
     poke(0x5f58, 0x9 | 0x4) --makes score BIG
-    printdropshadow("mENU mUSE          bATTLE bASS          bOSSY bEATS          fISSURE fINALE          vICTORY vESSLE",x-tracktitleposition+circletimex,y+18+circletimey,11,3)
+    printdropshadow("iDLE iNERTIA         bATTLE bEATS         pADRONE pANIC         fISSURE fINALE         vICTORY vESSLE",x-tracktitleposition+circletimex,y+18+circletimey,11,3)
     poke(0x5f58)
 end
 

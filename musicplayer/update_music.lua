@@ -48,4 +48,4 @@ menuitem(2, autoplaymenutext, function() autoplay = not autoplay end)
 
 if btnp(4) and btnp(5) then music(-1,3000) end
 
-tracktitleposition = lerp(tracktitleposition,newtracktitleposition,.03)
+tracktitleposition = lerp(tracktitleposition,newtracktitleposition,0.03)

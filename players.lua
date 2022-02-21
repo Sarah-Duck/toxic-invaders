@@ -72,33 +72,35 @@ function addplayer(x, y, sprite, spriteup, spritedwn, bulletsprite)
 
     function player:update()
         --movement
-        if player.health > 0 then -- can only input if alive!!!
-            if btn(0, player.id) then
-                player.x -= 1
-            elseif btn(1, player.id) then
-                player.x += 1
+        if currentwave ~= 20 then
+            if player.health > 0 then -- can only input if alive!!!
+                if btn(0, player.id) then
+                    player.x -= 1
+                elseif btn(1, player.id) then
+                    player.x += 1
+                end
+                if btn(2, player.id) then
+                    player.y -= 1
+                    player.ymov = 1
+                elseif btn(3, player.id) then
+                    player.y += 1
+                    player.ymov = -1
+                else
+                    player.ymov = 0
+                end
             end
-            if btn(2, player.id) then
-                player.y -= 1
-                player.ymov = 1
-            elseif btn(3, player.id) then
-                player.y += 1
-                player.ymov = -1
-            else
-                player.ymov = 0
-            end
+            player.x = mid(0, player.x, 120)
+        else
+            player.x = lerp(player.x, 200, 0.01) --slides the ship offscreen duing the scorescreen
         end
-        player.x = mid(0, player.x, 120)
         player.y = mid(0, player.y, 120)
 
         --particles from rockets, and smoke/sparks from damage
         player.particlecooldown -= ft
         if player.particlecooldown < 0 and player.health > 0 then
             for i = 0, 1, 1 do
-                addcircle(player.x-1, player.y+i*7, -0.5, 0, 1.5, 0.5, 9)
+                addcircle(player.x-1, player.y+i*7, -0.5, 0, 1.5, 0.5, 9) --thruster fx
             end
-            -- addcircle(player.x-1, player.y, -0.5, 0, 1.5, 0.5, 9)
-            -- addcircle(player.x-1, player.y+7, -0.5, 0, 1.5, 0.5, 9)
             if player.health < 3 then --sparks
                 addcircle(player.x+rnd(8), player.y+rnd(8), rnd(1.5)-0.75, -1.5, 1, rnd(1)+0.5, rnd({9,10}), -0.1)
             end
@@ -111,10 +113,7 @@ function addplayer(x, y, sprite, spriteup, spritedwn, bulletsprite)
         --shooting after cooldown
         player.shootcooldown -= ft
         player.inv -= ft
-        if (btn(4, player.id) or alwaysfire) and player.shootcooldown < 0 and player.health > 0 then
-            --for i = 1, 4, 1 do
-                --addcircle(player.x+3, player.y+4, rnd(1)+0.5, rnd(1)-0.5, 1.5, rnd(0.4), 12) 
-            --end
+        if (btn(4, player.id) or alwaysfire) and player.shootcooldown < 0 and player.health > 0 and currentwave ~= 20 then
             addbullet(player.x+3, player.y, 2, 0, true, bulletsprite)
             if player.shoot3 then
                 addbullet(player.x+3, player.y+3, 2, 0.25, true, bulletsprite)

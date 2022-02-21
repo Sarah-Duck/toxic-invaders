@@ -31,7 +31,7 @@ function selectmusic()
     if tracknumber == -1 then
         tracknumber = 0
     elseif tracknumber == 0 then
-        playsong(-1,0)
+        playsong(31)
     elseif tracknumber == 1 then
         playsong(0)
     elseif tracknumber == 2 then
@@ -39,21 +39,21 @@ function selectmusic()
     elseif tracknumber == 3 then
         playsong(17)
     elseif tracknumber == 4 then
-        playsong(-1,0)
+        playsong(17)
     end
 end
 
 function updatetracktitlepos()
     if tracknumber == 0 then
-        newtracktitleposition = -16
+        newtracktitleposition = -4
     elseif tracknumber == 1 then
-        newtracktitleposition = 145
+        newtracktitleposition = 167
     elseif tracknumber == 2 then
-        newtracktitleposition = 313
+        newtracktitleposition = 336
     elseif tracknumber == 3 then
-        newtracktitleposition = 493
+        newtracktitleposition = 517
     elseif tracknumber == 4 then
-        newtracktitleposition = 685
+        newtracktitleposition = 660
     end
 end
 

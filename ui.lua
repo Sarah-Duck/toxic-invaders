@@ -98,7 +98,7 @@ function credits(x,y)
 end
 
 --Ending screen
-function finalscorescreen(x,y)
+function finalscorescreen(x)
     local playercolour0 = 12
     local playercolour1 = 15
     if coopmode then
@@ -107,19 +107,19 @@ function finalscorescreen(x,y)
     end
 
     poke(0x5f58, 0x9 | 0x4) --makes score BIG
-    printdropshadow("vICTORY!", x+32,y+18,6,5)
-    printdropshadow(scorewithzeros(tostring(currentscore),4),x+48+circletimex,y+50+circletimey,playercolour0,playercolour1) --2P high score
+    printdropshadow("vICTORY!", x+32,18,6,5)
+    printdropshadow(scorewithzeros(tostring(currentscore),4),x+48+circletimex,50+circletimey,playercolour0,playercolour1) --2P high score
     poke(0x5f58)
     -- printdropshadow("fINAL sCORE", x+43,y+22,6,5)
     if (coopmode and currentscore > highscore1) or (not coopmode and currentscore > highscore0) then
         if flashtime then
-            printdropshadow("! new high score !", x+27,y+34,11,3)
+            printdropshadow("! new high score !", x+27,34,11,3)
         end
     end
 
-    printdropshadow("   THANKS FOR PLAYING\nPRESS (❎ ⁙ 🅾️) TO RETRY", x+15,y+80,11,3)
+    printdropshadow("   THANKS FOR PLAYING\nPRESS (❎ ⁙ 🅾️) TO RETRY", x+15,80,11,3)
 
-    printdropshadow("MADE WITH ♥ IN VANCOUVER\n       ◆ 2022 ◆", x+14,y+113,9,2)
+    printdropshadow("MADE WITH ♥ IN VANCOUVER\n       ◆ 2022 ◆", x+14,113,9,2)
     -- printdropshadow("◆ 2022 ◆", x+42,y+118,11,3)
 end
 
