@@ -228,7 +228,7 @@ wave[16] = {
         addwallboss(128, 70, 7, 30, 0.05, false, 3, false)
     end,
     everysecond = function ()
-        if flr(currentwavetime%6) == 5 and currentwavetime < 18 then
+        if flr(currentwavetime%6) == 5 and currentwavetime < 15 then
             local ylaserpos = 16
             if players[targetplayer].y > 64 then
                 ylaserpos = 80
