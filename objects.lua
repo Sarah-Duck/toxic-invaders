@@ -15,6 +15,8 @@ highscore0 = dget(0) --scores (0 is solo - 1 is coop)
 highscore1 = dget(1)
 currentscore = 0 --used for both gamemodes, but passed into highscore at end of game
 currentsong = -1
+playercolour0 = 12 --for final score screen
+playercolour1 = 15
 
 
 function startgame()

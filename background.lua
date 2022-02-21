@@ -4,15 +4,9 @@ function scrollingcircles(y, speed, spacing, radius, color)
     end
 end
 
--- function scrollingcirclelines(y, speed, spacing, radius, color)
---     for i = 1, 256, spacing do
---         circ((i-(gt*speed))%256-radius*2, y, radius, color)
---     end
--- end
-
 function scrollingsprite(sprite,x,y,w,h,speed,flip)
     flip = flip or false
-    spr(sprite, (-gt*speed+x+w*8)%(128+w*8)-w*8, y, w, h, flip)
+    spr(sprite, -(gt*speed+x+w*8)%(128+w*8)-w*8, y, w, h, flip) --moved the "-" from gt in hopes of fixing the flickering
 end
 
 

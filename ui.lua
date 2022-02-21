@@ -72,7 +72,7 @@ end
 
 --shown on edge of screen (blue for solo - orange for coop)
 function runningscore(currentscore,isflashing)
-    if isflashing or gt < 2 then
+    if isflashing or gt < 2 then --blinks when starting a game
         if flashtime then
             playerscore()
         end
@@ -93,24 +93,22 @@ function credits(x,y)
     spr(186,x-4,y+6+sintimecredits,1,1,timemodcredits) --duck
     spr(184,x+104,y+6+-sintimecredits,1,1,timemodcredits) --bot
     palt()
-    printdropshadow("1029chris\nLUA TUNES",x+10,y+5,9,2)
-    printdropshadow("ribboncable\nART  SOUNDS",x+56,y+5,12,15)
+    printdropshadow("1029chris   ribboncable\nLUA TUNES   ART  SOUNDS",x+9,y+5,9,2)
 end
 
 --Ending screen
 function finalscorescreen(x)
-    local playercolour0 = 12
-    local playercolour1 = 15
     if coopmode then
         playercolour0 = 9
         playercolour1 = 2
     end
 
     poke(0x5f58, 0x9 | 0x4) --makes score BIG
-    printdropshadow("vICTORY!", x+32,18,6,5)
+    printdropshadow("vICTORY!", x+33,18,6,5)
     printdropshadow(scorewithzerosstore,x+48+circletimex,50+circletimey,playercolour0,playercolour1) --2P high score
     poke(0x5f58)
-    -- printdropshadow("fINAL sCORE", x+43,y+22,6,5)
+    
+
     if (coopmode and currentscore > highscore1) or (not coopmode and currentscore > highscore0) then
         if flashtime then
             printdropshadow("! new high score !", x+27,34,11,3)

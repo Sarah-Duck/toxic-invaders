@@ -6,7 +6,7 @@ end
 
 function scrollingsprite(sprite,x,y,w,h,speed,flip)
     flip = flip or false
-    spr(sprite, (-gt*speed+x+w*8)%(128+w*8)-w*8, y, w, h, flip)
+    spr(sprite, -(gt*speed+x+w*8)%(128+w*8)-w*8, y, w, h, flip)
 end
 
 
