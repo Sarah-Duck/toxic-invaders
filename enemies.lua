@@ -535,7 +535,7 @@ function addmissileboss(x, y) --boss that shoots missiles!!!
         if currentwavetime%18 > 8 and currentwavetime%20 < 12 then
             enemy.targety = everysecondtimer\0.501*96
         elseif currentwavetime%18 > 17.3 then --INTIMIDATION TACTICS!!!!!
-            enemy.targety = targetplayer.y
+            enemy.targety = targetplayer.y-10
             enemy.targetx = targetplayer.x+24
             enemy.shootcooldown = 0.8
         end
