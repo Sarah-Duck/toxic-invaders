@@ -1,7 +1,7 @@
 obj = {}
-doshake = true
 gt = 0 -- game time, but not actually, this is only used by the background for scrolling.
 ft = 1/60 --frametime
+doshake = true
 scrollspeed = 0
 respawntimer = 0
 gameover = false

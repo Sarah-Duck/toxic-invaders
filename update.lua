@@ -67,9 +67,9 @@ function scorewithzeros(string,length)
 end
 
 -- screenshake accessibility setting
-if doshake then screenshaketext = "(▒) screenshake" end --adds 9 tokens to visually show the toggle
+if doshake then screenshaketext = "(▒) screenshake" end
 menuitem(1,screenshaketext,
     function()
         doshake = not doshake
         screenshaketext = "(█) screenshake"
-    end)
+end)

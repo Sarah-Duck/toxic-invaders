@@ -125,6 +125,7 @@ end
 --intro/ending acid effect
 function acidtransition()
     if acidcounter < 3 then
+        if btn(0) and btn(5) and btn(4) then dset(0) dset(1) run() end --clear score w/ button combo (LEFT - X - O)
         for i = 1, 128, 1 do
             line(i-1,128,i-1,sin((i+0.22-acidcounter*20)/24.357)*2+acidcounter*80-5,11) --cool wavy transition effect!!!!
             line(i-1,128,i-1,sin((i+acidcounter*60)/44.357)*5+acidcounter*80,3)
