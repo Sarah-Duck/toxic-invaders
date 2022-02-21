@@ -510,7 +510,7 @@ function addmissileboss(x, y) --boss that shoots missiles!!!
         w = 32,
         h = 32,
         inv = -1,
-        health = 150*#players, --40 originally, now 200
+        health = 40*#players, --40
         shootcooldown = 1.8,
         speed = 0.04,
         shot = enemyshot,
@@ -519,7 +519,7 @@ function addmissileboss(x, y) --boss that shoots missiles!!!
 
     function enemy.draw()
         local sprite = 69
-        if enemy.health < 38 then
+        if enemy.health < 11 then
             sprite = 101
             damagesmoke(enemy)
         end
@@ -534,8 +534,8 @@ function addmissileboss(x, y) --boss that shoots missiles!!!
         --some cool different moves, shout out to dont get a virus fans!
         if currentwavetime%18 > 8 and currentwavetime%20 < 12 then
             enemy.targety = everysecondtimer\0.501*96
-        elseif currentwavetime%rnd({17,18}) > 15 and enemy.health > 38 then --INTIMIDATION TACTICS!!!!! (rnd({16,20}) was 18 and 15 was 17.3 originally)
-            enemy.targety = targetplayer.y-16
+        elseif currentwavetime%18 > 17.3 then --INTIMIDATION TACTICS!!!!!
+            enemy.targety = targetplayer.y
             enemy.targetx = targetplayer.x+24
             enemy.shootcooldown = 0.8
         end
@@ -547,22 +547,21 @@ function addmissileboss(x, y) --boss that shoots missiles!!!
             enemy.targety = rnd(96)
         end
         if enemy.shootcooldown < 0 then
-            enemy.shootcooldown = 0.8 + rnd(0.5) --0.6 for both originally
+            enemy.shootcooldown = 0.6 + rnd(0.6)
             if enemy.x < canshootatx then
                 local offsetmissleboss = 2
-                if currentwavetime%2 > 1 then offsetmissleboss = 28 end --30 originally
+                if currentwavetime%2 > 1 then offsetmissleboss = 30 end
                 addmissile(enemy.x, enemy.y+offsetmissleboss, targetplayer)
-                -- if enemy.health < 50 then
-                if currentwavetime%rnd({9,11}) < 1 or enemy.health < 38 then
-                    enemy.shootcooldown = 1 + rnd(1) --not originally here (w the bullets and missles, it becomes much more difficult)
+                if enemy.health < 11 then
                     sfx(15,2)
                     addbullet(enemy.x,enemy.y+16,(targetplayer.x-enemy.x)/70,(targetplayer.y-enemy.y-16)/70)
+                    -- ERROR attempting to find a non existant player
                 end
                 enemy.speed += 0.001
             end
         end
         enemymisc(enemy)
-        enemydie(enemy,21,3,325,true) --death!!!!
+        enemydie(enemy,21,3,300,true) --death!!!!
     end
 
     add(enemies, enemy)
@@ -644,7 +643,7 @@ function addfinalboss() --THE FINAL BOSS!!!!!!! WOOOAAAHHHHHH!!!!!!!!!!!!!!!!!!!
                         addbullet(110,64, rnd(0.5)-1, rnd(2)-1)
                     end
                     sfx(3,3) --sound for barrage of bullets
-                    if rnd() < 0.6 then --originally 0.4
+                    if rnd() < 0.4 then
                         addmissile(110, 60, targetplayer)
                     end
                 end
