@@ -1,7 +1,7 @@
 pico-8 cartridge // http://www.pico-8.com
 version 35
 __lua__
---▶ WIP    toxic invaders       ◀
+--▶        toxic invaders       ◀
 --▶    1029chris ribboncable    ◀
 
 #include objects.lua
