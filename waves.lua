@@ -309,7 +309,7 @@ function updatewaves()
     end
     if wave[currentwave].conditions() then
         if wave[currentwave+1].song and currentwave ~= 19 then --dont want the final wave to play the next song for dramatic effect
-            playsong(wave[currentwave+1].song, wave[currentwave+1].fade or 0)
+            playsong(wave[currentwave+1].song)
         end
         delaytimer += ft
         if delaytimer > wave[currentwave+1].delay then

@@ -408,12 +408,14 @@ function addwallboss(x, y, length, points, speed, stay, move, isboss)
                     elseif move == 2 and i == ceil(rnd(length)) then -- this one is just random ones
                         return true
                     elseif move == 3 then --this one is that neat weaving pattern, shout out to don't get a virus fans!
-                        if i > length/3 and i < length/3*2 then
-                            if everysecondtimer < 0.1 then
+                        if currentwavetime%5 < 4.5 then
+                            if i > length/3 and i < length/3*2 then
+                                if everysecondtimer < 0.1 then
+                                    return true
+                                end
+                            elseif everysecondtimer > 0.5 and everysecondtimer < 0.6 then
                                 return true
                             end
-                        elseif everysecondtimer > 0.5 and everysecondtimer < 0.6 then
-                            return true
                         end
                     elseif move == 4 and (i < length/3+sin(t()/2)*3 or i > length/3*2+sin(t()/2)*3) then -- this one is a wavy bullet corridor
                         return true
