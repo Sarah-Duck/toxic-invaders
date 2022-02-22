@@ -1,5 +1,5 @@
 ﻿<html><head>
-<title>Toxic Invaders</title>
+<title>Toxic Invaders - Pico-8</title>
 <meta name="viewport" content="width=device-width, user-scalable=no">
 <script type="text/javascript">
 
@@ -10,7 +10,7 @@
 	// options
 
 	// fullscreen, sound, close button at top when playing on touchscreen
-	var p8_allow_mobile_menu = true;
+	var p8_allow_mobile_menu = false;
 
 	// p8_autoplay true to boot the cartridge automatically after page load when possible
 	// if the browser can not create an audio context outside of a user gesture (e.g. on iOS), p8_autoplay has no effect
@@ -393,7 +393,7 @@
 				else
 				{
 					// landscape: put a little above vertical center
-					margin_top = (frame_height - csize);
+					margin_top = (frame_height - csize)/4;
 				}
 			}
 			else{
@@ -434,7 +434,7 @@
 		else if (p8_touch_detected && p8_is_running) // landscape: slightly above vertical center (only relevant for iPad / highres devices)
 			p8_playarea.style.marginTop = (document.body.clientHeight - csize) / 4;
 		else
-			p8_playarea.style.marginTop = "";
+			p8_playarea.style.marginTop = 18;
 
 		canvas.style.width = csize;
 		canvas.style.height = csize;
@@ -937,12 +937,12 @@
 	display:table;
 	width:24px;
 	height:24px;
-	float:right;
+	float:center;
 }
 
 @media screen and (min-width:512px) {
 	.p8_menu_button{
-		width:24px; margin-left:12px; margin-bottom:8px;
+		width:24px; margin:auto;
 	}
 }
 .p8_menu_button:hover{
@@ -964,15 +964,15 @@ canvas{
 
 .p8_start_button{
 	cursor:pointer;
-	background:url("data:image/png;base64,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");
+	background:url("data:image/png;base64,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");
 	-repeat center;
-	image-rendering: pixelated;
 	-webkit-background-size:cover; -moz-background-size:cover; -o-background-size:cover; background-size:cover;
+	image-rendering: pixelated;
 }
 
 .button_gfx{
 	stroke-width:2;
-	stroke: #ffffff;
+	stroke: #00B543;
 	stroke-opacity:0.4;
 	fill-opacity:0.2;
 	fill:black;
@@ -980,7 +980,7 @@ canvas{
 
 .button_gfx_icon{
 	stroke-width:3;
-	stroke: #909090;
+	stroke: #00B543;
 	stroke-opacity:0.7;
 	fill:none;
 }
@@ -990,7 +990,7 @@ canvas{
 
 </head>
 
-<body style="padding:0px; margin:0px; background-color:black; color:black">
+<body style="padding:0px; margin:auto; background-color:#1D2B53; color:#ccc">
 <div id="body_0"> <!-- hide this when playing in mobile (p8_touch_detected) so that elements don't affect layout -->
 
 
@@ -1002,8 +1002,8 @@ canvas{
 
 	<div id="p8_menu_buttons_touch" style="position:absolute; width:100%; z-index:10; left:0px;">
 		<div class="p8_menu_button" id="p8b_full"  style="float:left;margin-left:10px" onClick="p8_give_focus(); p8_request_fullscreen();"></div>
-		<!-- <div class="p8_menu_button" id="p8b_sound" style="float:left;margin-left:10px" onClick="p8_give_focus(); p8_create_audio_context(); Module.pico8ToggleSound();"></div>
-		<div class="p8_menu_button" id="p8b_close" style="float:right; margin-right:10px" onClick="p8_close_cart();"></div> -->
+		<div class="p8_menu_button" id="p8b_sound" style="float:left;margin-left:10px" onClick="p8_give_focus(); p8_create_audio_context(); Module.pico8ToggleSound();"></div>
+		<div class="p8_menu_button" id="p8b_close" style="float:right; margin-right:10px" onClick="p8_close_cart();"></div>
 	</div>
 
 	<div id="p8_container"
@@ -1025,7 +1025,7 @@ canvas{
 				&nbsp
 			</div>
 
-			<div style="display:flex; position:center">
+			<div style="display:flex; position:relative">
 				<!-- pointer-events turned off for mobile in p8_update_layout because need for desktop mouse -->
 				<canvas class="emscripten" id="canvas" oncontextmenu="event.preventDefault();" >
 				</canvas>
@@ -1033,7 +1033,7 @@ canvas{
 					<!-- <div class="p8_menu_button" style="position:absolute; bottom:125px" id="p8b_controls" onClick="p8_give_focus(); Module.pico8ToggleControlMenu();"></div>					
 					<div class="p8_menu_button" style="position:absolute; bottom:90px" id="p8b_pause" onClick="p8_give_focus(); Module.pico8TogglePaused(); p8_update_layout_hash = -22;"></div>
 					<div class="p8_menu_button" style="position:absolute; bottom:55px" id="p8b_sound" onClick="p8_give_focus(); p8_create_audio_context(); Module.pico8ToggleSound();"></div>
-					--> <div class="p8_menu_button" style="position:absolute; bottom:20px" id="p8b_full" onClick="p8_give_focus(); p8_request_fullscreen();"></div>
+					--> <div class="p8_menu_button" style="position:absolute;" id="p8b_full" onClick="p8_give_focus(); p8_request_fullscreen();"></div>
 				</div>
 			</div>
 
