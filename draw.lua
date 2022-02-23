@@ -1,6 +1,7 @@
 --pallete replacement
-pal({1,2,131,141,5,6,7,136,9,137,139,12,133,3,140,130}, 1) --don't ask me why, but this table of colors starts at 1, and 0 is the final color
--- pal(15,140,1)
+?"\^!5f10🐱12⬇️♪567☉9웃⬅️<✽3😐" --only 2 token (thanks to "palette_maker" by 2darray)
+-- pal({1,2,131,141,5,6,7,136,9,137,139,12,133,3,140,130}, 1) --don't ask me why, but this table of colors starts at 1, and 0 is the final color (20 tokens)
+-- pal(15,140,1) --5 tokens each
 -- pal(14,3,1)
 -- pal(13,133,1)
 -- pal(11,139,1)
