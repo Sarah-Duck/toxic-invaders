@@ -307,7 +307,7 @@ function addlasershooter(x, y, points, speed, stay, isboss)
             enemy.y = 48 + sin(enemy.moveoffset+enemy.lasertimer/enemy.sinspeed) * 40
             if enemy.shootcooldown < 0 then
                 enemy.shootcooldown = 0.18
-                addbullet(enemy.x+6, enemy.y+20, -1, rnd(2)-1) --shoooot!!!!!
+                addbullet(enemy.x+8, enemy.y+12, -1, rnd(2)-1) --shoooot!!!!!
                 sfx(15,2)
             end
         end
