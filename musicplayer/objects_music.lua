@@ -30,7 +30,7 @@ function selectmusic()
     if tracknumber == -1 then
         tracknumber = 0
     elseif tracknumber == 0 then
-        playsong(31)
+        playsong(29)
     elseif tracknumber == 1 then
         playsong(0)
     elseif tracknumber == 2 then
