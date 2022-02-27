@@ -2,7 +2,7 @@
 
 ## Local-Multiplayer Pico-8 Bullet Hell
 
-<img align="right" src="https://raw.githubusercontent.com/1029chris/toxic-invaders/main/musicplayer/toxicinvadersost.p8.png">
+<img align="right" src="https://raw.githubusercontent.com/1029chris/toxic-invaders/main/toxicinvaders_misc/musicplayer/toxicinvadersost.p8.png">
 <img align="right" src="https://raw.githubusercontent.com/1029chris/toxic-invaders/main/toxicinvaders.p8.png">
 
 ### Everlasting war has wrought the planet T0X-1C.
